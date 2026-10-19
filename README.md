@@ -46,20 +46,43 @@ SkillBridge is an attractive, modern, full-stack career platform designed to hel
 
 ### 1. Start the Backend API Server
 ```powershell
-cd C:\Users\sy703\.gemini\antigravity\scratch\skillbridge\backend
+cd backend
+npm install        # first time only
 node server.js
 ```
-The backend API starts on `http://localhost:5000`.
+The backend API starts on `http://localhost:5000`.  
+> **Note:** `localhost:5000` is the API server — open the *frontend* URL below to use the app.
 
 ### 2. Start the Frontend Development Server
 ```powershell
-cd C:\Users\sy703\.gemini\antigravity\scratch\skillbridge\frontend
-cmd /c npm run dev
+cd frontend
+npm install        # first time only
+npm run dev
 ```
 Open `http://localhost:5173` in your browser.
+
+### Quick Start (both at once)
+```powershell
+# From the project root
+start.bat
+```
 
 ---
 
 ## 🤖 Dual-Mode AI Engine
 - **Built-in Smart Local AI (Default)**: Ready out of the box with zero configuration or API keys needed.
 - **Live Google Gemini 1.5 Flash**: Click the "AI Mode" button in the top right to optionally provide your Google Gemini API Key for live generative intelligence.
+
+---
+
+## 🔐 Candidate Authentication & Demo Accounts
+SkillBridge provides stateless JWT authentication with bcrypt password encryption. You can create a new account or instantly sign in with pre-seeded demo accounts:
+
+| Role | Email | Password |
+|---|---|---|
+| **Full Stack Engineer** | `candidate@skillbridge.io` | `candidatePass123` |
+| **Demo Candidate** | `demo@skillbridge.io` | `demo123456` |
+
+- Access the login page anytime by clicking **"Sign In / Register"** in the sidebar or top navbar.
+- Includes 1-click instant login buttons on the login page for rapid testing.
+

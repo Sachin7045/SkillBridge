@@ -16,10 +16,30 @@ import confetti from 'canvas-confetti';
 import { generateRoadmapApi } from '../api';
 
 export default function SkillBridgeRoadmap({ resume, rolesList, apiKey }) {
-  const [targetRole, setTargetRole] = useState(resume.targetRole || "Full Stack Developer");
+  const [targetRole, setTargetRole] = useState(resume?.targetRole || "Full Stack Developer");
   const [roadmap, setRoadmap] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [completedSkills, setCompletedSkills] = useState({});
+  
+  // Persistent progress tracking per candidate & role
+  const storageKey = `skillbridge_roadmap_progress_${resume?.id || 'default'}_${targetRole.replace(/\s+/g, '_')}`;
+  const [completedSkills, setCompletedSkills] = useState(() => {
+    try {
+      const saved = localStorage.getItem(storageKey);
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
+
+  // Re-sync progress when targetRole or resume changes
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(storageKey);
+      setCompletedSkills(saved ? JSON.parse(saved) : {});
+    } catch {
+      setCompletedSkills({});
+    }
+  }, [storageKey]);
 
   useEffect(() => {
     fetchRoadmap();
@@ -40,6 +60,11 @@ export default function SkillBridgeRoadmap({ resume, rolesList, apiKey }) {
   const toggleSkill = (skillName) => {
     setCompletedSkills(prev => {
       const next = { ...prev, [skillName]: !prev[skillName] };
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(next));
+      } catch (e) {
+        console.warn('Failed to save roadmap progress:', e);
+      }
       const totalChecked = Object.values(next).filter(Boolean).length;
       if (totalChecked > 0 && totalChecked % 3 === 0) {
         confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });

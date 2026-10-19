@@ -66,7 +66,7 @@ export default function UploadModal({ isOpen, onClose, onResumeLoaded }) {
           </div>
           <div>
             <h3 className="text-lg font-bold text-white">Import Your Resume</h3>
-            <p className="text-xs text-slate-400">Upload PDF, TXT or paste raw text</p>
+            <p className="text-xs text-slate-400">Upload PDF, DOCX, TXT or paste raw text</p>
           </div>
         </div>
 
@@ -78,7 +78,7 @@ export default function UploadModal({ isOpen, onClose, onResumeLoaded }) {
               activeTab === 'upload' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-slate-200'
             }`}
           >
-            Upload PDF / TXT
+            Upload PDF / DOCX / TXT
           </button>
           <button
             onClick={() => setActiveTab('paste')}
@@ -118,6 +118,7 @@ export default function UploadModal({ isOpen, onClose, onResumeLoaded }) {
                 if (e.target.files && e.target.files[0]) {
                   handleFileUpload(e.target.files[0]);
                 }
+                e.target.value = '';
               }}
             />
             {isLoading ? (
@@ -135,7 +136,7 @@ export default function UploadModal({ isOpen, onClose, onResumeLoaded }) {
                     Click to browse or drag and drop
                   </p>
                   <p className="text-xs text-slate-400 mt-1">
-                    Supports PDF, TXT (Maximum file size 10MB)
+                    Supports PDF, DOCX, and TXT (Maximum file size 10MB)
                   </p>
                 </div>
               </>

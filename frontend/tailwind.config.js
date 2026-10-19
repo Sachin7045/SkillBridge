@@ -8,6 +8,31 @@ export default {
   theme: {
     extend: {
       colors: {
+        midnight: {
+          950: '#020817', // Deep midnight navy background
+          900: '#040d21',
+          850: '#07152B', // Layered dark navy card
+          800: '#0B1933', // Elevated card / border
+          700: '#112244',
+        },
+        electric: {
+          500: '#258BFF', // Electric blue primary accent
+          400: '#4da1ff',
+          600: '#1b74de',
+        },
+        neonviolet: {
+          500: '#773BFF', // Neon violet secondary accent
+          400: '#9461ff',
+          600: '#5c22df',
+        },
+        cybercyan: {
+          500: '#16D9F5', // Highlight accent cyan
+          400: '#47e4f8',
+        },
+        emeraldgreen: {
+          500: '#19D3A2', // Success emerald green
+          400: '#3ce0b4',
+        },
         brand: {
           50: '#eef2ff',
           100: '#e0e7ff',
@@ -22,12 +47,14 @@ export default {
           950: '#1e1b4b',
         },
         accent: {
-          500: '#06b6d4', // Cyan accent
+          500: '#16D9F5', // Cyan accent
           600: '#0891b2'
         }
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        syne: ['Syne', 'sans-serif'],
+        sora: ['Sora', 'sans-serif'],
       }
     },
   },

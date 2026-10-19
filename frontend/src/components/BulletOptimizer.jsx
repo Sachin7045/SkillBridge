@@ -14,12 +14,13 @@ import {
 import confetti from 'canvas-confetti';
 import { optimizeBulletApi } from '../api';
 
-export default function BulletOptimizer({ apiKey }) {
+export default function BulletOptimizer({ apiKey, onApplyToResume = null, currentResume = null }) {
   const [bullet, setBullet] = useState('');
   const [contextTech, setContextTech] = useState('');
   const [isOptimizing, setIsOptimizing] = useState(false);
   const [result, setResult] = useState(null);
   const [copiedIndex, setCopiedIndex] = useState(null);
+  const [appliedIndex, setAppliedIndex] = useState(null);
 
   const sampleWeakBullets = [
     { text: "Worked on frontend with React and fixed bugs.", tech: "React, Redux, Jest" },
@@ -175,26 +176,57 @@ export default function BulletOptimizer({ apiKey }) {
                       </span>
                     </div>
 
-                    <button
-                      onClick={() => handleCopy(variation.text, idx)}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition ${
-                        isCopied
-                          ? 'bg-emerald-600 text-white'
-                          : 'bg-slate-900 border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800'
-                      }`}
-                    >
-                      {isCopied ? (
-                        <>
-                          <Check className="w-3.5 h-3.5" />
-                          <span>Copied!</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="w-3.5 h-3.5" />
-                          <span>Copy Bullet</span>
-                        </>
+                    <div className="flex items-center gap-2">
+                      {onApplyToResume && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            onApplyToResume(variation.text);
+                            setAppliedIndex(idx);
+                            setTimeout(() => setAppliedIndex(null), 2500);
+                          }}
+                          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition ${
+                            appliedIndex === idx
+                              ? 'bg-emerald-600 text-white'
+                              : 'bg-indigo-600/30 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/40'
+                          }`}
+                          title="Apply this accomplishment bullet directly to your primary resume experience"
+                        >
+                          {appliedIndex === idx ? (
+                            <>
+                              <Check className="w-3.5 h-3.5" />
+                              <span>Applied!</span>
+                            </>
+                          ) : (
+                            <>
+                              <Sparkles className="w-3.5 h-3.5" />
+                              <span>Apply to Resume</span>
+                            </>
+                          )}
+                        </button>
                       )}
-                    </button>
+
+                      <button
+                        onClick={() => handleCopy(variation.text, idx)}
+                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition ${
+                          isCopied
+                            ? 'bg-emerald-600 text-white'
+                            : 'bg-slate-900 border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800'
+                        }`}
+                      >
+                        {isCopied ? (
+                          <>
+                            <Check className="w-3.5 h-3.5" />
+                            <span>Copied!</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-3.5 h-3.5" />
+                            <span>Copy Bullet</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
                   </div>
 
                   <p className="text-xs sm:text-sm text-slate-100 font-medium leading-relaxed bg-slate-950/60 p-4 rounded-2xl border border-slate-800/80">

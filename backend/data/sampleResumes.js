@@ -224,5 +224,143 @@ export const SAMPLE_RESUMES = [
     certifications: [
       "Meta Front-End Developer Professional Certificate (Coursera)"
     ]
+  },
+  {
+    id: "sachin-yadav",
+    name: "Sachin Yadav",
+    title: "Full Stack Developer",
+    email: "sachin.yadav@example.com",
+    phone: "+91 98765 43210",
+    location: "Bengaluru, India",
+    links: {
+      linkedin: "https://linkedin.com/in/sachin-yadav-dev",
+      github: "https://github.com/sachinyadav-dev",
+      portfolio: "https://sachinyadav.dev"
+    },
+    summary: "Product-minded Full Stack Developer with 4+ years of experience building scalable web applications with React, Node.js, and PostgreSQL. Focused on clean architecture, reliable APIs, and measurable improvements to user experience.",
+    targetRole: "Full Stack Developer",
+    skills: {
+      languages: ["JavaScript", "TypeScript", "Python", "SQL", "HTML5", "CSS3"],
+      frameworks: ["React", "Next.js", "Node.js", "Express", "Tailwind CSS", "Redux"],
+      databases: ["PostgreSQL", "MongoDB", "Redis"],
+      cloudAndDevops: ["AWS", "Docker", "GitHub Actions", "Vercel"],
+      tools: ["Git", "Jest", "Postman", "Figma", "Sentry"],
+      softSkills: ["Agile/Scrum", "Problem Solving", "Team Collaboration", "Mentorship"]
+    },
+    experience: [
+      {
+        role: "Full Stack Developer",
+        company: "NexaTech Solutions",
+        location: "Bengaluru, India",
+        period: "2022 - Present",
+        bullets: [
+          "Built React and Node.js features for a SaaS platform used by more than 80,000 monthly users.",
+          "Designed REST APIs with Express and PostgreSQL, reducing average response time by 35%.",
+          "Introduced automated Jest testing and GitHub Actions deployments, increasing release confidence and shortening deployment time by 40%.",
+          "Collaborated with product and design teams to deliver 18 customer-facing features across four quarterly releases."
+        ]
+      },
+      {
+        role: "Software Developer",
+        company: "BrightStack Labs",
+        location: "Pune, India",
+        period: "2020 - 2022",
+        bullets: [
+          "Developed responsive dashboards with React, Redux, and Tailwind CSS for enterprise clients.",
+          "Integrated third-party payment and authentication services while maintaining secure API practices.",
+          "Optimized MongoDB queries and introduced Redis caching, improving key report generation speed by 50%."
+        ]
+      }
+    ],
+    education: [
+      {
+        degree: "Bachelor of Technology in Computer Science",
+        institution: "Visvesvaraya Technological University",
+        location: "Karnataka, India",
+        year: "2020",
+        gpa: "8.6/10"
+      }
+    ],
+    projects: [
+      {
+        name: "TaskFlow - Team Project Workspace",
+        tech: ["React", "Node.js", "PostgreSQL", "Docker"],
+        link: "https://github.com/sachinyadav-dev/taskflow",
+        description: "Collaborative project workspace with role-based access, real-time task updates, and activity reporting for distributed teams."
+      }
+    ],
+    certifications: [
+      "AWS Certified Cloud Practitioner",
+      "Meta Back-End Developer Professional Certificate"
+    ]
+  },
+  {
+    id: "preeti-singh",
+    name: "Preeti Singh",
+    title: "Frontend Developer",
+    email: "preeti.singh@example.com",
+    phone: "+91 91234 56780",
+    location: "New Delhi, India",
+    links: {
+      linkedin: "https://linkedin.com/in/preeti-singh-frontend",
+      github: "https://github.com/preetisingh-ui",
+      portfolio: "https://preetisingh.dev"
+    },
+    summary: "Detail-oriented Frontend Developer with 3+ years of experience creating accessible, responsive interfaces with React, TypeScript, and modern CSS. Enjoys turning complex product requirements into simple and polished user experiences.",
+    targetRole: "Frontend Engineer",
+    skills: {
+      languages: ["JavaScript", "TypeScript", "HTML5", "CSS3"],
+      frameworks: ["React", "Next.js", "Tailwind CSS", "Redux Toolkit", "Material UI"],
+      databases: ["Firebase", "Supabase"],
+      cloudAndDevops: ["Vercel", "Netlify", "GitHub Actions"],
+      tools: ["Git", "Figma", "Jest", "Cypress", "Storybook", "Postman"],
+      softSkills: ["Accessibility", "UI Collaboration", "Communication", "User Empathy"]
+    },
+    experience: [
+      {
+        role: "Frontend Developer",
+        company: "PixelSpring Digital",
+        location: "New Delhi, India",
+        period: "2023 - Present",
+        bullets: [
+          "Created reusable React and TypeScript components for six production web applications.",
+          "Improved mobile conversion rate by 22% through responsive redesigns and streamlined checkout flows.",
+          "Added automated Cypress coverage for critical user journeys and reduced escaped UI defects by 30%.",
+          "Partnered with designers to establish a Storybook component library used across three product teams."
+        ]
+      },
+      {
+        role: "Web Developer",
+        company: "CodeLeaf Studio",
+        location: "Gurugram, India",
+        period: "2021 - 2023",
+        bullets: [
+          "Built accessible landing pages and admin dashboards using React, JavaScript, and Material UI.",
+          "Integrated REST APIs and Firebase services for authentication, file uploads, and notifications.",
+          "Reduced page load time by 38% through image optimization, lazy loading, and bundle analysis."
+        ]
+      }
+    ],
+    education: [
+      {
+        degree: "Bachelor of Computer Applications",
+        institution: "University of Delhi",
+        location: "New Delhi, India",
+        year: "2021",
+        gpa: "8.4/10"
+      }
+    ],
+    projects: [
+      {
+        name: "CareConnect - Appointment Booking UI",
+        tech: ["React", "TypeScript", "Tailwind CSS", "Supabase"],
+        link: "https://github.com/preetisingh-ui/careconnect",
+        description: "Accessible appointment booking interface with calendar scheduling, provider search, and responsive patient dashboards."
+      }
+    ],
+    certifications: [
+      "Google UX Design Professional Certificate",
+      "Meta Front-End Developer Professional Certificate"
+    ]
   }
 ];

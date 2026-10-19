@@ -1,0 +1,45 @@
+/* Record Label Landing Page Dedicated Styles */
+.portal-container {
+  --ground: #0A0C0E;
+  --ground-secondary: #101317;
+  --ink: #EDE7DC;
+  --ink-secondary: #9EA5A8;
+  --muted: #6C7378;
+  --amber: #E8913C;
+  --teal: #2E6B72;
+  --hairline: rgba(237, 231, 220, 0.13);
+  background-color: var(--ground);
+  color: var(--ink);
+  font-family: 'Sora', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Typography utilities */
+.font-syne {
+  font-family: 'Syne', sans-serif;
+}
+.font-sora {
+  font-family: 'Sora', sans-serif;
+}
+
+/* Hairline borders */
+.border-hairline {
+  border-color: rgba(237, 231, 220, 0.13);
+}
+
+/* Outline text stroke for index numeral */
+.text-stroke-outline {
+  -webkit-text-stroke: 1.5px rgba(237, 231, 220, 0.25);
+  color: transparent;
+}
+
+/* Deck sleeve drop shadow ONLY */
+.deck-card-shadow {
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.85), 0 8px 16px -6px rgba(0, 0, 0, 0.6);
+}
+
+/* Touch action for throwable deck */
+.touch-pan-y {
+  touch-action: pan-y;
+  user-select: none;
+}

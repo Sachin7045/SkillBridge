@@ -26,7 +26,18 @@ export default function AiMockInterviewer({ resume, apiKey }) {
   const [candidateAnswer, setCandidateAnswer] = useState('');
   const [isLoadingQuestions, setIsLoadingQuestions] = useState(false);
   const [isEvaluating, setIsEvaluating] = useState(false);
-  const [evaluations, setEvaluations] = useState({}); // { [qId]: evaluationData }
+  
+  // Persistent session evaluation store
+  const sessionKey = `skillbridge_interview_session_${resume?.id || 'default'}`;
+  const [evaluations, setEvaluations] = useState(() => {
+    try {
+      const saved = localStorage.getItem(sessionKey);
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
+
   const [isSimulatingSpeech, setIsSimulatingSpeech] = useState(false);
   const [isSpeakingQuestion, setIsSpeakingQuestion] = useState(false);
   const [isListeningMic, setIsListeningMic] = useState(false);
@@ -135,10 +146,16 @@ export default function AiMockInterviewer({ resume, apiKey }) {
         { role: resume.title, company: resume.experience?.[0]?.company },
         apiKey
       );
-      setEvaluations(prev => ({
-        ...prev,
+      const nextEvaluations = {
+        ...evaluations,
         [currentQuestion.id]: res.evaluation
-      }));
+      };
+      setEvaluations(nextEvaluations);
+      try {
+        localStorage.setItem(sessionKey, JSON.stringify(nextEvaluations));
+      } catch (e) {
+        console.warn('Failed to save interview evaluation:', e);
+      }
       if (res.evaluation.score >= 8) {
         confetti({ particleCount: 70, spread: 60, origin: { y: 0.7 } });
       }

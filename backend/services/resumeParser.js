@@ -1,13 +1,36 @@
 import pdf from 'pdf-parse/lib/pdf-parse.js';
+import mammoth from 'mammoth';
 
 export async function parseResumeFile(buffer, mimetype, filename) {
+  if (!Buffer.isBuffer(buffer) || buffer.length === 0) {
+    throw new Error('The uploaded file is empty');
+  }
+
+  const safeFilename = String(filename || '').toLowerCase();
+  const safeMimetype = String(mimetype || '').toLowerCase();
   let text = '';
-  if (mimetype === 'application/pdf' || filename.toLowerCase().endsWith('.pdf')) {
+
+  if (safeMimetype === 'application/pdf' || safeFilename.endsWith('.pdf')) {
     const data = await pdf(buffer);
     text = data.text;
+  } else if (
+    safeMimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
+    safeFilename.endsWith('.docx')
+  ) {
+    const data = await mammoth.extractRawText({ buffer });
+    text = data.value;
   } else {
-    text = buffer.toString('utf-8');
+    if (safeMimetype.startsWith('text/') || safeFilename.endsWith('.txt')) {
+      text = buffer.toString('utf-8');
+    } else {
+      throw new Error('Unsupported resume file type. Please upload a PDF, DOCX, or TXT file.');
+    }
   }
+
+  if (!text || text.trim().length < 10) {
+    throw new Error('No readable text was found in the uploaded resume');
+  }
+
   return extractResumeStructure(text);
 }
 

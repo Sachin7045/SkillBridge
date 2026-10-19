@@ -4,7 +4,9 @@
 
 @layer base {
   body {
-    @apply bg-slate-950 text-slate-100 min-h-screen font-sans;
+    background-color: #020817;
+    color: #f1f5f9;
+    min-height: 100vh;
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   }
   
@@ -13,19 +15,74 @@
   }
 }
 
-/* Glassmorphism Cards */
+/* Theme specific roots */
+.light {
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --border-color: rgba(226, 232, 240, 0.9);
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  color-scheme: light;
+}
+
+.light body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+.light .pro-card {
+  background: #ffffff !important;
+  border-color: rgba(226, 232, 240, 0.9) !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+.light .pro-card:hover {
+  border-color: rgba(37, 139, 255, 0.4) !important;
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.08) !important;
+}
+
+.light aside {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+.light header {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Glassmorphism & Executive Surface Styles */
 .glass-panel {
-  background: rgba(30, 41, 59, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(7, 21, 43, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
 }
 
 .glass-panel-glow {
-  background: rgba(30, 41, 59, 0.75);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(99, 102, 241, 0.2);
-  box-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.1);
+  background: rgba(11, 25, 51, 0.85);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(37, 139, 255, 0.3);
+  box-shadow: 0 12px 40px -10px rgba(37, 139, 255, 0.2), 0 0 0 1px rgba(119, 59, 255, 0.15);
+}
+
+.pro-card {
+  background: #07152B;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pro-card:hover {
+  border-color: rgba(37, 139, 255, 0.35);
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.6), 0 0 14px 0 rgba(37, 139, 255, 0.12);
+}
+
+.pro-card-elevated {
+  background: #0B1933;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.5);
 }
 
 /* Custom Scrollbars */
@@ -35,26 +92,35 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.6);
+  background: #090d16;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.4);
+  background: rgba(99, 102, 241, 0.3);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 0.7);
+  background: rgba(99, 102, 241, 0.6);
 }
 
 /* Print Styles */
 @media print {
+  @page {
+    margin: 12mm;
+    size: auto;
+  }
   body {
     background: white !important;
-    color: black !important;
+    color: #0f172a !important;
   }
-  .no-print {
+  .no-print, header, aside, footer {
     display: none !important;
+  }
+  main {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
   .print-area {
     width: 100% !important;
@@ -63,6 +129,22 @@
     box-shadow: none !important;
     border: none !important;
     background: white !important;
-    color: #1a1a1a !important;
+    color: #0f172a !important;
+  }
+  .print-area * {
+    color: #0f172a !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    border-color: #cbd5e1 !important;
+  }
+  .print-area h1, .print-area h2, .print-area h3 {
+    color: #020617 !important;
+  }
+  .print-area .text-indigo-400, .print-area .text-cyan-400, .print-area .text-indigo-300 {
+    color: #2563eb !important;
+    font-weight: 600 !important;
+  }
+  .print-area .bg-slate-950, .print-area .bg-slate-900, .print-area .bg-slate-950\/50, .print-area .bg-slate-950\/80 {
+    background-color: transparent !important;
   }
 }

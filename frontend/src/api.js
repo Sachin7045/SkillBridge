@@ -96,3 +96,69 @@ export async function generateCoverLetterApi(resume, companyName, targetRole, jo
   if (!res.ok) throw new Error('Failed to generate cover letter');
   return res.json();
 }
+
+// Authentication API
+export async function registerUser(email, password, name) {
+  const res = await fetch(`${API_BASE}/auth/register`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password, name })
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Registration failed');
+  return data;
+}
+
+export async function loginUser(email, password, name = '') {
+  const res = await fetch(`${API_BASE}/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password, name })
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Login failed');
+  return data;
+}
+
+export async function fetchCurrentUser(token) {
+  const res = await fetch(`${API_BASE}/auth/me`, {
+    headers: { 'Authorization': `Bearer ${token}` }
+  });
+  if (!res.ok) throw new Error('Session expired');
+  return res.json();
+}
+
+// User Saved Resumes Persistence API
+export async function saveResumeToCloud(resume, token) {
+  const res = await fetch(`${API_BASE}/user-data/resumes`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify({ resume })
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to save resume to cloud');
+  return data;
+}
+
+export async function fetchUserResumes(token) {
+  const res = await fetch(`${API_BASE}/user-data/resumes`, {
+    headers: { 'Authorization': `Bearer ${token}` }
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to fetch saved resumes');
+  return data;
+}
+
+export async function deleteUserResume(resumeId, token) {
+  const res = await fetch(`${API_BASE}/user-data/resumes/${resumeId}`, {
+    method: 'DELETE',
+    headers: { 'Authorization': `Bearer ${token}` }
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to delete resume');
+  return data;
+}
+

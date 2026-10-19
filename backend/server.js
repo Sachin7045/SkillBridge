@@ -37,8 +37,8 @@ app.use(helmet({
 // 2. Strict CORS Configuration
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no origin (e.g. mobile apps, curl) or matching dev server
-    if (!origin || origin.startsWith('http://localhost') || origin === CORS_ORIGIN) {
+    // Allow requests with no origin, localhost, configured CORS_ORIGIN, or vercel preview domains
+    if (!origin || origin.startsWith('http://localhost') || origin.endsWith('.vercel.app') || origin === CORS_ORIGIN) {
       callback(null, true);
     } else {
       callback(new Error('Blocked by CORS policy'));
@@ -320,6 +320,10 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`SkillBridge Backend running on http://localhost:${PORT}`);
-});
+if (process.env.NODE_ENV !== 'test' && !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`SkillBridge Backend running on http://localhost:${PORT}`);
+  });
+}
+
+export default app;

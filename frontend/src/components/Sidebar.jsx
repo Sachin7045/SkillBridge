@@ -18,7 +18,8 @@ import {
   ArrowRight,
   LogIn,
   LogOut,
-  ChevronDown
+  ChevronDown,
+  Star
 } from 'lucide-react';
 
 export default function Sidebar({
@@ -34,6 +35,7 @@ export default function Sidebar({
     { id: 'overview', label: 'Dashboard', icon: LayoutDashboard, badge: null },
     { id: 'visualizer', label: 'Resume Visualizer', icon: FileText, badge: null },
     { id: 'analyzer', label: 'ATS Analyzer', icon: ShieldCheck, badge: null },
+    { id: 'highlights', label: 'Resume Highlights', icon: Star, badge: 'NEW' },
     { id: 'matcher', label: 'Job Matcher', icon: Search, badge: null, hasDropdown: true },
     { id: 'interview', label: 'AI Interviewer', icon: Mic, badge: null },
     { id: 'roadmap', label: 'Career Roadmap', icon: GitFork, badge: null },
@@ -110,9 +112,16 @@ export default function Sidebar({
                 {!isCollapsed && (
                   <div className="flex-1 flex items-center justify-between min-w-0">
                     <span className="truncate">{item.label}</span>
-                    {item.hasDropdown && (
-                      <ChevronDown className="w-3.5 h-3.5 text-slate-500 group-hover:text-slate-300" />
-                    )}
+                    <div className="flex items-center gap-1">
+                      {item.badge && (
+                        <span className={`text-[9px] font-extrabold px-1.5 py-0.5 rounded ${
+                          isActive ? 'bg-white/20 text-white' : 'bg-amber-500/20 text-amber-400'
+                        }`}>{item.badge}</span>
+                      )}
+                      {item.hasDropdown && (
+                        <ChevronDown className="w-3.5 h-3.5 text-slate-500 group-hover:text-slate-300" />
+                      )}
+                    </div>
                   </div>
                 )}
               </button>

@@ -248,14 +248,20 @@ app.post('/api/interview/generate-questions', async (req, res) => {
 app.post('/api/interview/evaluate-answer', async (req, res) => {
   try {
     const { question, answer, resumeContext, apiKey } = req.body;
-    if (!question || !answer) {
-      return res.status(400).json({ error: 'Question and answer are required' });
+    
+    // Strict input validation
+    if (!question || typeof question !== 'string' || !question.trim()) {
+      return res.status(400).json({ error: 'Interview question is required.' });
+    }
+    if (!answer || typeof answer !== 'string' || !answer.trim()) {
+      return res.status(400).json({ error: 'Answer cannot be empty. Please provide a response.' });
     }
 
-    const evaluation = await evaluateAnswer(question, answer, resumeContext, apiKey);
+    const evaluation = await evaluateAnswer(question.trim(), answer.trim(), resumeContext || {}, apiKey);
     res.json({ success: true, evaluation });
   } catch (err) {
-    res.status(500).json({ error: 'Failed to evaluate answer', details: err.message });
+    console.error('Interview evaluation error:', err.message);
+    res.status(500).json({ error: err.message || 'Failed to evaluate answer' });
   }
 });
 

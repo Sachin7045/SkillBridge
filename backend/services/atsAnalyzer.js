@@ -31,25 +31,26 @@ const KEYWORD_ALIASES = {
 };
 
 export function analyzeResume(resume, targetRole = "Full Stack Developer", customJobDescription = "") {
+  const safeResume = resume || {};
   // 1. Compile resume text and structural inventory
-  const allBullets = (resume.experience || []).flatMap(exp => exp.bullets || []);
+  const allBullets = (safeResume.experience || []).flatMap(exp => exp.bullets || []);
   const allSkills = [
-    ...(resume.skills?.languages || []),
-    ...(resume.skills?.frameworks || []),
-    ...(resume.skills?.databases || []),
-    ...(resume.skills?.cloudAndDevops || []),
-    ...(resume.skills?.tools || []),
-    ...(resume.skills?.softSkills || [])
+    ...(safeResume.skills?.languages || []),
+    ...(safeResume.skills?.frameworks || []),
+    ...(safeResume.skills?.databases || []),
+    ...(safeResume.skills?.cloudAndDevops || []),
+    ...(safeResume.skills?.tools || []),
+    ...(safeResume.skills?.softSkills || [])
   ];
 
   const resumeText = [
-    resume.name || '',
-    resume.title || '',
-    resume.summary || '',
+    safeResume.name || '',
+    safeResume.title || '',
+    safeResume.summary || '',
     ...allSkills,
     ...allBullets,
-    (resume.education || []).map(e => `${e.degree || ''} ${e.institution || ''} ${e.honors || ''}`).join(' '),
-    (resume.projects || []).map(p => `${p.name || ''} ${p.description || ''} ${(p.tech || []).join(' ')}`).join(' ')
+    (safeResume.education || []).map(e => `${e.degree || ''} ${e.institution || ''} ${e.honors || ''}`).join(' '),
+    (safeResume.projects || []).map(p => `${p.name || ''} ${p.description || ''} ${(p.tech || []).join(' ')}`).join(' ')
   ].join(' ').toLowerCase();
 
   // Explicitly declared skills vs in-text mentions
@@ -61,25 +62,25 @@ export function analyzeResume(resume, targetRole = "Full Stack Developer", custo
   let contactScore = 0;
   const contactFlags = [];
   
-  if (resume.email && resume.email.includes('@')) {
+  if (safeResume.email && safeResume.email.includes('@')) {
     contactScore += 4;
   } else {
     contactFlags.push("Missing professional email address");
   }
 
-  if (resume.phone && resume.phone.length > 7) {
+  if (safeResume.phone && safeResume.phone.length > 7) {
     contactScore += 3;
   } else {
     contactFlags.push("Missing direct telephone contact");
   }
 
-  if (resume.links?.linkedin || (resume.contact?.linkedin)) {
+  if (safeResume.links?.linkedin || (safeResume.contact?.linkedin)) {
     contactScore += 4;
   } else {
     contactFlags.push("No verified LinkedIn profile link detected");
   }
 
-  if (resume.links?.github || resume.links?.portfolio || resume.contact?.github) {
+  if (safeResume.links?.github || safeResume.links?.portfolio || safeResume.contact?.github) {
     contactScore += 4;
   } else {
     contactFlags.push("No GitHub or technical portfolio URL detected");
@@ -92,10 +93,10 @@ export function analyzeResume(resume, targetRole = "Full Stack Developer", custo
   const sectionAudits = [];
 
   // Summary
-  if (resume.summary && resume.summary.trim().length > 60) {
+  if (safeResume.summary && safeResume.summary.trim().length > 60) {
     sectionScore += 4;
     sectionAudits.push({ section: "Professional Summary", status: "pass", score: 4, max: 4, note: "Executive overview present (>60 chars)" });
-  } else if (resume.summary && resume.summary.trim().length > 0) {
+  } else if (safeResume.summary && safeResume.summary.trim().length > 0) {
     sectionScore += 2;
     sectionAudits.push({ section: "Professional Summary", status: "warn", score: 2, max: 4, note: "Summary is brief. Expand with key technical strengths." });
   } else {
@@ -103,7 +104,7 @@ export function analyzeResume(resume, targetRole = "Full Stack Developer", custo
   }
 
   // Work Experience
-  const expCount = (resume.experience || []).length;
+  const expCount = (safeResume.experience || []).length;
   if (expCount >= 2) {
     sectionScore += 6;
     sectionAudits.push({ section: "Work Experience", status: "pass", score: 6, max: 6, note: `${expCount} verified career positions documented` });
@@ -126,7 +127,7 @@ export function analyzeResume(resume, targetRole = "Full Stack Developer", custo
   }
 
   // Education
-  if ((resume.education || []).length > 0) {
+  if ((safeResume.education || []).length > 0) {
     sectionScore += 3;
     sectionAudits.push({ section: "Academic Education", status: "pass", score: 3, max: 3, note: "Degree and university background documented" });
   } else {
@@ -134,9 +135,9 @@ export function analyzeResume(resume, targetRole = "Full Stack Developer", custo
   }
 
   // Projects
-  if ((resume.projects || []).length > 0) {
+  if ((safeResume.projects || []).length > 0) {
     sectionScore += 2;
-    sectionAudits.push({ section: "Featured Projects", status: "pass", score: 2, max: 2, note: `${resume.projects.length} technical projects with tech stacks` });
+    sectionAudits.push({ section: "Featured Projects", status: "pass", score: 2, max: 2, note: `${safeResume.projects.length} technical projects with tech stacks` });
   } else {
     sectionAudits.push({ section: "Featured Projects", status: "warn", score: 0, max: 2, note: "No featured projects. Add GitHub repos with live URLs." });
   }
@@ -327,7 +328,7 @@ export function analyzeResume(resume, targetRole = "Full Stack Developer", custo
     improvements.push("Replace passive phrasing (e.g. 'worked on', 'helped with') with assertive power verbs like 'Architected', 'Engineered', 'Streamlined'.");
   }
 
-  if (resume.links?.linkedin && (resume.links?.github || resume.links?.portfolio)) {
+  if (safeResume.links?.linkedin && (safeResume.links?.github || safeResume.links?.portfolio)) {
     strengths.push("Great online professional presence with active LinkedIn and repository/portfolio links.");
   } else {
     improvements.push("Ensure your LinkedIn profile and public GitHub or project portfolio URL are prominently displayed.");
@@ -338,7 +339,7 @@ export function analyzeResume(resume, targetRole = "Full Stack Developer", custo
   }
 
   // Generate suggested truthful bullet rewrites based on their own actual role/tech
-  const topExp = (resume.experience || [])[0];
+  const topExp = (safeResume.experience || [])[0];
   if (topExp && topExp.bullets && topExp.bullets[0]) {
     const raw = topExp.bullets[0];
     recommendedBullets.push({

@@ -63,7 +63,10 @@ export async function evaluateAnswerApi(question, answer, resumeContext, apiKey)
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ question, answer, resumeContext, apiKey })
   });
-  if (!res.ok) throw new Error('Failed to evaluate answer');
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    throw new Error(data.error || 'Failed to evaluate answer');
+  }
   return res.json();
 }
 
@@ -98,6 +101,28 @@ export async function generateCoverLetterApi(resume, companyName, targetRole, jo
 }
 
 // Authentication API
+export async function sendOtpApi(email, password) {
+  const res = await fetch(`${API_BASE}/auth/send-otp`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password })
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to send OTP.');
+  return data;
+}
+
+export async function verifyOtpApi(email, otp, password = '') {
+  const res = await fetch(`${API_BASE}/auth/verify-otp`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, otp, password })
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Invalid OTP code.');
+  return data;
+}
+
 export async function registerUser(email, password, name) {
   const res = await fetch(`${API_BASE}/auth/register`, {
     method: 'POST',
@@ -141,6 +166,38 @@ export async function saveResumeToCloud(resume, token) {
   const data = await res.json();
   if (!res.ok) throw new Error(data.error || 'Failed to save resume to cloud');
   return data;
+}
+
+// User Job Applications Persistence API
+export async function fetchUserApplications(token) {
+  const res = await fetch(`${API_BASE}/user-data/applications`, {
+    headers: { 'Authorization': `Bearer ${token}` }
+  });
+  if (!res.ok) return [];
+  const data = await res.json();
+  return data.applications || [];
+}
+
+export async function saveApplicationToCloud(application, token) {
+  const res = await fetch(`${API_BASE}/user-data/applications`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify({ application })
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to save application.');
+  return data;
+}
+
+export async function deleteApplicationFromCloud(id, token) {
+  const res = await fetch(`${API_BASE}/user-data/applications/${id}`, {
+    method: 'DELETE',
+    headers: { 'Authorization': `Bearer ${token}` }
+  });
+  return res.json();
 }
 
 export async function fetchUserResumes(token) {

@@ -18,7 +18,10 @@ import {
   Upload,
   Save,
   Cloud,
-  CheckCircle2
+  CheckCircle2,
+  Search,
+  Printer,
+  Download
 } from "lucide-react";
 
 import {
@@ -30,13 +33,15 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import ResumeEditModal from "./ResumeEditModal";
+import { highlightKeywords } from "./ResumeHighlights";
 
 export default function ResumeVisualizer({
   resume = {},
   onUpdateResume = () => {},
   onResumeUpload,
   currentUser = null,
-  onSaveToCloud = null
+  onSaveToCloud = null,
+  highlightKeywords: kwList = []
 }) {
   const [template, setTemplate] = useState("modern");
   const [isEditing, setIsEditing] = useState(false);
@@ -268,6 +273,17 @@ export default function ResumeVisualizer({
               )}
             </button>
           )}
+
+          {/* Print / Save to PDF */}
+          <button
+            type="button"
+            onClick={() => window.print()}
+            className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-slate-200 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700/80 rounded-xl transition shadow-sm"
+            title="Print or Save Resume as PDF via browser"
+          >
+            <Printer className="w-3.5 h-3.5 text-cyan-400" />
+            <span className="hidden sm:inline">Print / PDF</span>
+          </button>
 
           {isEditing ? (
             <button
@@ -622,6 +638,11 @@ export default function ResumeVisualizer({
                 <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
                   <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
                   Professional Profile
+                  {kwList.length > 0 && (
+                    <span className="ml-auto text-[10px] text-amber-400 flex items-center gap-1 font-normal normal-case tracking-normal">
+                      <Search className="w-3 h-3" />{kwList.length} keyword{kwList.length > 1 ? 's' : ''} highlighted
+                    </span>
+                  )}
                 </h2>
 
                 {isEditing ? (
@@ -641,7 +662,7 @@ export default function ResumeVisualizer({
                 ) : (
 
                   <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                    {editableResume.summary}
+                    {highlightKeywords(editableResume.summary, kwList)}
                   </p>
 
                 )}
@@ -721,7 +742,7 @@ export default function ResumeVisualizer({
                             }`} />
 
                             <span className={`leading-relaxed ${template === "executive" ? "text-slate-300 font-serif" : ""}`}>
-                              {bullet}
+                              {highlightKeywords(bullet, kwList)}
                             </span>
 
                           </li>
@@ -780,7 +801,7 @@ export default function ResumeVisualizer({
                       </div>
 
                       <p className="text-xs text-slate-400 mb-3 leading-relaxed">
-                        {proj.description}
+                        {highlightKeywords(proj.description, kwList)}
                       </p>
 
                       <div className="flex flex-wrap gap-1">

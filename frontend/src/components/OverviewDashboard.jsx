@@ -23,7 +23,8 @@ import {
   Code2,
   GitBranch,
   ChevronRight,
-  Check
+  Check,
+  Star
 } from 'lucide-react';
 import { 
   ResponsiveContainer, 
@@ -43,6 +44,7 @@ export default function OverviewDashboard({
   resume,
   analysis,
   currentUser = null,
+  applications = [],
   onNavigateTab,
   onOpenUpload,
   onOpenSamples
@@ -488,6 +490,26 @@ export default function OverviewDashboard({
               <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-white group-hover:translate-x-0.5 transition" />
             </div>
 
+            {/* Action 3 — Resume Highlights (NEW) */}
+            <div 
+              onClick={() => onNavigateTab('highlights')}
+              className="p-3 rounded-2xl bg-gradient-to-r from-amber-950/30 to-[#0B1933]/60 hover:from-amber-900/30 hover:to-[#0B1933] border border-amber-500/20 hover:border-amber-400/40 cursor-pointer transition flex items-center justify-between group"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center shrink-0">
+                  <Star className="w-4 h-4" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold text-white group-hover:text-amber-400 transition">View Resume Highlights</span>
+                    <span className="text-[9px] uppercase font-extrabold px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30">NEW</span>
+                  </div>
+                  <p className="text-[11px] text-slate-400 mt-0.5">Badges, AI highlights, keyword scanner & section diagnostics.</p>
+                </div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-amber-400 group-hover:translate-x-0.5 transition" />
+            </div>
+
             {/* Action 4 */}
             <div 
               onClick={() => onNavigateTab('interview')}
@@ -645,56 +667,78 @@ export default function OverviewDashboard({
         {/* Widget 4: Job Applications */}
         <div className="rounded-3xl p-5 bg-[#07152B] border border-[#0B1933] shadow-2xl flex flex-col justify-between">
           <div className="flex items-center justify-between mb-2">
-            <h4 className="text-xs font-bold text-white">Job Applications</h4>
+            <h4 className="text-xs font-bold text-white flex items-center gap-1.5">
+              <Briefcase className="w-3.5 h-3.5 text-[#258BFF]" />
+              <span>Job Applications Pipeline</span>
+            </h4>
             <button 
-              onClick={() => onNavigateTab('matcher')} 
+              onClick={() => onNavigateTab('applications')} 
               className="text-[11px] font-semibold text-[#258BFF] hover:underline"
             >
-              View All →
+              View Pipeline ({applications.length}) →
             </button>
           </div>
 
           {/* Counts Bar */}
-          <div className="grid grid-cols-3 gap-2 text-center p-2 rounded-2xl bg-[#0B1933]/60 border border-white/5 mb-3">
-            <div>
-              <div className="text-base font-extrabold text-white">5</div>
-              <div className="text-[9px] uppercase font-bold text-slate-400">Applied</div>
-            </div>
-            <div>
-              <div className="text-base font-extrabold text-[#258BFF]">2</div>
-              <div className="text-[9px] uppercase font-bold text-slate-400">Interview</div>
-            </div>
-            <div>
-              <div className="text-base font-extrabold text-[#19D3A2]">1</div>
-              <div className="text-[9px] uppercase font-bold text-slate-400">Offer</div>
-            </div>
-          </div>
+          {(() => {
+            const appliedCount = applications.filter(a => a.status === 'applied').length;
+            const interviewCount = applications.filter(a => ['screening', 'interview', 'final'].includes(a.status)).length;
+            const offerCount = applications.filter(a => a.status === 'offer').length;
+            const recentApps = applications.slice(0, 3);
 
-          <div className="space-y-1.5">
-            <div className="flex items-center justify-between p-2 rounded-xl bg-[#0B1933]/40 border border-white/5">
-              <div className="min-w-0">
-                <div className="text-[11px] font-bold text-white truncate">Frontend Developer</div>
-                <div className="text-[9px] text-slate-400 truncate">TCS • Applied • 12 Oct</div>
-              </div>
-              <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-[#258BFF]/20 text-[#258BFF]">Applied</span>
-            </div>
+            return (
+              <>
+                <div className="grid grid-cols-3 gap-2 text-center p-2 rounded-2xl bg-[#0B1933]/60 border border-white/5 mb-3">
+                  <div>
+                    <div className="text-base font-extrabold text-white">{appliedCount}</div>
+                    <div className="text-[9px] uppercase font-bold text-slate-400">Applied</div>
+                  </div>
+                  <div>
+                    <div className="text-base font-extrabold text-[#258BFF]">{interviewCount}</div>
+                    <div className="text-[9px] uppercase font-bold text-slate-400">Interview</div>
+                  </div>
+                  <div>
+                    <div className="text-base font-extrabold text-[#19D3A2]">{offerCount}</div>
+                    <div className="text-[9px] uppercase font-bold text-slate-400">Offer</div>
+                  </div>
+                </div>
 
-            <div className="flex items-center justify-between p-2 rounded-xl bg-[#0B1933]/40 border border-white/5">
-              <div className="min-w-0">
-                <div className="text-[11px] font-bold text-white truncate">Full Stack Developer</div>
-                <div className="text-[9px] text-slate-400 truncate">Zoho • Interview • 8 Oct</div>
-              </div>
-              <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-[#773BFF]/20 text-[#9461ff]">Interview</span>
-            </div>
-
-            <div className="flex items-center justify-between p-2 rounded-xl bg-[#0B1933]/40 border border-white/5">
-              <div className="min-w-0">
-                <div className="text-[11px] font-bold text-white truncate">Backend Developer</div>
-                <div className="text-[9px] text-slate-400 truncate">Infosys • Applied • 5 Oct</div>
-              </div>
-              <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-[#258BFF]/20 text-[#258BFF]">Applied</span>
-            </div>
-          </div>
+                <div className="space-y-1.5">
+                  {recentApps.length > 0 ? (
+                    recentApps.map(app => {
+                      const isInterview = ['screening', 'interview', 'final'].includes(app.status);
+                      const isOffer = app.status === 'offer';
+                      return (
+                        <div 
+                          key={app.id}
+                          onClick={() => onNavigateTab('applications')}
+                          className="flex items-center justify-between p-2 rounded-xl bg-[#0B1933]/40 border border-white/5 hover:bg-[#0B1933] cursor-pointer transition"
+                        >
+                          <div className="min-w-0 pr-2">
+                            <div className="text-[11px] font-bold text-white truncate">{app.title}</div>
+                            <div className="text-[9px] text-slate-400 truncate">{app.company} • {app.location}</div>
+                          </div>
+                          <span className={`px-2 py-0.5 rounded text-[9px] font-bold shrink-0 ${
+                            isOffer 
+                              ? 'bg-[#19D3A2]/20 text-[#19D3A2]' 
+                              : isInterview 
+                              ? 'bg-[#773BFF]/20 text-[#9461ff]' 
+                              : 'bg-[#258BFF]/20 text-[#258BFF]'
+                          }`}>
+                            {app.status === 'interview' ? 'Interview' : app.status === 'final' ? 'Final Loop' : app.status === 'offer' ? 'Offer' : 'Applied'}
+                          </span>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <div className="p-3 text-center text-[11px] text-slate-500">
+                      No active applications tracked yet.
+                    </div>
+                  )}
+                </div>
+              </>
+            );
+          })()}
         </div>
 
       </div>

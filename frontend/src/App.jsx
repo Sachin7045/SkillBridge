@@ -7,6 +7,7 @@ import TopNavbar from './components/TopNavbar';
 import OverviewDashboard from './components/OverviewDashboard';
 import ResumeVisualizer from './components/ResumeVisualizer';
 import ResumeAnalyzer from './components/ResumeAnalyzer';
+import ResumeHighlights from './components/ResumeHighlights';
 import JobMatcher from './components/JobMatcher';
 import AiMockInterviewer from './components/AiMockInterviewer';
 import SkillBridgeRoadmap from './components/SkillBridgeRoadmap';
@@ -17,6 +18,7 @@ import SettingsView from './components/SettingsView';
 import CoverLetterGenerator from './components/CoverLetterGenerator';
 import SkillBridgeLanding from './components/SkillBridgeLanding';
 import LoginPage from './components/LoginPage';
+import JobApplications from './components/JobApplications';
 
 // Modals & Feedback
 import UploadModal from './components/UploadModal';
@@ -36,7 +38,80 @@ import {
   fetchUserResumes,
   deleteUserResume
 } from './api';
-import { Sparkles, ShieldCheck } from 'lucide-react';
+import { Sparkles, ShieldCheck, FileText } from 'lucide-react';
+
+const DEFAULT_APPLICATIONS = [
+  {
+    id: 'app-1',
+    company: 'Razorpay',
+    title: 'Senior Full Stack Engineer',
+    source: 'LinkedIn',
+    location: 'Bengaluru (Hybrid)',
+    salary: '₹24 - ₹36 LPA',
+    status: 'interview',
+    appliedDate: '2026-10-24',
+    nextInterview: '06 Nov (Round 2 System Design)',
+    url: 'https://www.linkedin.com/jobs/search/?keywords=Razorpay+Full+Stack',
+    notes: 'Covered React Virtual DOM in Round 1. Next round is high-scale payment ledger and Redis caching.',
+    contact: 'Rohit Sharma (Tech Recruiting Lead)'
+  },
+  {
+    id: 'app-2',
+    company: 'Zoho Corporation',
+    title: 'Full Stack Developer',
+    source: 'Naukri.com',
+    location: 'Chennai / Remote',
+    salary: '₹20 - ₹26 LPA',
+    status: 'final',
+    appliedDate: '2026-10-18',
+    nextInterview: '04 Nov (Director Fit & Offer Review)',
+    url: 'https://www.naukri.com/zoho-jobs',
+    notes: 'Cleared technical assignment with 100% score. Discussing role leveling and compensation band.',
+    contact: 'Ananya S (HR Business Partner)'
+  },
+  {
+    id: 'app-3',
+    company: 'Swiggy',
+    title: 'Frontend Engineer (React / Next.js)',
+    source: 'LinkedIn',
+    location: 'Bengaluru (Hybrid)',
+    salary: '₹22 - ₹30 LPA',
+    status: 'screening',
+    appliedDate: '2026-10-28',
+    nextInterview: '05 Nov (Technical Screen with Lead)',
+    url: 'https://www.linkedin.com/jobs/search/?keywords=Swiggy+Frontend',
+    notes: 'Recruiter reached out via LinkedIn InMail. Discussing Core Web Vitals and microfrontends.',
+    contact: 'Karan Verma (Senior Recruiter)'
+  },
+  {
+    id: 'app-4',
+    company: 'Tata Consultancy Services (TCS Digital)',
+    title: 'Full Stack Lead',
+    source: 'Naukri.com',
+    location: 'Pune (Hybrid)',
+    salary: '₹18 - ₹24 LPA',
+    status: 'offer',
+    appliedDate: '2026-10-12',
+    nextInterview: null,
+    url: 'https://www.naukri.com/tcs-jobs',
+    notes: 'Received official offer letter. Decision deadline by 15 November.',
+    contact: 'Deepak Patel (Recruitment Operations)'
+  },
+  {
+    id: 'app-5',
+    company: 'CRED',
+    title: 'Backend Systems Engineer',
+    source: 'Company Careers Site',
+    location: 'Bengaluru (Onsite)',
+    salary: '₹30 - ₹42 LPA',
+    status: 'applied',
+    appliedDate: '2026-10-31',
+    nextInterview: null,
+    url: 'https://careers.cred.club',
+    notes: 'Applied with tailored ATS resume emphasizing distributed event systems and Kafka.',
+    contact: 'careers@cred.club'
+  }
+];
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -52,6 +127,8 @@ export default function App() {
   const [analysis, setAnalysis] = useState(null);
   const [rolesList, setRolesList] = useState([]);
   const [savedResumes, setSavedResumes] = useState([]);
+  // Keyword highlights shared between Highlights panel and Resume Visualizer
+  const [highlightKeywords, setHighlightKeywords] = useState([]);
   
   // API key stored in localStorage
   const [apiKey, setApiKey] = useState(() => localStorage.getItem('skillbridge_gemini_key') || '');
@@ -76,6 +153,70 @@ export default function App() {
 
   // Toast notifications queue
   const [toasts, setToasts] = useState([]);
+
+  // Persistent Job Applications Pipeline State
+  const [applications, setApplications] = useState(() => {
+    try {
+      const saved = localStorage.getItem('skillbridge_user_job_applications');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.warn('Failed to parse saved applications:', e);
+    }
+    return DEFAULT_APPLICATIONS;
+  });
+
+  const handleAddApplication = (newApp) => {
+    setApplications(prev => {
+      const updated = [newApp, ...prev.filter(a => a.id !== newApp.id)];
+      try { localStorage.setItem('skillbridge_user_job_applications', JSON.stringify(updated)); } catch (e) {}
+      return updated;
+    });
+    addToast({ type: 'success', title: 'Application Tracked', message: `Added ${newApp.company} (${newApp.title}) to your Pipeline.` });
+  };
+
+  const handleUpdateApplication = (updatedApp) => {
+    setApplications(prev => {
+      const updated = prev.map(a => a.id === updatedApp.id ? updatedApp : a);
+      try { localStorage.setItem('skillbridge_user_job_applications', JSON.stringify(updated)); } catch (e) {}
+      return updated;
+    });
+    addToast({ type: 'info', title: 'Pipeline Updated', message: `Updated status for ${updatedApp.company}.` });
+  };
+
+  const handleDeleteApplication = (appId) => {
+    setApplications(prev => {
+      const updated = prev.filter(a => a.id !== appId);
+      try { localStorage.setItem('skillbridge_user_job_applications', JSON.stringify(updated)); } catch (e) {}
+      return updated;
+    });
+    addToast({ type: 'default', title: 'Application Removed', message: 'Job removed from pipeline.' });
+  };
+
+  const handleTrackJobFromMatcher = (job) => {
+    const existing = applications.find(a => 
+      a.company.toLowerCase() === job.company.toLowerCase() && 
+      a.title.toLowerCase() === job.title.toLowerCase()
+    );
+    if (existing) {
+      addToast({ type: 'info', title: 'Already Tracked', message: `${job.company} is already in your application pipeline.` });
+      return;
+    }
+    const newApp = {
+      id: `app_${Date.now()}`,
+      company: job.company,
+      title: job.title,
+      source: job.portal === 'LinkedIn' ? 'LinkedIn' : job.portal === 'Naukri' ? 'Naukri.com' : 'Company Site',
+      location: job.location || 'Remote',
+      salary: job.salary || 'Competitive',
+      status: 'applied',
+      appliedDate: new Date().toISOString().split('T')[0],
+      nextInterview: null,
+      url: job.applyUrl || null,
+      notes: `Target role: ${job.targetRole || 'Engineering'}. Required skills: ${(job.requiredSkills || []).slice(0, 5).join(', ')}`,
+      contact: 'Talent Acquisition'
+    };
+    handleAddApplication(newApp);
+  };
 
   const addToast = ({ type = 'info', title = '', message = '' }) => {
     const id = Date.now() + Math.random();
@@ -457,6 +598,7 @@ export default function App() {
                   resume={currentResume}
                   analysis={analysis}
                   currentUser={currentUser}
+                  applications={applications}
                   onNavigateTab={(tab) => setActiveTab(tab)}
                   onOpenUpload={() => setIsUploadOpen(true)}
                   onOpenSamples={() => setIsSamplesOpen(true)}
@@ -472,11 +614,23 @@ export default function App() {
                   onResumeUpload={handleVisualizerUpload}
                   currentUser={currentUser}
                   onSaveToCloud={handleSaveResumeCloud}
+                  highlightKeywords={highlightKeywords}
                 />
               </motion.div>
             )}
 
-            {activeTab === 'analyzer' && currentResume && analysis && (
+            {activeTab === 'highlights' && currentResume && (
+              <motion.div key="highlights" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <ResumeHighlights
+                  resume={currentResume}
+                  analysis={analysis}
+                  highlightKeywords={highlightKeywords}
+                  onKeywordsChange={setHighlightKeywords}
+                />
+              </motion.div>
+            )}
+
+            {activeTab === 'analyzer' && currentResume && (
               <motion.div key="analyzer" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                 <ResumeAnalyzer
                   analysis={analysis}
@@ -485,6 +639,7 @@ export default function App() {
                   onAnalysisUpdated={setAnalysis}
                   onNavigateToRoadmap={() => setActiveTab('roadmap')}
                   onNavigateToOptimizer={() => setActiveTab('bullet')}
+                  onNavigateToMatcher={() => setActiveTab('matcher')}
                 />
               </motion.div>
             )}
@@ -497,6 +652,8 @@ export default function App() {
                   analysis={analysis}
                   onAnalysisUpdated={setAnalysis}
                   onNavigateTab={(tab) => setActiveTab(tab)}
+                  onTrackJob={handleTrackJobFromMatcher}
+                  trackedJobIds={applications.map(a => `${a.company.toLowerCase()}_${a.title.toLowerCase()}`)}
                 />
               </motion.div>
             )}
@@ -609,40 +766,19 @@ export default function App() {
 
             {activeTab === 'applications' && currentResume && (
               <motion.div key="applications" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                <div className="rounded-3xl p-6 bg-[#07152B] border border-[#0B1933] shadow-2xl space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                        <ShieldCheck className="w-5 h-5 text-[#258BFF]" />
-                        <span>Job Application Pipeline Tracker</span>
-                      </h2>
-                      <p className="text-xs text-slate-400 mt-1">Real-time status of matched roles, technical submissions, and interview loops.</p>
-                    </div>
-                    <button 
-                      onClick={() => setActiveTab('matcher')}
-                      className="px-4 py-2 rounded-xl bg-[#258BFF] hover:bg-[#1b74de] text-white text-xs font-bold transition shadow-md"
-                    >
-                      Find New Matched Jobs
-                    </button>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-                    <div className="p-4 rounded-2xl bg-[#0B1933] border border-white/5">
-                      <div className="text-xs text-slate-400 font-medium">Applied Positions</div>
-                      <div className="text-3xl font-black text-white mt-1">5</div>
-                      <div className="text-[11px] text-slate-400 mt-1">TCS, Infosys, Wipro, Cognizant</div>
-                    </div>
-                    <div className="p-4 rounded-2xl bg-[#0B1933] border border-white/5">
-                      <div className="text-xs text-slate-400 font-medium">Active Interview Loops</div>
-                      <div className="text-3xl font-black text-[#258BFF] mt-1">2</div>
-                      <div className="text-[11px] text-[#258BFF] mt-1">Zoho (Round 2), TechM</div>
-                    </div>
-                    <div className="p-4 rounded-2xl bg-[#0B1933] border border-white/5">
-                      <div className="text-xs text-slate-400 font-medium">Offers Received</div>
-                      <div className="text-3xl font-black text-[#19D3A2] mt-1">1</div>
-                      <div className="text-[11px] text-[#19D3A2] mt-1">Full Stack Developer Offer</div>
-                    </div>
-                  </div>
-                </div>
+                <JobApplications
+                  applications={applications}
+                  onAddApplication={handleAddApplication}
+                  onUpdateApplication={handleUpdateApplication}
+                  onDeleteApplication={handleDeleteApplication}
+                  onNavigateTab={(tab) => setActiveTab(tab)}
+                  onPrepareInterview={(app) => {
+                    setActiveTab('interview');
+                  }}
+                  onGenerateCoverLetter={(app) => {
+                    setActiveTab('coverletter');
+                  }}
+                />
               </motion.div>
             )}
 
@@ -665,6 +801,32 @@ export default function App() {
                   rolesList={rolesList}
                   apiKey={apiKey}
                 />
+              </motion.div>
+            )}
+
+            {!currentResume && ['visualizer', 'highlights', 'analyzer', 'matcher', 'interview', 'roadmap', 'compare', 'analytics', 'coverletter'].includes(activeTab) && (
+              <motion.div key="no-resume" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="glass-panel p-12 text-center rounded-3xl border border-slate-800 space-y-4 my-8">
+                <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 mx-auto">
+                  <FileText className="w-6 h-6" />
+                </div>
+                <h3 className="text-base font-bold text-white">No Active Resume Loaded</h3>
+                <p className="text-xs text-slate-400 max-w-sm mx-auto">
+                  Upload your resume PDF/DOCX or select a pre-calibrated candidate profile to explore this feature.
+                </p>
+                <div className="flex items-center justify-center gap-3 pt-2">
+                  <button
+                    onClick={() => setIsUploadOpen(true)}
+                    className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl transition"
+                  >
+                    Upload Resume
+                  </button>
+                  <button
+                    onClick={() => setIsSamplesOpen(true)}
+                    className="px-4 py-2 bg-slate-900 border border-slate-700 hover:border-slate-600 text-slate-300 text-xs font-semibold rounded-xl transition"
+                  >
+                    Load Sample Profile
+                  </button>
+                </div>
               </motion.div>
             )}
 

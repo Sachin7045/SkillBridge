@@ -1,26 +1,23 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Lock, 
   Mail, 
-  User, 
   ArrowRight, 
+  ArrowLeft,
   Sparkles, 
   CheckCircle2, 
   AlertCircle, 
   Eye, 
   EyeOff, 
   ShieldCheck, 
-  ArrowLeft,
-  Briefcase,
-  Zap,
-  Target,
-  FileText,
+  KeyRound,
+  RotateCw,
+  User,
   LogOut,
-  ChevronRight,
-  KeyRound
+  Check
 } from 'lucide-react';
-import { registerUser, loginUser } from '../api';
+import { sendOtpApi, verifyOtpApi } from '../api';
 
 export default function LoginPage({
   currentUser,
@@ -28,102 +25,133 @@ export default function LoginPage({
   onLogout,
   onBackToApp
 }) {
-  const [mode, setMode] = useState('login'); // 'login' | 'register'
+  // Step 1: 'credentials' (Email & Password)
+  // Step 2: 'otp' (6-digit OTP Verification)
+  const [step, setStep] = useState('credentials');
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [name, setName] = useState('');
+  const [otp, setOtp] = useState('');
+  const [receivedOtp, setReceivedOtp] = useState('');
+  
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  
+  // Resend OTP countdown timer
+  const [countdown, setCountdown] = useState(0);
 
-  // Handle Form Submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    let timer;
+    if (countdown > 0) {
+      timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+    }
+    return () => clearTimeout(timer);
+  }, [countdown]);
+
+  // Step 1: Submit Email & Password to receive OTP
+  const handleSendOtp = async (e) => {
+    if (e) e.preventDefault();
     setErrorMessage('');
     setSuccessMessage('');
 
-    if (!email.trim() || !password.trim()) {
-      setErrorMessage('Please fill in both email and password.');
+    const cleanEmail = email.trim();
+    if (!cleanEmail || !password.trim()) {
+      setErrorMessage('Please enter both your email address and password.');
       return;
     }
 
     if (password.length < 6) {
-      setErrorMessage('Password must be at least 6 characters long.');
+      setErrorMessage('Password must be at least 6 characters in length.');
       return;
-    }
-
-    if (mode === 'register') {
-      if (password !== confirmPassword) {
-        setErrorMessage('Passwords do not match.');
-        return;
-      }
-      if (!name.trim()) {
-        setErrorMessage('Please provide your full name.');
-        return;
-      }
     }
 
     setIsLoading(true);
     try {
-      if (mode === 'register') {
-        const data = await registerUser(email.trim(), password, name.trim());
-        setSuccessMessage('Account created successfully! Entering workspace...');
-        setTimeout(() => {
-          onAuthSuccess({ token: data.token, user: data.user });
-          if (onBackToApp) onBackToApp();
-        }, 600);
-      } else {
-        const data = await loginUser(email.trim(), password, name.trim());
-        setSuccessMessage(`Welcome back${data.user?.name ? ', ' + data.user.name : ''}! Redirecting to workspace...`);
-        setTimeout(() => {
-          onAuthSuccess({ token: data.token, user: data.user });
-          if (onBackToApp) onBackToApp();
-        }, 500);
-      }
+      const data = await sendOtpApi(cleanEmail, password);
+      setReceivedOtp(data.otp || '');
+      setSuccessMessage(data.message || `Verification OTP sent to ${cleanEmail}.`);
+      setStep('otp');
+      setCountdown(45); // 45 seconds resend cooldown
     } catch (err) {
-      setErrorMessage(err.message || 'Authentication failed. Please verify credentials.');
+      setErrorMessage(err.message || 'Failed to send verification code. Please check credentials.');
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Quick 1-Click Instant Demo Login
-  const handleQuickDemoLogin = async (demoEmail, demoPass, demoName = '') => {
-    setEmail(demoEmail);
-    setPassword(demoPass);
-    if (demoName) setName(demoName);
-    setMode('login');
+  // Step 2: Verify 6-digit OTP and complete authentication
+  const handleVerifyOtp = async (e) => {
+    if (e) e.preventDefault();
     setErrorMessage('');
-    setIsLoading(true);
+    setSuccessMessage('');
 
+    const cleanOtp = otp.trim();
+    if (!cleanOtp) {
+      setErrorMessage('Please enter the 6-digit OTP sent to your email.');
+      return;
+    }
+
+    if (cleanOtp.length !== 6) {
+      setErrorMessage('OTP must be exactly 6 digits.');
+      return;
+    }
+
+    setIsLoading(true);
     try {
-      const data = await loginUser(demoEmail, demoPass, demoName);
-      setSuccessMessage(`Signed in as ${data.user.name || demoEmail}! Loading workspace...`);
+      const data = await verifyOtpApi(email.trim(), cleanOtp, password);
+      setSuccessMessage('OTP verified successfully! Entering your workspace...');
       setTimeout(() => {
         onAuthSuccess({ token: data.token, user: data.user });
         if (onBackToApp) onBackToApp();
       }, 500);
     } catch (err) {
-      setErrorMessage(err.message || 'Quick demo login failed.');
+      setErrorMessage(err.message || 'Invalid or expired OTP code.');
+    } finally {
       setIsLoading(false);
     }
   };
 
-  // If already authenticated, show friendly Account state
+  // Quick 1-click Auto-Fill OTP helper
+  const handleAutoFillOtp = () => {
+    if (receivedOtp) {
+      setOtp(receivedOtp);
+      setErrorMessage('');
+    }
+  };
+
+  // Resend OTP
+  const handleResendOtp = async () => {
+    if (countdown > 0 || isLoading) return;
+    setErrorMessage('');
+    setSuccessMessage('');
+    setIsLoading(true);
+    try {
+      const data = await sendOtpApi(email.trim(), password);
+      setReceivedOtp(data.otp || '');
+      setSuccessMessage(`New verification code sent to ${email.trim()}.`);
+      setCountdown(45);
+    } catch (err) {
+      setErrorMessage(err.message || 'Failed to resend OTP.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // If already authenticated, show friendly active session state
   if (currentUser) {
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+      <div className="min-h-screen bg-[#020817] text-slate-100 flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
         
         {/* Navigation Bar */}
-        <header className="h-16 px-6 border-b border-slate-800/80 bg-slate-950/70 backdrop-blur-xl flex items-center justify-between">
+        <header className="h-16 px-6 border-b border-slate-800/80 bg-[#020817]/80 backdrop-blur-xl flex items-center justify-between">
           <button
             onClick={onBackToApp}
             className="flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white transition group"
           >
             <ArrowLeft className="w-4 h-4 text-slate-400 group-hover:-translate-x-1 transition-transform" />
-            <span>Back to Dashboard</span>
+            <span>Back to Workspace</span>
           </button>
 
           <div className="flex items-center gap-2">
@@ -133,276 +161,141 @@ export default function LoginPage({
         </header>
 
         {/* Center Content Card */}
-        <div className="max-w-xl w-full mx-auto p-6 sm:p-8">
+        <div className="max-w-md w-full mx-auto p-6">
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden"
+            className="bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl relative text-center space-y-6"
           >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-            
-            <div className="relative z-10 text-center">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-500 to-cyan-400 p-[1px] mx-auto shadow-xl shadow-indigo-500/20 mb-4">
-                <div className="w-full h-full bg-slate-950 rounded-[15px] flex items-center justify-center">
-                  <User className="w-8 h-8 text-cyan-400" />
-                </div>
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-500 to-cyan-400 p-[1px] mx-auto shadow-xl shadow-indigo-500/20">
+              <div className="w-full h-full bg-[#020817] rounded-[15px] flex items-center justify-center">
+                <User className="w-8 h-8 text-cyan-400" />
               </div>
+            </div>
 
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>Verified Candidate Account</span>
-              </div>
-
-              <h2 className="text-2xl font-black text-white tracking-tight">
-                {currentUser.name || 'Candidate Member'}
+            <div>
+              <h2 className="text-xl font-bold text-white">
+                {currentUser.name || 'Candidate'}
               </h2>
-              <p className="text-sm text-slate-400 mt-1 font-mono">
+              <p className="text-xs text-slate-400 mt-1 font-mono">
                 {currentUser.email}
               </p>
+            </div>
 
-              <div className="grid grid-cols-2 gap-3 mt-6 text-left">
-                <div className="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800">
-                  <div className="text-[11px] text-slate-500 font-semibold uppercase tracking-wider">Account ID</div>
-                  <div className="text-xs font-mono text-slate-300 mt-1 truncate">{currentUser.id || 'usr_verified'}</div>
-                </div>
-                <div className="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800">
-                  <div className="text-[11px] text-slate-500 font-semibold uppercase tracking-wider">Storage Scope</div>
-                  <div className="text-xs font-bold text-cyan-400 mt-1">Cloud Isolated Sync</div>
-                </div>
-              </div>
+            <div className="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800 text-xs text-slate-300 flex items-center justify-between">
+              <span>Authentication Status</span>
+              <span className="text-emerald-400 font-semibold flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5" /> Verified via OTP
+              </span>
+            </div>
 
-              <div className="flex flex-col sm:flex-row items-center gap-3 mt-8">
-                <button
-                  onClick={onBackToApp}
-                  className="w-full sm:flex-1 py-3 px-5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2"
-                >
-                  <span>Launch Workspace</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={onLogout}
-                  className="w-full sm:w-auto py-3 px-5 rounded-xl bg-slate-800 hover:bg-rose-500/20 hover:text-rose-300 border border-slate-700/80 text-slate-300 text-xs font-semibold transition flex items-center justify-center gap-2"
-                >
-                  <LogOut className="w-4 h-4" />
-                  <span>Sign Out</span>
-                </button>
-              </div>
+            <div className="space-y-2.5 pt-2">
+              <button
+                onClick={onBackToApp}
+                className="w-full py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2"
+              >
+                <span>Enter Workspace Dashboard</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+
+              <button
+                onClick={onLogout}
+                className="w-full py-2.5 px-4 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-rose-400 hover:text-rose-300 text-xs font-semibold transition flex items-center justify-center gap-2"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span>Sign Out</span>
+              </button>
             </div>
           </motion.div>
         </div>
 
-        {/* Footer */}
-        <footer className="py-6 text-center text-xs text-slate-600">
-          SkillBridge AI Career Intelligence Platform • End-to-End Secure JWT
-        </footer>
+        <div className="p-6 text-center text-xs text-slate-500">
+          SkillBridge Career Accelerator • Protected by 2FA OTP
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between selection:bg-indigo-500 selection:text-white relative overflow-hidden">
+    <div className="min-h-screen bg-[#020817] text-slate-100 flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
       
-      {/* Background Ambience Glows */}
-      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-indigo-600/15 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-cyan-600/15 rounded-full blur-[120px] pointer-events-none" />
-
-      {/* Top Header Bar */}
-      <header className="h-16 px-6 sm:px-10 border-b border-slate-800/80 bg-slate-950/60 backdrop-blur-xl flex items-center justify-between relative z-20">
-        <div 
-          onClick={onBackToApp}
-          className="flex items-center gap-3 cursor-pointer group"
-        >
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 to-cyan-400 p-[1px] shadow-lg shadow-indigo-500/25">
-            <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-              <Sparkles className="w-4 h-4 text-cyan-400" />
-            </div>
-          </div>
-          <span className="font-syne font-bold text-base text-white tracking-tight">
-            Skill<span className="text-cyan-400">Bridge</span>
-          </span>
-          <span className="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
-            Auth
-          </span>
-        </div>
-
+      {/* Top Navbar */}
+      <header className="h-16 px-6 border-b border-slate-800/80 bg-[#020817]/70 backdrop-blur-xl flex items-center justify-between">
         <button
           onClick={onBackToApp}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700 text-xs font-medium transition"
+          className="flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white transition group"
         >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          <span>Explore Workspace as Guest</span>
+          <ArrowLeft className="w-4 h-4 text-slate-400 group-hover:-translate-x-1 transition-transform" />
+          <span>Back to Workspace</span>
         </button>
+
+        <div className="flex items-center gap-2.5">
+          <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-indigo-500 to-cyan-400 flex items-center justify-center text-[10px] font-black text-white shadow-md shadow-indigo-500/20">
+            S
+          </div>
+          <span className="text-sm font-bold tracking-tight text-white hidden sm:inline">
+            SkillBridge
+          </span>
+        </div>
       </header>
 
-      {/* Main Content Layout */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 flex items-center justify-center relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center w-full max-w-5xl">
+      {/* Main Login Card */}
+      <main className="flex-1 flex items-center justify-center p-4 sm:p-6 my-auto">
+        <div className="w-full max-w-md">
           
-          {/* Left Hero Column: Platform Value Showcase */}
-          <div className="lg:col-span-6 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Career Intelligence Engine</span>
-            </div>
+          <motion.div 
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25 }}
+            className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl relative overflow-hidden"
+          >
+            {/* Ambient background glow */}
+            <div className="absolute top-0 right-0 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
 
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-              Unlock algorithmic ATS readiness & <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-cyan-400 to-emerald-400">AI career intelligence</span>.
-            </h1>
-
-            <p className="text-slate-400 text-sm leading-relaxed">
-              Create an account or sign in to save your verified resumes, calibrate algorithmic keyword densities, practice Gemini-anchored mock interviews, and optimize achievements in real time.
-            </p>
-
-            {/* Feature Highlights List */}
-            <div className="space-y-3 pt-2">
-              <div className="flex items-center gap-3 p-3 rounded-2xl bg-slate-900/60 border border-slate-800/80">
-                <div className="w-9 h-9 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center shrink-0">
-                  <ShieldCheck className="w-4 h-4" />
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-white">8-Rule ATS Audit Engine</h4>
-                  <p className="text-[11px] text-slate-400">Deterministic scoring across structure, metrics, taxonomy & verbs.</p>
-                </div>
+            {/* Header Icon & Title */}
+            <div className="relative z-10 text-center mb-6">
+              <div className="w-12 h-12 rounded-2xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center mx-auto mb-3 text-indigo-400 shadow-lg shadow-indigo-600/20">
+                {step === 'credentials' ? (
+                  <Lock className="w-6 h-6" />
+                ) : (
+                  <KeyRound className="w-6 h-6 text-cyan-400" />
+                )}
               </div>
 
-              <div className="flex items-center gap-3 p-3 rounded-2xl bg-slate-900/60 border border-slate-800/80">
-                <div className="w-9 h-9 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center shrink-0">
-                  <Zap className="w-4 h-4" />
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-white">AI STAR Bullet Rewriter</h4>
-                  <p className="text-[11px] text-slate-400">Transform weak duties into quantified business impact statements.</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3 p-3 rounded-2xl bg-slate-900/60 border border-slate-800/80">
-                <div className="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0">
-                  <Target className="w-4 h-4" />
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-white">Multi-Phase Role Roadmap</h4>
-                  <p className="text-[11px] text-slate-400">Target role competency maps closing candidate technical skill gaps.</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Quick Demo Fill Pills */}
-            <div className="pt-2">
-              <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                <KeyRound className="w-3.5 h-3.5 text-cyan-400" />
-                <span>Instant 1-Click Demo Accounts</span>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                <button
-                  type="button"
-                  onClick={() => handleQuickDemoLogin('candidate@skillbridge.io', 'candidatePass123')}
-                  className="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-indigo-500/10 text-xs font-medium text-slate-300 hover:text-white transition flex items-center gap-2 group"
-                >
-                  <span className="w-2 h-2 rounded-full bg-indigo-400" />
-                  <span>Sachin Yadav (Full Stack)</span>
-                  <ChevronRight className="w-3 h-3 text-slate-500 group-hover:translate-x-0.5 transition-transform" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleQuickDemoLogin('demo@skillbridge.io', 'demo123456')}
-                  className="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 hover:bg-cyan-500/10 text-xs font-medium text-slate-300 hover:text-white transition flex items-center gap-2 group"
-                >
-                  <span className="w-2 h-2 rounded-full bg-cyan-400" />
-                  <span>Demo Candidate</span>
-                  <ChevronRight className="w-3 h-3 text-slate-500 group-hover:translate-x-0.5 transition-transform" />
-                </button>
-              </div>
-            </div>
-
-          </div>
-
-          {/* Right Form Column: Interactive Sign In / Register Card */}
-          <div className="lg:col-span-6 flex justify-center">
-            <motion.div 
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl relative"
-            >
+              <h2 className="text-xl font-bold text-white tracking-tight">
+                {step === 'credentials' ? 'Sign In to SkillBridge' : 'Verify One-Time Password'}
+              </h2>
               
-              {/* Card Header & Tab Switcher */}
-              <div className="mb-6">
-                <div className="flex border-b border-slate-800 bg-slate-950/60 p-1 rounded-2xl mb-5">
-                  <button
-                    type="button"
-                    onClick={() => { setMode('login'); setErrorMessage(''); setSuccessMessage(''); }}
-                    className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all ${
-                      mode === 'login'
-                        ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
-                        : 'text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    Sign In
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => { setMode('register'); setErrorMessage(''); setSuccessMessage(''); }}
-                    className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all ${
-                      mode === 'register'
-                        ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
-                        : 'text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    Create Account
-                  </button>
-                </div>
+              <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
+                {step === 'credentials' ? (
+                  <span>Enter your email and password to receive a secure 6-digit OTP code.</span>
+                ) : (
+                  <span>Enter the 6-digit verification code sent for <strong className="text-cyan-300 font-mono">{email}</strong></span>
+                )}
+              </p>
+            </div>
 
-                <h2 className="text-lg font-bold text-white tracking-tight">
-                  {mode === 'login' ? 'Sign in to your Workspace' : 'Create your Candidate Profile'}
-                </h2>
-                <p className="text-xs text-slate-400 mt-1">
-                  {mode === 'login' 
-                    ? 'Enter your registered credentials or select a demo account.' 
-                    : 'Get started in seconds with deterministic ATS analytics.'}
-                </p>
+            {/* Alerts */}
+            {errorMessage && (
+              <div className="mb-4 p-3 rounded-xl bg-rose-950/50 border border-rose-500/40 text-rose-300 text-xs flex items-center gap-2.5 animate-in fade-in">
+                <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
+                <span>{errorMessage}</span>
               </div>
+            )}
 
-              {/* Status Notifications */}
-              {errorMessage && (
-                <div className="mb-4 p-3 rounded-xl bg-rose-950/50 border border-rose-500/40 text-rose-300 text-xs flex items-center gap-2.5 animate-in fade-in">
-                  <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
-                  <span>{errorMessage}</span>
-                </div>
-              )}
+            {successMessage && (
+              <div className="mb-4 p-3 rounded-xl bg-emerald-950/50 border border-emerald-500/40 text-emerald-300 text-xs flex items-center gap-2.5 animate-in fade-in">
+                <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400" />
+                <span>{successMessage}</span>
+              </div>
+            )}
 
-              {successMessage && (
-                <div className="mb-4 p-3 rounded-xl bg-emerald-950/50 border border-emerald-500/40 text-emerald-300 text-xs flex items-center gap-2.5 animate-in fade-in">
-                  <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400" />
-                  <span>{successMessage}</span>
-                </div>
-              )}
-
-              {/* Form Element */}
-              <form onSubmit={handleSubmit} className="space-y-4">
-                
-                {/* Full Name Input (Used for personalized greeting on dashboard) */}
-                <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <label className="block text-xs font-semibold text-slate-300">
-                      Full Name {mode === 'login' ? <span className="text-[10px] text-slate-400 font-normal">(for Dashboard greeting)</span> : ''}
-                    </label>
-                    {mode === 'login' && (
-                      <span className="text-[10px] text-indigo-400 font-medium">Dashboard Profile Name</span>
-                    )}
-                  </div>
-                  <div className="relative">
-                    <User className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
-                    <input
-                      type="text"
-                      required={mode === 'register'}
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="Enter your name"
-                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs placeholder-slate-600 focus:outline-none focus:border-indigo-500 transition"
-                    />
-                  </div>
-                </div>
-
+            {/* ---------------------------------------------------------------- */}
+            {/* STEP 1: ONLY EMAIL & PASSWORD */}
+            {/* ---------------------------------------------------------------- */}
+            {step === 'credentials' && (
+              <form onSubmit={handleSendOtp} className="space-y-4 relative z-10">
                 {/* Email Input */}
                 <div>
                   <label className="block text-xs font-semibold text-slate-300 mb-1.5">
@@ -416,7 +309,7 @@ export default function LoginPage({
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="e.g. candidate@skillbridge.io"
-                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs placeholder-slate-600 focus:outline-none focus:border-indigo-500 transition"
+                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs placeholder-slate-600 focus:outline-none focus:border-indigo-500 transition font-sans"
                     />
                   </div>
                 </div>
@@ -437,7 +330,7 @@ export default function LoginPage({
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs placeholder-slate-600 focus:outline-none focus:border-indigo-500 transition"
+                      className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs placeholder-slate-600 focus:outline-none focus:border-indigo-500 transition font-sans"
                     />
                     <button
                       type="button"
@@ -449,77 +342,135 @@ export default function LoginPage({
                   </div>
                 </div>
 
-                {/* Confirm Password (Registration only) */}
-                {mode === 'register' && (
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                      Confirm Password
-                    </label>
-                    <div className="relative">
-                      <Lock className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
-                      <input
-                        type={showPassword ? 'text' : 'password'}
-                        required
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        placeholder="••••••••"
-                        className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs placeholder-slate-600 focus:outline-none focus:border-indigo-500 transition"
-                      />
-                    </div>
-                  </div>
-                )}
-
-                {/* Submit CTA Button */}
+                {/* Submit Button */}
                 <button
                   type="submit"
-                  disabled={isLoading}
-                  className="w-full mt-3 py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white text-xs font-bold transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2"
+                  disabled={isLoading || !email.trim() || !password.trim()}
+                  className="w-full mt-2 py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-bold transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2"
                 >
                   {isLoading ? (
-                    <span>Authenticating with Server...</span>
+                    <>
+                      <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent animate-spin rounded-full" />
+                      <span>Sending Secure OTP...</span>
+                    </>
                   ) : (
                     <>
-                      <span>{mode === 'login' ? 'Sign In to Workspace' : 'Create & Access Platform'}</span>
+                      <span>Continue & Send OTP</span>
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}
                 </button>
 
-                {/* Switch mode link */}
-                <div className="text-center pt-2">
-                  <span className="text-xs text-slate-400">
-                    {mode === 'login' ? "Don't have an account yet? " : "Already have an account? "}
-                  </span>
+                {/* Security Tag */}
+                <div className="pt-2 text-center text-[11px] text-slate-500 flex items-center justify-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Two-factor protected: Email + Password + 6-Digit OTP</span>
+                </div>
+              </form>
+            )}
+
+            {/* ---------------------------------------------------------------- */}
+            {/* STEP 2: 6-DIGIT OTP VERIFICATION */}
+            {/* ---------------------------------------------------------------- */}
+            {step === 'otp' && (
+              <form onSubmit={handleVerifyOtp} className="space-y-4 relative z-10">
+                
+                {/* Instant Verification Code Helper Banner */}
+                {receivedOtp && (
+                  <div className="p-3.5 rounded-2xl bg-cyan-950/40 border border-cyan-500/40 flex items-center justify-between gap-3 animate-in fade-in">
+                    <div>
+                      <div className="text-[10px] uppercase font-bold text-cyan-400 tracking-wider">
+                        Verification Code
+                      </div>
+                      <div className="text-base font-black text-white font-mono tracking-widest mt-0.5">
+                        {receivedOtp}
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleAutoFillOtp}
+                      className="px-2.5 py-1 text-[11px] font-semibold bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/30 rounded-lg transition flex items-center gap-1"
+                    >
+                      <Check className="w-3 h-3" />
+                      <span>Auto-Fill</span>
+                    </button>
+                  </div>
+                )}
+
+                {/* OTP Input */}
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1.5 text-center">
+                    Enter 6-Digit Verification Code
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      maxLength={6}
+                      autoFocus
+                      required
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
+                      placeholder="• • • • • •"
+                      className="w-full py-3 px-4 rounded-xl bg-slate-950 border border-slate-800 text-white text-center font-mono font-bold text-lg tracking-[0.5em] placeholder-slate-600 focus:outline-none focus:border-cyan-400 transition"
+                    />
+                  </div>
+                </div>
+
+                {/* Submit Verify CTA */}
+                <button
+                  type="submit"
+                  disabled={isLoading || otp.trim().length !== 6}
+                  className="w-full py-3 px-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed text-slate-950 text-xs font-bold transition shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2"
+                >
+                  {isLoading ? (
+                    <>
+                      <div className="w-3.5 h-3.5 border-2 border-slate-950 border-t-transparent animate-spin rounded-full" />
+                      <span>Verifying OTP...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Verify OTP & Enter Workspace</span>
+                      <CheckCircle2 className="w-4 h-4" />
+                    </>
+                  )}
+                </button>
+
+                {/* Quick Navigation: Resend & Go Back */}
+                <div className="pt-2 flex items-center justify-between text-xs text-slate-400 border-t border-slate-800/80">
                   <button
                     type="button"
                     onClick={() => {
-                      setMode(mode === 'login' ? 'register' : 'login');
+                      setStep('credentials');
                       setErrorMessage('');
                       setSuccessMessage('');
                     }}
-                    className="text-xs text-indigo-400 hover:text-indigo-300 font-semibold underline"
+                    className="hover:text-white transition flex items-center gap-1"
                   >
-                    {mode === 'login' ? 'Create one now' : 'Sign In instead'}
+                    <ArrowLeft className="w-3 h-3" />
+                    <span>Change Credentials</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleResendOtp}
+                    disabled={countdown > 0 || isLoading}
+                    className="text-cyan-400 hover:text-cyan-300 disabled:text-slate-600 disabled:cursor-not-allowed font-semibold transition"
+                  >
+                    {countdown > 0 ? `Resend code in ${countdown}s` : 'Resend Code'}
                   </button>
                 </div>
 
-                {/* Bottom Trust Badge */}
-                <div className="pt-3 border-t border-slate-800/80 flex items-center justify-center gap-1.5 text-[10px] text-slate-500">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Stateless JWT with bcrypt password hashing</span>
-                </div>
-
               </form>
+            )}
 
-            </motion.div>
-          </div>
+          </motion.div>
 
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="py-6 border-t border-slate-900 bg-slate-950/80 text-center text-xs text-slate-600">
-        SkillBridge • AI Resume Visualizer, ATS Analyzer & Career Accelerator
+      <footer className="h-14 px-6 border-t border-slate-800/80 bg-[#020817]/60 flex items-center justify-center text-[11px] text-slate-500">
+        <span>SkillBridge © 2026 • AI Resume Visualizer, Analyzer & Career Accelerator</span>
       </footer>
 
     </div>

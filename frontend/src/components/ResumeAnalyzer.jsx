@@ -18,7 +18,9 @@ import {
   Check,
   Award,
   Layers,
-  FileText
+  FileText,
+  Linkedin,
+  ExternalLink
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { analyzeResumeApi } from '../api';
@@ -29,7 +31,8 @@ export default function ResumeAnalyzer({
   rolesList, 
   onAnalysisUpdated, 
   onNavigateToRoadmap,
-  onNavigateToOptimizer
+  onNavigateToOptimizer,
+  onNavigateToMatcher
 }) {
   const [targetRole, setTargetRole] = useState(resume?.targetRole || "Full Stack Developer");
   const [jobDescription, setJobDescription] = useState('');
@@ -114,8 +117,19 @@ ${analysis.scoringDisclaimer || 'Scoring is calculated via transparent heuristic
 
   if (!analysis) {
     return (
-      <div className="p-12 text-center text-slate-400">
-        Loading ATS analysis...
+      <div className="glass-panel p-12 text-center rounded-3xl border border-slate-800 space-y-4">
+        <div className="w-12 h-12 rounded-full border-2 border-indigo-500 border-t-transparent animate-spin mx-auto" />
+        <h3 className="text-base font-bold text-white">Analyzing Resume against ATS Standards...</h3>
+        <p className="text-xs text-slate-400 max-w-md mx-auto">
+          Benchmarking quantifiable metrics, power verbs, section completeness, and skill taxonomy for {targetRole}.
+        </p>
+        <button
+          onClick={handleRunAudit}
+          disabled={isAuditing}
+          className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-lg shadow-indigo-600/30 transition"
+        >
+          {isAuditing ? 'Auditing...' : 'Run ATS Audit Now'}
+        </button>
       </div>
     );
   }
@@ -279,7 +293,41 @@ ${analysis.scoringDisclaimer || 'Scoring is calculated via transparent heuristic
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <a
+              href={`https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(targetRole)}&location=India`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs px-2.5 py-1.5 rounded-xl bg-[#0A66C2]/15 text-[#60a5fa] border border-[#0A66C2]/30 hover:bg-[#0A66C2]/25 flex items-center gap-1.5 transition font-semibold"
+              title="Search live jobs on LinkedIn"
+            >
+              <Linkedin className="w-3.5 h-3.5" />
+              <span>LinkedIn</span>
+              <ExternalLink className="w-2.5 h-2.5 opacity-80" />
+            </a>
+
+            <a
+              href={`https://www.naukri.com/${targetRole.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-jobs?k=${encodeURIComponent(targetRole)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs px-2.5 py-1.5 rounded-xl bg-[#0078DB]/15 text-[#38bdf8] border border-[#0078DB]/30 hover:bg-[#0078DB]/25 flex items-center gap-1.5 transition font-semibold"
+              title="Search live jobs on Naukri.com"
+            >
+              <span className="w-2 h-2 rounded-full bg-[#0078DB]" />
+              <span>Naukri</span>
+              <ExternalLink className="w-2.5 h-2.5 opacity-80" />
+            </a>
+
+            {onNavigateToMatcher && (
+              <button
+                onClick={onNavigateToMatcher}
+                className="text-xs px-2.5 py-1.5 rounded-xl bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 hover:bg-indigo-600/30 flex items-center gap-1 transition font-medium"
+                title="Open full Job Matcher with curated openings"
+              >
+                <span>Job Matcher Tab →</span>
+              </button>
+            )}
+
             <select
               value={targetRole}
               onChange={(e) => setTargetRole(e.target.value)}

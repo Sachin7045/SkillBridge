@@ -543,7 +543,7 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
                     key={q.id || idx}
                     onClick={() => {
                       setSelectedQuestionIndex(idx);
-                      setCandidateAnswer('');
+                      setCandidateAnswer(evaluations[q.id]?.submittedAnswer || '');
                     }}
                     className={`p-3.5 rounded-2xl border transition-all cursor-pointer space-y-2 ${
                       isSelected

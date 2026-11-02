@@ -11,14 +11,25 @@ export async function parseResumeFile(buffer, mimetype, filename) {
   let text = '';
 
   if (safeMimetype === 'application/pdf' || safeFilename.endsWith('.pdf')) {
-    const data = await pdf(buffer);
-    text = data.text;
+    try {
+      const data = await pdf(buffer);
+      text = data.text;
+    } catch (err) {
+      if (/password|encrypted/i.test(err?.message || '')) {
+        throw new Error('This PDF is password-protected or encrypted. Please remove the password and re-upload.');
+      }
+      throw new Error(`Failed to read PDF document: ${err?.message || 'File may be corrupted or malformed.'}`);
+    }
   } else if (
     safeMimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
     safeFilename.endsWith('.docx')
   ) {
-    const data = await mammoth.extractRawText({ buffer });
-    text = data.value;
+    try {
+      const data = await mammoth.extractRawText({ buffer });
+      text = data.value;
+    } catch (err) {
+      throw new Error(`Failed to read Word document (.docx): ${err?.message || 'File may be corrupted or malformed.'}`);
+    }
   } else {
     if (safeMimetype.startsWith('text/') || safeFilename.endsWith('.txt')) {
       text = buffer.toString('utf-8');

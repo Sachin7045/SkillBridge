@@ -24,7 +24,8 @@ import {
   Kanban,
   List,
   Check,
-  Linkedin
+  Linkedin,
+  Download
 } from 'lucide-react';
 
 export const PIPELINE_STAGES = [
@@ -211,6 +212,36 @@ export default function JobApplications({
     return PIPELINE_STAGES.find(s => s.id === statusId) || PIPELINE_STAGES[0];
   };
 
+  const handleExportCSV = () => {
+    if (applications.length === 0) {
+      alert('No job applications to export.');
+      return;
+    }
+    const headers = ['Company', 'Job Title', 'Stage', 'Platform', 'Location', 'Salary', 'Applied Date', 'Next Interview', 'Job URL', 'Notes'];
+    const rows = applications.map(a => [
+      `"${(a.company || '').replace(/"/g, '""')}"`,
+      `"${(a.title || '').replace(/"/g, '""')}"`,
+      `"${a.status || ''}"`,
+      `"${a.source || ''}"`,
+      `"${(a.location || '').replace(/"/g, '""')}"`,
+      `"${(a.salary || '').replace(/"/g, '""')}"`,
+      `"${a.appliedDate || ''}"`,
+      `"${(a.nextInterview || '').replace(/"/g, '""')}"`,
+      `"${(a.url || '').replace(/"/g, '""')}"`,
+      `"${(a.notes || '').replace(/"/g, '""')}"`
+    ]);
+    const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `skillbridge_job_applications_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="space-y-6">
       
@@ -237,6 +268,15 @@ export default function JobApplications({
           >
             <Search className="w-3.5 h-3.5 text-cyan-400" />
             <span>Explore Matched Jobs</span>
+          </button>
+
+          <button
+            onClick={handleExportCSV}
+            className="px-3.5 py-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-300 transition flex items-center gap-1.5 shadow-sm"
+            title="Download CSV report of tracked applications"
+          >
+            <Download className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Export CSV</span>
           </button>
 
           <button

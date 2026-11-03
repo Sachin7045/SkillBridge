@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Mail, 
   Sparkles, 
@@ -14,13 +14,26 @@ import {
 import confetti from 'canvas-confetti';
 import { generateCoverLetterApi } from '../api';
 
-export default function CoverLetterGenerator({ resume, rolesList, apiKey }) {
-  const [companyName, setCompanyName] = useState('Google');
-  const [targetRole, setTargetRole] = useState(resume.targetRole || "Full Stack Developer");
-  const [jobDescription, setJobDescription] = useState('');
+export default function CoverLetterGenerator({ 
+  resume, 
+  rolesList, 
+  apiKey,
+  initialCompany = '',
+  initialRole = '',
+  initialJobDescription = ''
+}) {
+  const [companyName, setCompanyName] = useState(initialCompany || 'Google');
+  const [targetRole, setTargetRole] = useState(initialRole || resume.targetRole || "Full Stack Developer");
+  const [jobDescription, setJobDescription] = useState(initialJobDescription || '');
   const [isGenerating, setIsGenerating] = useState(false);
   const [coverLetterData, setCoverLetterData] = useState(null);
   const [isCopied, setIsCopied] = useState(false);
+
+  useEffect(() => {
+    if (initialCompany) setCompanyName(initialCompany);
+    if (initialRole) setTargetRole(initialRole);
+    if (initialJobDescription) setJobDescription(initialJobDescription);
+  }, [initialCompany, initialRole, initialJobDescription]);
 
   const handleGenerate = async () => {
     setIsGenerating(true);

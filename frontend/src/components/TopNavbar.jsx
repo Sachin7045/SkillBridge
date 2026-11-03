@@ -42,7 +42,7 @@ export default function TopNavbar({
     { id: 3, title: 'Skill Gap Detected', desc: '3 missing frameworks identified for DevOps Architect.', time: '3h ago' }
   ];
 
-  const displayName = currentUser?.name || 'Sachin Yadav';
+  const displayName = currentUser?.name || currentUser?.email?.split('@')[0] || 'Guest Developer';
   const displayRole = 'Full Stack Developer';
 
   return (

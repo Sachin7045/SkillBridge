@@ -70,7 +70,12 @@ export function getCategoryBadge(category) {
   return { label: category || 'Resume Deep-Dive', color: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30', icon: '📄' };
 }
 
-export default function AiMockInterviewer({ resume, apiKey }) {
+export default function AiMockInterviewer({ 
+  resume, 
+  apiKey, 
+  targetJob = null, 
+  onClearTargetJob = () => {} 
+}) {
   const [questions, setQuestions] = useState([]);
   const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(0);
   const [category, setCategory] = useState('all');
@@ -138,16 +143,21 @@ export default function AiMockInterviewer({ resume, apiKey }) {
     setEvalError(null);
   }, [selectedQuestionIndex, selectedLang]);
 
-  // Load questions when resume changes
+  // Load questions when resume or target job changes
   useEffect(() => {
     loadQuestions();
-  }, [resume, category]);
+  }, [resume, category, targetJob]);
 
   const loadQuestions = async () => {
     setIsLoadingQuestions(true);
     setEvalError(null);
     try {
-      const res = await generateQuestionsApi(resume, category, apiKey);
+      const effectiveResume = targetJob ? {
+        ...resume,
+        targetRole: targetJob.title || resume?.targetRole,
+        targetCompany: targetJob.company
+      } : resume;
+      const res = await generateQuestionsApi(effectiveResume, category, apiKey);
       setQuestions(res.questions || []);
       setSelectedQuestionIndex(0);
       setCandidateAnswer('');
@@ -285,8 +295,8 @@ export default function AiMockInterviewer({ resume, apiKey }) {
         currentQuestion.question,
         trimmedAnswer,
         { 
-          role: resume?.title, 
-          company: resume?.experience?.[0]?.company,
+          role: targetJob?.title || resume?.title || resume?.targetRole || "Software Engineer", 
+          company: targetJob?.company || resume?.experience?.[0]?.company || "Target Company",
           category: currentQuestion.category,
           topic: currentQuestion.topic
         },
@@ -403,6 +413,33 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
   return (
     <div className="space-y-6">
       
+      {/* Targeted Role Context Banner (if active from Job Applications / Matcher) */}
+      {targetJob && (
+        <div className="p-4 rounded-2xl bg-indigo-950/60 border border-indigo-500/40 flex items-center justify-between gap-3 text-xs shadow-lg shadow-indigo-600/10">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 flex items-center justify-center font-bold text-sm">
+              🎯
+            </div>
+            <div>
+              <div className="font-bold text-white flex items-center gap-1.5">
+                <span>Active Target Role: {targetJob.title}</span>
+                <span className="text-slate-400">at</span>
+                <span className="text-cyan-400 font-semibold">{targetJob.company}</span>
+              </div>
+              <div className="text-[11px] text-indigo-300/90 mt-0.5">
+                Questions and technical evaluation criteria are customized for this application.
+              </div>
+            </div>
+          </div>
+          <button
+            onClick={onClearTargetJob}
+            className="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700 text-[11px] font-semibold transition"
+          >
+            Clear Context
+          </button>
+        </div>
+      )}
+
       {/* Top Banner */}
       <div className="glass-panel p-6 rounded-3xl border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>

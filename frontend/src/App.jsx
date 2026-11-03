@@ -36,7 +36,10 @@ import {
   fetchCurrentUser,
   saveResumeToCloud,
   fetchUserResumes,
-  deleteUserResume
+  deleteUserResume,
+  fetchUserApplications,
+  saveApplicationToCloud,
+  deleteApplicationFromCloud
 } from './api';
 import { Sparkles, ShieldCheck, FileText } from 'lucide-react';
 
@@ -154,6 +157,9 @@ export default function App() {
   // Toast notifications queue
   const [toasts, setToasts] = useState([]);
 
+  // Active target role/company context from Job Applications or Matcher
+  const [activeTargetJob, setActiveTargetJob] = useState(null);
+
   // Persistent Job Applications Pipeline State
   const [applications, setApplications] = useState(() => {
     try {
@@ -165,31 +171,61 @@ export default function App() {
     return DEFAULT_APPLICATIONS;
   });
 
-  const handleAddApplication = (newApp) => {
+  const handleAddApplication = async (newApp) => {
     setApplications(prev => {
       const updated = [newApp, ...prev.filter(a => a.id !== newApp.id)];
       try { localStorage.setItem('skillbridge_user_job_applications', JSON.stringify(updated)); } catch (e) {}
       return updated;
     });
     addToast({ type: 'success', title: 'Application Tracked', message: `Added ${newApp.company} (${newApp.title}) to your Pipeline.` });
+    
+    // Cloud sync if authenticated
+    const token = localStorage.getItem('skillbridge_auth_token');
+    if (token) {
+      try {
+        await saveApplicationToCloud(newApp, token);
+      } catch (err) {
+        console.warn('Cloud sync failed for application:', err);
+      }
+    }
   };
 
-  const handleUpdateApplication = (updatedApp) => {
+  const handleUpdateApplication = async (updatedApp) => {
     setApplications(prev => {
       const updated = prev.map(a => a.id === updatedApp.id ? updatedApp : a);
       try { localStorage.setItem('skillbridge_user_job_applications', JSON.stringify(updated)); } catch (e) {}
       return updated;
     });
     addToast({ type: 'info', title: 'Pipeline Updated', message: `Updated status for ${updatedApp.company}.` });
+
+    // Cloud sync if authenticated
+    const token = localStorage.getItem('skillbridge_auth_token');
+    if (token) {
+      try {
+        await saveApplicationToCloud(updatedApp, token);
+      } catch (err) {
+        console.warn('Cloud sync failed for application update:', err);
+      }
+    }
   };
 
-  const handleDeleteApplication = (appId) => {
+  const handleDeleteApplication = async (appId) => {
     setApplications(prev => {
       const updated = prev.filter(a => a.id !== appId);
       try { localStorage.setItem('skillbridge_user_job_applications', JSON.stringify(updated)); } catch (e) {}
       return updated;
     });
     addToast({ type: 'default', title: 'Application Removed', message: 'Job removed from pipeline.' });
+
+    // Cloud sync if authenticated
+    const token = localStorage.getItem('skillbridge_auth_token');
+    if (token) {
+      try {
+        await deleteApplicationFromCloud(appId, token);
+      } catch (err) {
+        console.warn('Cloud sync failed for application deletion:', err);
+      }
+    }
   };
 
   const handleTrackJobFromMatcher = (job) => {
@@ -299,6 +335,17 @@ export default function App() {
               } catch (e) {
                 console.warn('Could not fetch saved resumes:', e);
               }
+
+              // Fetch user's tracked job applications
+              try {
+                const cloudApps = await fetchUserApplications(token);
+                if (cloudApps && cloudApps.length > 0) {
+                  setApplications(cloudApps);
+                  localStorage.setItem('skillbridge_user_job_applications', JSON.stringify(cloudApps));
+                }
+              } catch (e) {
+                console.warn('Could not fetch saved applications:', e);
+              }
             }
           } catch {
             localStorage.removeItem('skillbridge_auth_token');
@@ -347,6 +394,16 @@ export default function App() {
         }
       } catch (e) {
         console.warn('Could not fetch saved resumes:', e);
+      }
+
+      try {
+        const cloudApps = await fetchUserApplications(token);
+        if (cloudApps && cloudApps.length > 0) {
+          setApplications(cloudApps);
+          localStorage.setItem('skillbridge_user_job_applications', JSON.stringify(cloudApps));
+        }
+      } catch (e) {
+        console.warn('Could not fetch saved applications:', e);
       }
     }
   };
@@ -663,6 +720,8 @@ export default function App() {
                 <AiMockInterviewer
                   resume={currentResume}
                   apiKey={apiKey}
+                  targetJob={activeTargetJob}
+                  onClearTargetJob={() => setActiveTargetJob(null)}
                 />
               </motion.div>
             )}
@@ -764,7 +823,7 @@ export default function App() {
               </motion.div>
             )}
 
-            {activeTab === 'applications' && currentResume && (
+            {activeTab === 'applications' && (
               <motion.div key="applications" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                 <JobApplications
                   applications={applications}
@@ -773,10 +832,22 @@ export default function App() {
                   onDeleteApplication={handleDeleteApplication}
                   onNavigateTab={(tab) => setActiveTab(tab)}
                   onPrepareInterview={(app) => {
+                    setActiveTargetJob(app);
                     setActiveTab('interview');
+                    addToast({
+                      type: 'info',
+                      title: 'Interview Loop Loaded',
+                      message: `Loaded mock interview prep for ${app.title} at ${app.company}.`
+                    });
                   }}
                   onGenerateCoverLetter={(app) => {
+                    setActiveTargetJob(app);
                     setActiveTab('coverletter');
+                    addToast({
+                      type: 'info',
+                      title: 'Role Context Loaded',
+                      message: `Generating tailored application letter for ${app.company}.`
+                    });
                   }}
                 />
               </motion.div>
@@ -800,6 +871,9 @@ export default function App() {
                   resume={currentResume}
                   rolesList={rolesList}
                   apiKey={apiKey}
+                  initialCompany={activeTargetJob?.company}
+                  initialRole={activeTargetJob?.title}
+                  initialJobDescription={activeTargetJob?.notes}
                 />
               </motion.div>
             )}

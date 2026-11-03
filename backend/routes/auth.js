@@ -41,13 +41,39 @@ function validatePassword(password) {
   return typeof password === 'string' && password.length >= 6;
 }
 
+// Convert email address into clean, human-readable full name
+export function formatNameFromEmail(email, providedName = '') {
+  if (providedName && typeof providedName === 'string' && providedName.trim().length > 1) {
+    return providedName.trim();
+  }
+  const username = String(email || '').split('@')[0] || '';
+  // Clean special characters and numbers: e.g. "sachin.yadav" -> "Sachin Yadav"
+  const cleanParts = username
+    .replace(/[0-9]+/g, ' ')
+    .replace(/[._\-+]/g, ' ')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+
+  if (cleanParts.length > 0 && cleanParts.join(' ').length >= 3) {
+    return cleanParts.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+  }
+
+  const rawClean = username.replace(/[._\-+]/g, ' ').trim();
+  if (rawClean.length > 0) {
+    return rawClean.split(/\s+/).map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+  }
+
+  return 'Candidate';
+}
+
 // --------------------------------------------------------------------------
 // POST /api/auth/send-otp
 // Step 1: Validate email & password, generate 6-digit OTP code
 // --------------------------------------------------------------------------
 router.post('/send-otp', async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, name } = req.body;
 
     if (!email || !password) {
       return res.status(400).json({ error: 'Both email and password are required.' });
@@ -85,12 +111,14 @@ router.post('/send-otp', async (req, res) => {
     const otp = generate6DigitOtp();
     const expiresAt = Date.now() + 10 * 60 * 1000;
 
+    const chosenName = formatNameFromEmail(normalizedEmail, name || existingUser?.name);
+
     OTP_STORE.set(normalizedEmail, {
       otp,
       expiresAt,
       passwordHash,
       isNewUser,
-      name: normalizedEmail.split('@')[0]
+      name: chosenName
     });
 
     console.log(`[AUTH OTP] Security OTP for ${normalizedEmail}: ${otp}`);
@@ -114,7 +142,7 @@ router.post('/send-otp', async (req, res) => {
 // --------------------------------------------------------------------------
 router.post('/verify-otp', async (req, res) => {
   try {
-    const { email, otp } = req.body;
+    const { email, otp, name } = req.body;
 
     if (!email || !otp) {
       return res.status(400).json({ error: 'Email and 6-digit OTP code are required.' });
@@ -141,19 +169,23 @@ router.post('/verify-otp', async (req, res) => {
     OTP_STORE.delete(normalizedEmail);
 
     let user = USER_DATABASE.get(normalizedEmail);
-    if (!user) {
-      // Create new user profile if registration flow
-      const displayName = record.name
-        ? record.name.charAt(0).toUpperCase() + record.name.slice(1)
-        : 'SkillBridge User';
+    const chosenName = (name && String(name).trim().length > 0)
+      ? String(name).trim()
+      : (record.name && !/^[a-z0-9_.-]+$/i.test(record.name))
+      ? record.name
+      : formatNameFromEmail(normalizedEmail, record.name);
 
+    if (!user) {
       user = {
         id: `user_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
         email: normalizedEmail,
-        name: displayName,
+        name: chosenName,
         passwordHash: record.passwordHash,
         createdAt: new Date().toISOString()
       };
+      USER_DATABASE.set(normalizedEmail, user);
+    } else if (name && String(name).trim().length > 0) {
+      user.name = String(name).trim();
       USER_DATABASE.set(normalizedEmail, user);
     }
 
@@ -277,6 +309,36 @@ router.get('/me', authenticateToken, (req, res) => {
     success: true,
     user: req.user
   });
+});
+
+// --------------------------------------------------------------------------
+// PUT /api/auth/profile (Update candidate display name)
+// --------------------------------------------------------------------------
+router.put('/profile', authenticateToken, (req, res) => {
+  try {
+    const { name } = req.body;
+    if (!name || String(name).trim().length === 0) {
+      return res.status(400).json({ error: 'Name cannot be empty.' });
+    }
+    const cleanName = String(name).trim();
+    const normalizedEmail = req.user.email.toLowerCase().trim();
+    const user = USER_DATABASE.get(normalizedEmail);
+    if (user) {
+      user.name = cleanName;
+      USER_DATABASE.set(normalizedEmail, user);
+    }
+    const updatedUser = { id: req.user.id, email: req.user.email, name: cleanName };
+    const newToken = generateToken(updatedUser);
+    return res.json({
+      success: true,
+      message: 'Profile name updated successfully.',
+      user: updatedUser,
+      token: newToken
+    });
+  } catch (err) {
+    console.error('Update profile error:', err.message);
+    return res.status(500).json({ error: 'Failed to update profile name.' });
+  }
 });
 
 export default router;

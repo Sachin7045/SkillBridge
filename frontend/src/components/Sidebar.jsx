@@ -21,6 +21,7 @@ import {
   ChevronDown,
   Star
 } from 'lucide-react';
+import { formatUserDisplayName } from '../utils/userDisplay';
 
 export default function Sidebar({
   activeTab,
@@ -29,8 +30,10 @@ export default function Sidebar({
   setIsCollapsed,
   atsScore = 78,
   currentUser = null,
+  currentResume = null,
   onLogout = () => {}
 }) {
+  const displayName = formatUserDisplayName(currentUser, currentResume);
   const primaryNav = [
     { id: 'overview', label: 'Dashboard', icon: LayoutDashboard, badge: null },
     { id: 'visualizer', label: 'Resume Visualizer', icon: FileText, badge: null },
@@ -165,15 +168,13 @@ export default function Sidebar({
           >
             <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#258BFF] to-[#16D9F5] p-[1px] shrink-0 overflow-hidden shadow-md">
               <div className="w-full h-full bg-[#020817] rounded-full flex items-center justify-center text-xs font-bold text-white">
-                {currentUser?.name 
-                  ? currentUser.name.charAt(0).toUpperCase()
-                  : 'S'}
+                {displayName ? displayName.charAt(0).toUpperCase() : 'S'}
               </div>
             </div>
             {!isCollapsed && (
               <div className="flex flex-col min-w-0">
                 <span className="text-xs font-semibold text-white truncate max-w-[120px]">
-                  {currentUser?.name || 'Sachin Yadav'}
+                  {displayName}
                 </span>
                 <span className="text-[10px] text-slate-400 truncate max-w-[120px]">
                   {currentUser?.email || 'sachin.yadav@email.com'}

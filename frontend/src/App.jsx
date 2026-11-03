@@ -39,7 +39,8 @@ import {
   deleteUserResume,
   fetchUserApplications,
   saveApplicationToCloud,
-  deleteApplicationFromCloud
+  deleteApplicationFromCloud,
+  updateUserProfileApi
 } from './api';
 import { Sparkles, ShieldCheck, FileText } from 'lucide-react';
 
@@ -252,6 +253,34 @@ export default function App() {
       contact: 'Talent Acquisition'
     };
     handleAddApplication(newApp);
+  };
+
+  const handleUpdateUserName = async (newName) => {
+    if (!newName || !newName.trim()) return;
+    const cleanName = newName.trim();
+
+    setCurrentUser(prev => {
+      const updated = prev ? { ...prev, name: cleanName } : { name: cleanName, email: '' };
+      try { localStorage.setItem('skillbridge_user', JSON.stringify(updated)); } catch (e) {}
+      return updated;
+    });
+
+    setCurrentResume(prev => prev ? ({ ...prev, name: cleanName }) : prev);
+
+    const token = localStorage.getItem('skillbridge_auth_token');
+    if (token) {
+      try {
+        await updateUserProfileApi(cleanName, token);
+      } catch (err) {
+        console.warn('Profile name sync to backend failed:', err);
+      }
+    }
+
+    addToast({
+      type: 'success',
+      title: 'Profile Name Updated',
+      message: `Your name is now set to ${cleanName}.`
+    });
   };
 
   const addToast = ({ type = 'info', title = '', message = '' }) => {
@@ -611,6 +640,7 @@ export default function App() {
         setIsCollapsed={setIsSidebarCollapsed}
         atsScore={analysis?.atsScore || 78}
         currentUser={currentUser}
+        currentResume={currentResume}
         onLogout={handleLogout}
       />
 
@@ -635,6 +665,7 @@ export default function App() {
           onOpenApiKey={() => setIsApiKeyOpen(true)}
           hasApiKey={Boolean(apiKey)}
           currentResumeName={currentUser?.name || (currentResume?.id !== 'sachin-yadav' && currentResume?.id !== 'sample-1' ? currentResume?.name : '')}
+          currentResume={currentResume}
           onPrint={handlePrint}
           theme={theme}
           onToggleTheme={handleToggleTheme}
@@ -643,6 +674,7 @@ export default function App() {
           currentUser={currentUser}
           onLogout={handleLogout}
           onOpenAuth={() => setActiveTab('login')}
+          onUpdateUserName={handleUpdateUserName}
         />
 
         {/* Content Container */}
@@ -659,6 +691,7 @@ export default function App() {
                   onNavigateTab={(tab) => setActiveTab(tab)}
                   onOpenUpload={() => setIsUploadOpen(true)}
                   onOpenSamples={() => setIsSamplesOpen(true)}
+                  onUpdateUserName={handleUpdateUserName}
                 />
               </motion.div>
             )}

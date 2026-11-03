@@ -13,8 +13,10 @@ import {
   Zap,
   CheckCircle2,
   LogOut,
-  User
+  User,
+  Edit3
 } from 'lucide-react';
+import { formatUserDisplayName } from '../utils/userDisplay';
 
 export default function TopNavbar({
   activeTab,
@@ -23,6 +25,7 @@ export default function TopNavbar({
   onOpenApiKey,
   hasApiKey,
   currentResumeName,
+  currentResume = null,
   onPrint,
   theme,
   onToggleTheme,
@@ -30,7 +33,8 @@ export default function TopNavbar({
   isMobileSidebarOpen,
   currentUser = null,
   onLogout = () => {},
-  onOpenAuth = () => {}
+  onOpenAuth = () => {},
+  onUpdateUserName = () => {}
 }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [showNotifications, setShowNotifications] = useState(false);
@@ -42,7 +46,7 @@ export default function TopNavbar({
     { id: 3, title: 'Skill Gap Detected', desc: '3 missing frameworks identified for DevOps Architect.', time: '3h ago' }
   ];
 
-  const displayName = currentUser?.name || currentUser?.email?.split('@')[0] || 'Guest Developer';
+  const displayName = formatUserDisplayName(currentUser, currentResume);
   const displayRole = 'Full Stack Developer';
 
   return (

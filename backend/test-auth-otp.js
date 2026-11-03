@@ -1,6 +1,6 @@
 process.env.NODE_ENV = 'test';
 
-import { USER_DATABASE, OTP_STORE } from './routes/auth.js';
+import { USER_DATABASE, OTP_STORE, formatNameFromEmail } from './routes/auth.js';
 import bcrypt from 'bcryptjs';
 import { generateToken } from './middleware/auth.js';
 
@@ -171,6 +171,11 @@ async function runTests() {
   const newVerifyRes = await handleVerifyOtp({ email: newUserEmail, otp: newSendRes.data.otp });
   assert(newVerifyRes.status === 200, 'New user successfully verified via OTP and logged in');
   assert(newVerifyRes.data.user.email === newUserEmail, 'Creates user profile in database');
+
+  // 8. Clean Human Name Resolution from Email & Overrides
+  assert(formatNameFromEmail('sachin.yadav@gmail.com') === 'Sachin Yadav', 'Derives "Sachin Yadav" cleanly from dotted email');
+  assert(formatNameFromEmail('rahul_kumar@tech.co') === 'Rahul Kumar', 'Derives "Rahul Kumar" cleanly from underscored email');
+  assert(formatNameFromEmail('sy703083@gmail.com', 'Sachin Yadav') === 'Sachin Yadav', 'Honors provided full name over email username');
 
   console.log(`\n=== Auth OTP Tests: ${passedTests}/${totalTests} Passed ===`);
   if (passedTests === totalTests) {

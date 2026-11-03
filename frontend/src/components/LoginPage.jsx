@@ -29,6 +29,7 @@ export default function LoginPage({
   // Step 2: 'otp' (6-digit OTP Verification)
   const [step, setStep] = useState('credentials');
   
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [otp, setOtp] = useState('');
@@ -69,7 +70,7 @@ export default function LoginPage({
 
     setIsLoading(true);
     try {
-      const data = await sendOtpApi(cleanEmail, password);
+      const data = await sendOtpApi(cleanEmail, password, name.trim());
       setReceivedOtp(data.otp || '');
       setSuccessMessage(data.message || `Verification OTP sent to ${cleanEmail}.`);
       setStep('otp');
@@ -100,7 +101,7 @@ export default function LoginPage({
 
     setIsLoading(true);
     try {
-      const data = await verifyOtpApi(email.trim(), cleanOtp, password);
+      const data = await verifyOtpApi(email.trim(), cleanOtp, name.trim());
       setSuccessMessage('OTP verified successfully! Entering your workspace...');
       setTimeout(() => {
         onAuthSuccess({ token: data.token, user: data.user });
@@ -296,6 +297,26 @@ export default function LoginPage({
             {/* ---------------------------------------------------------------- */}
             {step === 'credentials' && (
               <form onSubmit={handleSendOtp} className="space-y-4 relative z-10">
+                {/* Full Name Input (Optional) */}
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-xs font-semibold text-slate-300">
+                      Your Full Name
+                    </label>
+                    <span className="text-[10px] text-slate-500">Optional</span>
+                  </div>
+                  <div className="relative">
+                    <User className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
+                    <input
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="e.g. Sachin Yadav"
+                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs placeholder-slate-600 focus:outline-none focus:border-indigo-500 transition font-sans"
+                    />
+                  </div>
+                </div>
+
                 {/* Email Input */}
                 <div>
                   <label className="block text-xs font-semibold text-slate-300 mb-1.5">

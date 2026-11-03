@@ -24,8 +24,11 @@ import {
   GitBranch,
   ChevronRight,
   Check,
-  Star
+  Star,
+  Edit3,
+  X
 } from 'lucide-react';
+import { formatUserDisplayName } from '../utils/userDisplay';
 import { 
   ResponsiveContainer, 
   AreaChart, 
@@ -47,11 +50,27 @@ export default function OverviewDashboard({
   applications = [],
   onNavigateTab,
   onOpenUpload,
-  onOpenSamples
+  onOpenSamples,
+  onUpdateUserName = () => {}
 }) {
   const [timeFilter, setTimeFilter] = useState('90D'); // '7D' | '30D' | '90D'
 
-  const displayName = currentUser?.name || 'Sachin Yadav';
+  const displayName = formatUserDisplayName(currentUser, resume);
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [nameInput, setNameInput] = useState('');
+
+  const handleStartEdit = () => {
+    setNameInput(displayName);
+    setIsEditingName(true);
+  };
+
+  const handleSaveName = (e) => {
+    e.preventDefault();
+    if (nameInput.trim()) {
+      onUpdateUserName(nameInput.trim());
+      setIsEditingName(false);
+    }
+  };
   const role = resume?.targetRole || 'Full Stack Developer';
   const atsScore = analysis?.atsScore || 86;
   const ratingTier = analysis?.ratingTier || 'Excellent';
@@ -124,9 +143,47 @@ export default function OverviewDashboard({
               <span>👋</span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              Welcome back, <span className="text-[#16D9F5]">{displayName}</span>
-            </h1>
+            {isEditingName ? (
+              <form onSubmit={handleSaveName} className="flex items-center gap-2 mt-1 mb-2">
+                <input
+                  type="text"
+                  autoFocus
+                  value={nameInput}
+                  onChange={(e) => setNameInput(e.target.value)}
+                  placeholder="Enter your full name"
+                  className="px-3 py-1.5 rounded-xl bg-slate-950 border border-indigo-500 text-white text-base font-bold focus:outline-none focus:ring-1 focus:ring-indigo-500 font-sans"
+                />
+                <button
+                  type="submit"
+                  className="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition flex items-center gap-1 shadow-md"
+                  title="Save Name"
+                >
+                  <Check className="w-3.5 h-3.5" />
+                  <span>Save</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsEditingName(false)}
+                  className="p-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white text-xs transition"
+                  title="Cancel"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </form>
+            ) : (
+              <div className="flex items-center gap-2 flex-wrap">
+                <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                  Welcome back, <span className="text-[#16D9F5]">{displayName}</span>
+                </h1>
+                <button
+                  onClick={handleStartEdit}
+                  className="p-1.5 rounded-lg text-slate-500 hover:text-[#16D9F5] hover:bg-slate-800/80 transition"
+                  title="Edit your display name"
+                >
+                  <Edit3 className="w-4 h-4" />
+                </button>
+              </div>
+            )}
 
             <p className="text-slate-300 text-xs sm:text-sm mt-2 font-medium leading-relaxed">
               “Your career journey is a bridge between where you are and where you want to be.”

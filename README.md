@@ -60,6 +60,27 @@ SkillBridge is an attractive, modern, full-stack career platform designed to hel
 - **Instant Accomplishment Rewriter**: Transforms weak, passive statements into executive-ready achievements.
 - **Multi-Perspective Styles**: Generates variations focused on **Quantified Metrics & Scale**, **Technical Depth & Resilience**, and **Business Leadership**.
 - **Action Verb Bank**: 1-click power verbs for rapid resume tuning.
+- **Full STAR Breakdown**: Situation, Task, Action, and Result structured breakdowns for every optimized variation.
+
+### 7. 💼 End-to-End Job Applications Pipeline Tracker
+- **Kanban & List Pipeline Views**: Track applications across 6 stages: `Applied`, `Screening`, `Technical Interview`, `Final Round`, `Offer Received`, and `Archived / Rejected`.
+- **Cross-Platform Origin Badging**: Filter and label jobs sourced from **LinkedIn**, **Naukri.com**, **Direct Careers**, and referrals.
+- **Interconnected Career Acceleration**:
+  - **1-Click Mock Q&A**: Instantly launch AI Mock Interview pre-calibrated to that company and target role.
+  - **1-Click Tailored Cover Letter**: Generate custom cover letters pre-populated with company name, role, and job requirements.
+- **CSV Data Export**: 1-click download of your entire application pipeline report for offline records.
+- **Persistent Cloud & Local Sync**: Multi-device synchronization isolated to your user account.
+
+### 8. ✉️ AI Tailored Cover Letter Generator
+- Auto-generates role-specific, high-impact cover letters incorporating the candidate's top engineering achievements, technical stack, and target company value propositions.
+- 1-click copy to clipboard and text file download.
+
+---
+
+## 🌐 Live Production Deployment
+- **Production URL**: [https://skillbridge-beige-seven.vercel.app](https://skillbridge-beige-seven.vercel.app)
+- **Deployment Status**: Ready on Vercel Production
+- **GitHub Repository**: [https://github.com/Sachin7045/SkillBridge.git](https://github.com/Sachin7045/SkillBridge.git)
 
 ---
 
@@ -117,7 +138,7 @@ SkillBridge provides secure authentication using **Email & Password with 6-Digit
 
 ## 🧪 Automated Testing & Verification
 
-Run the test suites from the project root:
+Run the comprehensive test suites (144 automated test cases, 100% pass rate):
 
 ```powershell
 # 1. Email + Password + OTP Authentication Tests (15 test cases)
@@ -128,6 +149,18 @@ node backend/test-interview-eval.js
 
 # 3. ATS Analyzer & Unit Scoring Tests (13 test cases)
 node backend/test-ats.js
+
+# 4. Job Applications Pipeline & Cloud Sync Tests (19 test cases)
+node backend/test-job-applications.js
+
+# 5. Core 5 Modules Integration Verification (5 test cases)
+node backend/test-core-modules.js
+
+# 6. Multilingual AI Interview Voice & Dialect Tests (5 test cases)
+node backend/test-multilingual-interview.js
+
+# 7. Software Engineering Domains & Fields Tests (16 test cases)
+node backend/test-software-fields-interview.js
 ```
 
 

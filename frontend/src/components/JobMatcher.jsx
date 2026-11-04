@@ -157,7 +157,7 @@ export default function JobMatcher({
       {/* Top Banner */}
       <div className="pro-card p-6 sm:p-7 rounded-3xl border border-slate-800/80 bg-slate-900/60 backdrop-blur-xl flex flex-col md:flex-row md:items-center justify-between gap-5">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-2">
             <Search className="w-3.5 h-3.5" />
             <span>Target Role & Live Portal Matcher</span>
           </div>
@@ -165,7 +165,7 @@ export default function JobMatcher({
             Job Description & Keyword Gap Calibration
           </h2>
           <p className="text-xs text-slate-400 mt-1 max-w-xl">
-            Test candidate resume against actual recruiter job descriptions, search live openings on <strong className="text-sky-400 font-semibold">LinkedIn</strong> and <strong className="text-cyan-400 font-semibold">Naukri.com</strong>, or detect missing competency gaps.
+            Test candidate resume against actual recruiter job descriptions, search live openings on <strong className="text-sky-400 font-semibold">LinkedIn</strong> and <strong className="text-blue-400 font-semibold">Naukri.com</strong>, or detect missing competency gaps.
           </p>
         </div>
 
@@ -173,10 +173,10 @@ export default function JobMatcher({
         <div className="flex items-center gap-4 bg-slate-950/70 p-4 rounded-2xl border border-slate-800 shrink-0">
           <div>
             <div className="text-[10px] uppercase font-bold text-slate-400">Match Coefficient</div>
-            <div className="text-2xl font-black text-cyan-400 mt-0.5">{matchPercentage}%</div>
+            <div className="text-2xl font-black text-blue-400 mt-0.5">{matchPercentage}%</div>
           </div>
-          <div className="w-12 h-12 rounded-full border-4 border-cyan-500/20 border-t-cyan-400 flex items-center justify-center">
-            <Target className="w-5 h-5 text-cyan-400" />
+          <div className="w-12 h-12 rounded-full border-4 border-blue-500/20 border-t-cyan-400 flex items-center justify-center">
+            <Target className="w-5 h-5 text-blue-400" />
           </div>
         </div>
       </div>
@@ -184,16 +184,16 @@ export default function JobMatcher({
       {/* ---------------------------------------------------- */}
       {/* SECTION 1: LinkedIn & Naukri.com Deep Link Search Bar */}
       {/* ---------------------------------------------------- */}
-      <div className="pro-card p-5 sm:p-6 rounded-2xl border border-indigo-500/30 bg-slate-900/70 space-y-4 shadow-lg shadow-indigo-950/20">
+      <div className="pro-card p-5 sm:p-6 rounded-2xl border border-blue-500/30 bg-slate-900/70 space-y-4 shadow-lg shadow-blue-950/20">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
+            <div className="w-8 h-8 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
               <Globe className="w-4 h-4" />
             </div>
             <div>
               <h3 className="text-sm font-bold text-white flex items-center gap-2">
                 <span>Live Portal Search & Direct Deep Links</span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 font-medium">
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/10 text-blue-300 border border-blue-500/20 font-medium">
                   LinkedIn & Naukri
                 </span>
               </h3>
@@ -227,7 +227,7 @@ export default function JobMatcher({
                 value={searchKeywords}
                 onChange={(e) => setSearchKeywords(e.target.value)}
                 placeholder="e.g. Full Stack Developer, React, Node.js..."
-                className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 font-sans"
+                className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 font-sans"
               />
             </div>
           </div>
@@ -242,7 +242,7 @@ export default function JobMatcher({
               <select
                 value={searchLocation}
                 onChange={(e) => setSearchLocation(e.target.value)}
-                className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-indigo-500 font-sans appearance-none"
+                className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-blue-500 font-sans appearance-none"
               >
                 {locationsList.map((loc) => (
                   <option key={loc.value} value={loc.value}>
@@ -288,7 +288,7 @@ export default function JobMatcher({
             className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-700 text-slate-200 text-xs font-semibold transition"
             title="Open searches on both LinkedIn and Naukri.com"
           >
-            <ExternalLink className="w-3.5 h-3.5 text-cyan-400" />
+            <ExternalLink className="w-3.5 h-3.5 text-blue-400" />
             <span className="hidden sm:inline">Open Both Portals</span>
             <span className="sm:hidden">Both</span>
           </button>
@@ -312,7 +312,7 @@ export default function JobMatcher({
                 onClick={() => handleRoleSelect(roleName)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-medium transition ${
                   selectedRole === roleName
-                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/25 border border-indigo-500'
+                    ? 'bg-blue-600 text-white shadow-md shadow-blue-600/25 border border-blue-500'
                     : 'bg-slate-950 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700'
                 }`}
               >
@@ -345,7 +345,7 @@ export default function JobMatcher({
 
               <button
                 onClick={() => handleLoadSampleJD('naukri')}
-                className="text-[11px] px-2.5 py-1 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 hover:bg-cyan-500/20 transition flex items-center gap-1 font-medium"
+                className="text-[11px] px-2.5 py-1 rounded-lg bg-cyan-500/10 text-blue-400 border border-blue-500/20 hover:bg-cyan-500/20 transition flex items-center gap-1 font-medium"
                 title="Paste a sample Naukri.com Enterprise JD"
               >
                 <span className="w-3 h-3 rounded-full bg-cyan-400 text-slate-950 font-black text-[8px] flex items-center justify-center">N</span>
@@ -372,7 +372,7 @@ export default function JobMatcher({
             value={customJD}
             onChange={(e) => setCustomJD(e.target.value)}
             placeholder="Paste raw requirements from LinkedIn, Naukri.com, or company careers page (e.g. requirements for React, Node.js, Docker, PostgreSQL, AWS, Redis)..."
-            className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 resize-none font-sans leading-relaxed"
+            className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 resize-none font-sans leading-relaxed"
           />
 
           <div className="flex items-center justify-between pt-1">
@@ -383,7 +383,7 @@ export default function JobMatcher({
             <button
               onClick={() => handleRunMatch()}
               disabled={isMatching}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white text-xs font-bold transition shadow-md shadow-indigo-600/25"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white text-xs font-bold transition shadow-md shadow-blue-600/25"
             >
               <Sparkles className="w-3.5 h-3.5" />
               <span>{isMatching ? "Scanning Keywords..." : "Run Precision Match"}</span>
@@ -457,7 +457,7 @@ export default function JobMatcher({
             <span className="text-slate-400">Want to add missing skills to your learning path?</span>
             <button
               onClick={() => onNavigateTab('roadmap')}
-              className="text-indigo-400 hover:text-indigo-300 font-medium transition"
+              className="text-blue-400 hover:text-blue-300 font-medium transition"
             >
               Open Roadmap →
             </button>
@@ -473,13 +473,13 @@ export default function JobMatcher({
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-800">
           <div>
             <div className="flex items-center gap-2">
-              <Briefcase className="w-4 h-4 text-cyan-400" />
+              <Briefcase className="w-4 h-4 text-blue-400" />
               <h3 className="text-base font-bold text-white">
                 Featured Tech Openings on LinkedIn & Naukri.com
               </h3>
             </div>
             <p className="text-xs text-slate-400 mt-0.5">
-              Curated openings matching <strong className="text-slate-200">{selectedRole}</strong>. Click <strong className="text-indigo-400">Match With Resume</strong> to test your compatibility, or apply directly on the portal.
+              Curated openings matching <strong className="text-slate-200">{selectedRole}</strong>. Click <strong className="text-blue-400">Match With Resume</strong> to test your compatibility, or apply directly on the portal.
             </p>
           </div>
 
@@ -491,7 +491,7 @@ export default function JobMatcher({
                 onClick={() => setActivePortalFilter('all')}
                 className={`px-3 py-1.5 rounded-lg font-medium transition ${
                   activePortalFilter === 'all'
-                    ? 'bg-indigo-600 text-white'
+                    ? 'bg-blue-600 text-white'
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
@@ -525,7 +525,7 @@ export default function JobMatcher({
             <select
               value={activeCityFilter}
               onChange={(e) => setActiveCityFilter(e.target.value)}
-              className="bg-slate-950 border border-slate-800 text-xs text-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-500"
+              className="bg-slate-950 border border-slate-800 text-xs text-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-500"
             >
               <option value="all">All Cities</option>
               <option value="Bengaluru">Bengaluru</option>
@@ -545,7 +545,7 @@ export default function JobMatcher({
                 setActivePortalFilter('all');
                 setActiveCityFilter('all');
               }}
-              className="text-indigo-400 hover:underline"
+              className="text-blue-400 hover:underline"
             >
               Reset Filters
             </button>
@@ -563,7 +563,7 @@ export default function JobMatcher({
               return (
                 <div
                   key={job.id}
-                  className="p-5 rounded-2xl bg-slate-950/80 border border-slate-800/90 hover:border-indigo-500/40 hover:bg-slate-950 transition-all flex flex-col justify-between space-y-4 group"
+                  className="p-5 rounded-2xl bg-slate-950/80 border border-slate-800/90 hover:border-blue-500/40 hover:bg-slate-950 transition-all flex flex-col justify-between space-y-4 group"
                 >
                   <div className="space-y-3">
                     {/* Top Row: Company, Title, Portal Badge */}
@@ -573,7 +573,7 @@ export default function JobMatcher({
                           {job.companyLogo || '🏢'}
                         </div>
                         <div>
-                          <h4 className="text-sm font-bold text-white group-hover:text-indigo-300 transition leading-snug">
+                          <h4 className="text-sm font-bold text-white group-hover:text-blue-300 transition leading-snug">
                             {job.title}
                           </h4>
                           <div className="text-xs text-slate-400 font-medium flex items-center gap-1.5 mt-0.5">
@@ -674,7 +674,7 @@ export default function JobMatcher({
                             }`}
                             title={isTracked ? "Already in your applications pipeline" : "Track this role in your Job Applications Pipeline"}
                           >
-                            {isTracked ? <Check className="w-3 h-3 text-emerald-400" /> : <Briefcase className="w-3 h-3 text-cyan-400" />}
+                            {isTracked ? <Check className="w-3 h-3 text-emerald-400" /> : <Briefcase className="w-3 h-3 text-blue-400" />}
                             <span>{isTracked ? 'Tracked' : 'Track'}</span>
                           </button>
                         );
@@ -683,10 +683,10 @@ export default function JobMatcher({
                       {/* Match With Resume Button */}
                       <button
                         onClick={() => handleLoadAndMatchJob(job)}
-                        className="px-3 py-1.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 text-xs font-semibold transition flex items-center gap-1.5"
+                        className="px-3 py-1.5 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 text-xs font-semibold transition flex items-center gap-1.5"
                         title="Load this job description into the calibration engine"
                       >
-                        <Sparkles className="w-3 h-3 text-indigo-400" />
+                        <Sparkles className="w-3 h-3 text-blue-400" />
                         <span>Match</span>
                       </button>
 

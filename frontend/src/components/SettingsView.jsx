@@ -32,7 +32,7 @@ export default function SettingsView({
     onShowToast({
       type: 'success',
       title: 'Settings Saved',
-      message: inputKey.trim() ? 'Google Gemini API key configured.' : 'Operating in offline local AI heuristic mode.'
+      message: inputKey.trim() ? 'Google Gemini API key configured.' : 'Operating in offline local evaluation mode.'
     });
     setTimeout(() => setSavedSuccess(false), 2500);
   };
@@ -47,7 +47,7 @@ export default function SettingsView({
       {/* Header */}
       <div className="pro-card p-6 rounded-3xl border border-slate-800/80 bg-slate-900/60 backdrop-blur-xl">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+          <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
             <SettingsIcon className="w-5 h-5" />
           </div>
           <div>
@@ -61,7 +61,7 @@ export default function SettingsView({
       <div className="pro-card p-6 rounded-2xl border border-slate-800/80 bg-slate-900/60">
         <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-5">
           <div className="flex items-center gap-2.5">
-            <KeyRound className="w-4 h-4 text-indigo-400" />
+            <KeyRound className="w-4 h-4 text-blue-400" />
             <h3 className="text-sm font-bold text-white">Google Gemini API Credentials</h3>
           </div>
           <span className={`text-[10px] uppercase font-bold px-2.5 py-0.5 rounded-full border ${
@@ -81,7 +81,7 @@ export default function SettingsView({
               value={inputKey}
               onChange={(e) => setInputKey(e.target.value)}
               placeholder="AIzaSy..."
-              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white placeholder-slate-600 text-xs focus:outline-none focus:border-indigo-500 font-mono"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white placeholder-slate-600 text-xs focus:outline-none focus:border-blue-500 font-mono"
             />
             <p className="text-[11px] text-slate-400 mt-2 leading-relaxed">
               When omitted, SkillBridge seamlessly runs an <strong>intelligent offline heuristic AI engine</strong> that parses resume taxonomy, generates anchored questions, and calculates STAR adherence locally without external network dependencies.
@@ -93,7 +93,7 @@ export default function SettingsView({
               href="https://aistudio.google.com/app/apikey"
               target="_blank"
               rel="noreferrer"
-              className="text-xs text-indigo-400 hover:text-indigo-300 inline-flex items-center gap-1 transition"
+              className="text-xs text-blue-400 hover:text-blue-300 inline-flex items-center gap-1 transition"
             >
               <span>Get a free key from Google AI Studio</span>
               <ExternalLink className="w-3 h-3" />
@@ -101,7 +101,7 @@ export default function SettingsView({
 
             <button
               type="submit"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition shadow-md shadow-indigo-600/25"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold transition shadow-md shadow-blue-600/25"
             >
               {savedSuccess ? <Check className="w-3.5 h-3.5" /> : <Save className="w-3.5 h-3.5" />}
               <span>{savedSuccess ? 'Saved' : 'Save Changes'}</span>
@@ -132,7 +132,7 @@ export default function SettingsView({
           >
             {theme === 'dark' ? (
               <>
-                <Moon className="w-3.5 h-3.5 text-indigo-400" />
+                <Moon className="w-3.5 h-3.5 text-blue-400" />
                 <span>Dark Obsidian</span>
               </>
             ) : (
@@ -148,7 +148,7 @@ export default function SettingsView({
       {/* Architectural Engine Overview */}
       <div className="pro-card p-6 rounded-2xl border border-slate-800/80 bg-slate-900/60 space-y-3">
         <div className="flex items-center gap-2.5 text-sm font-bold text-white">
-          <Cpu className="w-4 h-4 text-cyan-400" />
+          <Cpu className="w-4 h-4 text-blue-400" />
           <span>Active Architecture Telemetry</span>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
@@ -162,7 +162,7 @@ export default function SettingsView({
           </div>
           <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800">
             <span className="text-slate-400 block text-[10px] uppercase">Client Framework</span>
-            <span className="text-cyan-400 font-semibold mt-0.5 block">React 18 + Vite 6 + Tailwind</span>
+            <span className="text-blue-400 font-semibold mt-0.5 block">React 18 + Vite 6 + Tailwind</span>
           </div>
         </div>
       </div>

@@ -157,7 +157,7 @@ export default function ResumeVisualizer({
         <div className="flex flex-wrap items-center gap-4">
 
           {/* Upload Resume Button */}
-          <label className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-500 rounded-xl cursor-pointer transition shadow-md shadow-indigo-600/25 group">
+          <label className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-xl cursor-pointer transition shadow-md shadow-blue-600/25 group">
             <Upload className="w-3.5 h-3.5 transition-transform group-hover:-translate-y-0.5" />
             <span>{readingResume ? "Analyzing File..." : "Upload New Resume"}</span>
             <input
@@ -178,7 +178,7 @@ export default function ResumeVisualizer({
           {/* Template Switcher */}
           <div className="flex items-center gap-2 border-l border-slate-800 pl-4">
             <span className="text-xs font-semibold text-slate-400 flex items-center gap-1.5 uppercase tracking-wider text-[11px]">
-              <Layout className="w-3.5 h-3.5 text-indigo-400" />
+              <Layout className="w-3.5 h-3.5 text-blue-400" />
               Layout:
             </span>
 
@@ -227,9 +227,9 @@ export default function ResumeVisualizer({
           <button
             type="button"
             onClick={() => setIsEditModalOpen(true)}
-            className="flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-white bg-indigo-600/30 hover:bg-indigo-600 border border-indigo-500/40 rounded-xl transition shadow-sm"
+            className="flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-white bg-blue-600/30 hover:bg-blue-600 border border-blue-500/40 rounded-xl transition shadow-sm"
           >
-            <Sparkles className="w-3.5 h-3.5 text-cyan-300" />
+            <Sparkles className="w-3.5 h-3.5 text-blue-300" />
             <span>Structured Section Editor</span>
           </button>
 
@@ -262,12 +262,12 @@ export default function ResumeVisualizer({
                 </>
               ) : isSavingCloud ? (
                 <>
-                  <Cloud className="w-3.5 h-3.5 animate-pulse text-indigo-400" />
+                  <Cloud className="w-3.5 h-3.5 animate-pulse text-blue-400" />
                   <span>Saving...</span>
                 </>
               ) : (
                 <>
-                  <Save className="w-3.5 h-3.5 text-indigo-400" />
+                  <Save className="w-3.5 h-3.5 text-blue-400" />
                   <span>Save to Cloud</span>
                 </>
               )}
@@ -281,7 +281,7 @@ export default function ResumeVisualizer({
             className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-slate-200 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700/80 rounded-xl transition shadow-sm"
             title="Print or Save Resume as PDF via browser"
           >
-            <Printer className="w-3.5 h-3.5 text-cyan-400" />
+            <Printer className="w-3.5 h-3.5 text-blue-400" />
             <span className="hidden sm:inline">Print / PDF</span>
           </button>
 
@@ -300,7 +300,7 @@ export default function ResumeVisualizer({
               onClick={() => setIsEditing(true)}
               className="flex items-center gap-2 px-3.5 py-2 text-xs font-medium text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-700 border border-slate-700/80 rounded-xl transition shadow-sm"
             >
-              <Edit3 className="w-3.5 h-3.5 text-indigo-400" />
+              <Edit3 className="w-3.5 h-3.5 text-blue-400" />
               <span>Inline Edit</span>
             </button>
           )}
@@ -323,11 +323,11 @@ export default function ResumeVisualizer({
             <div className="flex items-center justify-between mb-2">
 
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
-                <Cpu className="w-4 h-4 text-indigo-400" />
+                <Cpu className="w-4 h-4 text-blue-400" />
                 Technical Competency Radar
               </h3>
 
-              <span className="text-[10px] text-indigo-300 bg-indigo-500/10 px-2.5 py-0.5 rounded-full border border-indigo-500/20 font-semibold">
+              <span className="text-[10px] text-blue-300 bg-blue-500/10 px-2.5 py-0.5 rounded-full border border-blue-500/20 font-semibold">
                 Calibrated
               </span>
 
@@ -389,7 +389,7 @@ export default function ResumeVisualizer({
 
               <div className="p-2.5 rounded-xl bg-slate-950/70 border border-slate-800/80">
 
-                <div className="text-base font-bold text-indigo-400">
+                <div className="text-base font-bold text-blue-400">
                   {editableResume.experience?.length || 0}
                 </div>
 
@@ -407,7 +407,7 @@ export default function ResumeVisualizer({
           <div className="glass-panel p-5 rounded-2xl border border-slate-800 space-y-4">
 
             <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-              <Code2 className="w-4 h-4 text-indigo-400" />
+              <Code2 className="w-4 h-4 text-blue-400" />
               Categorized Skills
             </h3>
 
@@ -490,14 +490,14 @@ export default function ResumeVisualizer({
           <div
             className={`print-area rounded-3xl transition-all duration-300 p-8 sm:p-10 ${
               template === "modern"
-                ? "bg-slate-900/90 border border-indigo-500/30 shadow-2xl shadow-black/60 relative overflow-hidden"
+                ? "bg-slate-900/90 border border-blue-500/30 shadow-2xl shadow-black/60 relative overflow-hidden"
                 : template === "executive"
                 ? "bg-[#090d16] border border-slate-700/80 text-slate-100 shadow-2xl"
                 : "bg-slate-900/60 border border-slate-800 shadow-xl"
             }`}
           >
             {template === "modern" && (
-              <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute top-0 right-0 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
             )}
 
             {/* =========================
@@ -528,7 +528,7 @@ export default function ResumeVisualizer({
                             name: e.target.value,
                           })
                         }
-                        className="text-2xl font-black bg-slate-950 border border-indigo-500 rounded px-2 py-1 text-white w-full"
+                        className="text-2xl font-black bg-slate-950 border border-blue-500 rounded px-2 py-1 text-white w-full"
                         placeholder="Full Name"
                       />
 
@@ -541,7 +541,7 @@ export default function ResumeVisualizer({
                             title: e.target.value,
                           })
                         }
-                        className="text-sm font-semibold bg-slate-950 border border-slate-700 rounded px-2 py-1 text-cyan-400 w-full"
+                        className="text-sm font-semibold bg-slate-950 border border-slate-700 rounded px-2 py-1 text-blue-400 w-full"
                         placeholder="Professional Title"
                       />
 
@@ -554,7 +554,7 @@ export default function ResumeVisualizer({
                         {editableResume.name || "Your Name"}
                       </h1>
 
-                      <p className="text-sm sm:text-base font-semibold text-cyan-400 mt-1">
+                      <p className="text-sm sm:text-base font-semibold text-blue-400 mt-1">
                         {editableResume.title || "Professional Title"}
                       </p>
                     </>
@@ -568,21 +568,21 @@ export default function ResumeVisualizer({
 
                   {editableResume.email && (
                     <span className="flex items-center gap-1.5">
-                      <Mail className="w-3.5 h-3.5 text-indigo-400" />
+                      <Mail className="w-3.5 h-3.5 text-blue-400" />
                       {editableResume.email}
                     </span>
                   )}
 
                   {editableResume.phone && (
                     <span className="flex items-center gap-1.5">
-                      <Phone className="w-3.5 h-3.5 text-indigo-400" />
+                      <Phone className="w-3.5 h-3.5 text-blue-400" />
                       {editableResume.phone}
                     </span>
                   )}
 
                   {editableResume.location && (
                     <span className="flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-indigo-400" />
+                      <MapPin className="w-3.5 h-3.5 text-blue-400" />
                       {editableResume.location}
                     </span>
                   )}
@@ -602,7 +602,7 @@ export default function ResumeVisualizer({
                       href={editableResume.links.linkedin}
                       target="_blank"
                       rel="noreferrer"
-                      className="flex items-center gap-1 text-indigo-400 hover:text-indigo-300"
+                      className="flex items-center gap-1 text-blue-400 hover:text-blue-300"
                     >
                       <Linkedin className="w-3.5 h-3.5" />
                       LinkedIn Profile
@@ -615,7 +615,7 @@ export default function ResumeVisualizer({
                       href={editableResume.links.github}
                       target="_blank"
                       rel="noreferrer"
-                      className="flex items-center gap-1 text-cyan-400 hover:text-cyan-300"
+                      className="flex items-center gap-1 text-blue-400 hover:text-blue-300"
                     >
                       <Github className="w-3.5 h-3.5" />
                       GitHub Profile
@@ -636,7 +636,7 @@ export default function ResumeVisualizer({
               <div className="py-5 border-b border-slate-800/80">
 
                 <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                  <Sparkles className="w-3.5 h-3.5 text-blue-400" />
                   Professional Profile
                   {kwList.length > 0 && (
                     <span className="ml-auto text-[10px] text-amber-400 flex items-center gap-1 font-normal normal-case tracking-normal">
@@ -678,7 +678,7 @@ export default function ResumeVisualizer({
               <div className="py-6 border-b border-slate-800/80">
 
                 <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4 flex items-center gap-1.5">
-                  <Briefcase className="w-3.5 h-3.5 text-indigo-400" />
+                  <Briefcase className="w-3.5 h-3.5 text-blue-400" />
                   Work Experience Timeline
                 </h2>
 
@@ -698,7 +698,7 @@ export default function ResumeVisualizer({
                     >
 
                       {template === "modern" && (
-                        <div className="absolute left-0 top-1.5 w-3 h-3 rounded-full bg-indigo-400" />
+                        <div className="absolute left-0 top-1.5 w-3 h-3 rounded-full bg-blue-400" />
                       )}
 
                       <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-2">
@@ -709,7 +709,7 @@ export default function ResumeVisualizer({
                             {exp.role || "Position"}
                           </h3>
 
-                          <p className={`text-xs font-semibold ${template === "executive" ? "text-slate-400" : "text-indigo-300"}`}>
+                          <p className={`text-xs font-semibold ${template === "executive" ? "text-slate-400" : "text-blue-300"}`}>
                             {exp.company || "Company"}
                             {exp.location && ` • ${exp.location}`}
                           </p>
@@ -768,7 +768,7 @@ export default function ResumeVisualizer({
               <div className="py-6 border-b border-slate-800/80">
 
                 <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4 flex items-center gap-1.5">
-                  <Code2 className="w-3.5 h-3.5 text-cyan-400" />
+                  <Code2 className="w-3.5 h-3.5 text-blue-400" />
                   Featured Technical Projects
                 </h2>
 
@@ -792,7 +792,7 @@ export default function ResumeVisualizer({
                             href={proj.link}
                             target="_blank"
                             rel="noreferrer"
-                            className="text-indigo-400 hover:text-indigo-300"
+                            className="text-blue-400 hover:text-blue-300"
                           >
                             <ExternalLink className="w-3 h-3" />
                           </a>
@@ -810,7 +810,7 @@ export default function ResumeVisualizer({
 
                           <span
                             key={tIdx}
-                            className="text-[10px] bg-slate-900 text-cyan-300 px-2 py-0.5 rounded border border-slate-800"
+                            className="text-[10px] bg-slate-900 text-blue-300 px-2 py-0.5 rounded border border-slate-800"
                           >
                             {tech}
                           </span>
@@ -836,7 +836,7 @@ export default function ResumeVisualizer({
               <div className="pt-6">
 
                 <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-1.5">
-                  <GraduationCap className="w-3.5 h-3.5 text-indigo-400" />
+                  <GraduationCap className="w-3.5 h-3.5 text-blue-400" />
                   Education & Honors
                 </h2>
 

@@ -46,7 +46,7 @@ export const SOFTWARE_FIELDS = [
   { id: 'System Design', label: 'System Design & Scale (100M+ Users, CAP, Caching)', icon: '🏗️', short: 'System Design' },
   { id: 'DevOps', label: 'DevOps & Cloud (Kubernetes, CI/CD, Canary, IaC)', icon: '🚀', short: 'DevOps & Cloud' },
   { id: 'Data Engineering', label: 'Data Engineering (Kafka, Spark, Lakehouse)', icon: '📊', short: 'Data Eng' },
-  { id: 'AI & Machine Learning', label: 'AI & Machine Learning (RAG, Vector DB, LLMOps)', icon: '🤖', short: 'AI & ML' },
+  { id: 'AI & Machine Learning', label: 'AI & Machine Learning (RAG, Vector DB, LLMOps)', icon: '🧠', short: 'AI & ML' },
   { id: 'Cybersecurity', label: 'Cybersecurity & AppSec (OWASP, OAuth, JWT, PKCE)', icon: '🛡️', short: 'Cybersecurity' },
   { id: 'Mobile', label: 'Mobile App Engineering (Offline-First, Bridge, SQLite)', icon: '📱', short: 'Mobile' },
   { id: 'Testing & SRE', label: 'Testing, QA & SRE (Pyramid, OpenTelemetry, SLOs)', icon: '🧪', short: 'Testing & SRE' },
@@ -67,7 +67,7 @@ export function getCategoryBadge(category) {
   if (c.includes('mobile')) return { label: 'Mobile Engineering', color: 'bg-pink-500/10 text-pink-400 border-pink-500/30', icon: '📱' };
   if (c.includes('testing') || c.includes('sre')) return { label: 'Testing & SRE', color: 'bg-orange-500/10 text-orange-400 border-orange-500/30', icon: '🧪' };
   if (c.includes('behavioral') || c.includes('star')) return { label: 'Behavioral (STAR)', color: 'bg-amber-500/10 text-amber-400 border-amber-500/30', icon: '🤝' };
-  return { label: category || 'Resume Deep-Dive', color: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30', icon: '📄' };
+  return { label: category || 'Resume Deep-Dive', color: 'bg-blue-500/10 text-blue-400 border-blue-500/30', icon: '📄' };
 }
 
 export default function AiMockInterviewer({ 
@@ -415,9 +415,9 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
       
       {/* Targeted Role Context Banner (if active from Job Applications / Matcher) */}
       {targetJob && (
-        <div className="p-4 rounded-2xl bg-indigo-950/60 border border-indigo-500/40 flex items-center justify-between gap-3 text-xs shadow-lg shadow-indigo-600/10">
+        <div className="p-4 rounded-2xl bg-blue-950/60 border border-blue-500/40 flex items-center justify-between gap-3 text-xs shadow-lg shadow-blue-600/10">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 flex items-center justify-center font-bold text-sm">
+            <div className="w-9 h-9 rounded-xl bg-blue-600/30 border border-blue-500/40 text-blue-300 flex items-center justify-center font-bold text-sm">
               🎯
             </div>
             <div>
@@ -426,7 +426,7 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
                 <span className="text-slate-400">at</span>
                 <span className="text-cyan-400 font-semibold">{targetJob.company}</span>
               </div>
-              <div className="text-[11px] text-indigo-300/90 mt-0.5">
+              <div className="text-[11px] text-blue-300/90 mt-0.5">
                 Questions and technical evaluation criteria are customized for this application.
               </div>
             </div>
@@ -444,12 +444,12 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
       <div className="glass-panel p-6 rounded-3xl border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+            <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
               <Mic className="w-4 h-4" />
             </div>
-            <h2 className="text-lg font-bold text-white">AI Mock Interviewer</h2>
+            <h2 className="text-lg font-bold text-white">Technical Mock Interview Studio</h2>
             <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-semibold">
-              Multilingual Voice Interrogator
+              Staff-Level Assessment Framework
             </span>
           </div>
           <p className="text-xs text-slate-400">
@@ -482,7 +482,7 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
               setSelectedQuestionIndex(0);
               setCandidateAnswer('');
             }}
-            className="bg-slate-950 border border-slate-700 text-xs text-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-500 font-medium"
+            className="bg-slate-950 border border-slate-700 text-xs text-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-500 font-medium"
             title="Filter by Software Engineering Field"
           >
             {SOFTWARE_FIELDS.map(f => (
@@ -498,7 +498,7 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
             className="flex items-center gap-1.5 px-3 py-2 bg-slate-900 border border-slate-700 hover:border-slate-600 rounded-xl text-xs text-slate-300 transition"
             title="Generate fresh questions"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${isLoadingQuestions ? 'animate-spin text-indigo-400' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 ${isLoadingQuestions ? 'animate-spin text-blue-400' : ''}`} />
             <span className="hidden sm:inline">Refresh</span>
           </button>
 
@@ -506,7 +506,7 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
             <>
               <button
                 onClick={handleExportInterviewSession}
-                className="flex items-center gap-1.5 px-3 py-2 bg-indigo-600/30 hover:bg-indigo-600 border border-indigo-500/40 rounded-xl text-xs text-indigo-200 hover:text-white transition"
+                className="flex items-center gap-1.5 px-3 py-2 bg-blue-600/30 hover:bg-blue-600 border border-blue-500/40 rounded-xl text-xs text-indigo-200 hover:text-white transition"
                 title="Download full evaluation report as Markdown"
               >
                 <Download className="w-3.5 h-3.5 text-cyan-300" />
@@ -539,7 +539,7 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
               }}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all border ${
                 isActive
-                  ? 'bg-indigo-600/25 border-indigo-500 text-white shadow-sm shadow-indigo-500/20 ring-1 ring-indigo-500/50'
+                  ? 'bg-blue-600/25 border-blue-500 text-white shadow-sm shadow-blue-500/20 ring-1 ring-blue-500/50'
                   : 'bg-slate-950/80 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700 hover:bg-slate-900'
               }`}
               title={field.label}
@@ -553,7 +553,7 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
 
       {isLoadingQuestions ? (
         <div className="p-16 text-center space-y-3">
-          <div className="w-12 h-12 rounded-full border-2 border-indigo-500 border-t-transparent animate-spin mx-auto" />
+          <div className="w-12 h-12 rounded-full border-2 border-blue-500 border-t-transparent animate-spin mx-auto" />
           <p className="text-sm font-medium text-slate-300">
             Synthesizing challenging interview questions from your resume...
           </p>
@@ -584,7 +584,7 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
                     }}
                     className={`p-3.5 rounded-2xl border transition-all cursor-pointer space-y-2 ${
                       isSelected
-                        ? 'bg-indigo-600/10 border-indigo-500 ring-1 ring-indigo-500 shadow-md shadow-indigo-600/10'
+                        ? 'bg-blue-600/10 border-blue-500 ring-1 ring-blue-500 shadow-md shadow-blue-600/10'
                         : 'bg-slate-900/50 border-slate-800 hover:border-slate-700 hover:bg-slate-900'
                     }`}
                   >
@@ -649,7 +649,7 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
                 {/* AI Voice Interviewer Speech Hub ("AI Question Puche") */}
                 <div className={`p-4 rounded-2xl border transition-all ${
                   isSpeakingQuestion 
-                    ? 'bg-indigo-950/40 border-indigo-500/50 shadow-lg shadow-indigo-600/10 ring-1 ring-indigo-500/30' 
+                    ? 'bg-blue-950/40 border-blue-500/50 shadow-lg shadow-blue-600/10 ring-1 ring-blue-500/30' 
                     : 'bg-slate-950/60 border-slate-800'
                 }`}>
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
@@ -658,10 +658,10 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
                     <div className="flex items-center gap-3">
                       <div className={`w-10 h-10 rounded-2xl flex items-center justify-center border transition ${
                         isSpeakingQuestion
-                          ? 'bg-indigo-600 text-white border-indigo-400 shadow-md shadow-indigo-500/40'
-                          : 'bg-slate-900 text-indigo-400 border-slate-700'
+                          ? 'bg-blue-600 text-white border-blue-400 shadow-md shadow-blue-500/40'
+                          : 'bg-slate-900 text-blue-400 border-slate-700'
                       }`}>
-                        <Bot className="w-5 h-5" />
+                        <Mic className="w-5 h-5" />
                       </div>
 
                       <div>
@@ -669,7 +669,7 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
                           <span className="text-xs font-bold text-white">
                             {uiText.aiInterviewerTitle}
                           </span>
-                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-800 text-indigo-300 font-semibold border border-slate-700">
+                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-800 text-blue-300 font-semibold border border-slate-700">
                             {activeLangConfig.flag} {activeLangConfig.shortName}
                           </span>
                         </div>
@@ -680,9 +680,9 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
                             <>
                               <div className="flex items-center gap-0.5 h-3.5">
                                 <span className="w-1 bg-cyan-400 rounded-full animate-pulse h-3" />
-                                <span className="w-1 bg-indigo-400 rounded-full animate-bounce h-4" />
+                                <span className="w-1 bg-blue-400 rounded-full animate-bounce h-4" />
                                 <span className="w-1 bg-cyan-300 rounded-full animate-pulse h-2.5" />
-                                <span className="w-1 bg-indigo-300 rounded-full animate-bounce h-3.5" />
+                                <span className="w-1 bg-blue-300 rounded-full animate-bounce h-3.5" />
                                 <span className="w-1 bg-cyan-400 rounded-full animate-pulse h-2" />
                               </div>
                               <span className="text-[11px] font-medium text-cyan-400">
@@ -691,7 +691,7 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
                             </>
                           ) : (
                             <span className="text-[11px] text-slate-400">
-                              AI Voice Ready • Click button to hear question in {activeLangConfig.nativeName}
+                              Audio Prompts Ready • Click button to hear question in {activeLangConfig.nativeName}
                             </span>
                           )}
                         </div>
@@ -707,9 +707,9 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
                         className={`flex items-center gap-2 px-3.5 py-2 text-xs font-bold rounded-xl transition shadow-sm ${
                           isSpeakingQuestion
                             ? 'bg-rose-600 hover:bg-rose-500 text-white shadow-rose-600/30 animate-pulse'
-                            : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-600/25'
+                            : 'bg-blue-600 hover:bg-blue-500 text-white shadow-blue-600/25'
                         }`}
-                        title="AI speaks the question aloud"
+                        title="Listen to question aloud"
                       >
                         {isSpeakingQuestion ? (
                           <>
@@ -733,7 +733,7 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
                             onClick={() => setSpeechSpeed(speed)}
                             className={`px-2 py-1 rounded-lg font-medium transition ${
                               speechSpeed === speed
-                                ? 'bg-indigo-600 text-white font-bold'
+                                ? 'bg-blue-600 text-white font-bold'
                                 : 'text-slate-400 hover:text-slate-200'
                             }`}
                           >
@@ -748,7 +748,7 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
                           type="checkbox"
                           checked={isAutoAskEnabled}
                           onChange={handleToggleAutoAsk}
-                          className="w-3 h-3 text-indigo-600 rounded bg-slate-950 border-slate-700 focus:ring-0 cursor-pointer"
+                          className="w-3 h-3 text-blue-600 rounded bg-slate-950 border-slate-700 focus:ring-0 cursor-pointer"
                         />
                         <span>{uiText.autoAsk}</span>
                       </label>
@@ -776,7 +776,7 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
                     </div>
                     {currentQuestion.contextAnchor && (
                       <span className="text-[11px] text-slate-400 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">
-                        Anchor: <strong className="text-indigo-300">{currentQuestion.contextAnchor}</strong>
+                        Anchor: <strong className="text-blue-300">{currentQuestion.contextAnchor}</strong>
                       </span>
                     )}
                   </div>
@@ -814,7 +814,7 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
 
                   {currentQuestion.tips && (
                     <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] text-slate-400">
-                      <span className="flex items-center gap-1 text-indigo-400 font-semibold">
+                      <span className="flex items-center gap-1 text-blue-400 font-semibold">
                         <Lightbulb className="w-3.5 h-3.5" /> Tips:
                       </span>
                       {currentQuestion.tips.map((tip, idx) => (
@@ -830,7 +830,7 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
                 <div className="space-y-3">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
-                      <MessageSquare className="w-3.5 h-3.5 text-indigo-400" />
+                      <MessageSquare className="w-3.5 h-3.5 text-blue-400" />
                       <span>Your Response</span>
                       <span className="text-[10px] text-cyan-400 font-normal">
                         ({activeLangConfig.shortName} speech active)
@@ -891,7 +891,7 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
                         ? `[${activeLangConfig.nativeName} (${activeLangConfig.shortName}) Active] Type or speak your response using the microphone above in ${activeLangConfig.nativeName} or English...`
                         : "Provide your answer. Walk through the Situation, Task, what specific Actions you took, and the quantifiable Result..."
                     }
-                    className="w-full p-4 bg-slate-950 border border-slate-800 rounded-2xl text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 font-sans leading-relaxed resize-none"
+                    className="w-full p-4 bg-slate-950 border border-slate-800 rounded-2xl text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-500 font-sans leading-relaxed resize-none"
                   />
 
                   <div className="flex items-center justify-between pt-1">
@@ -910,7 +910,7 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
                     <button
                       onClick={handleSubmitAnswer}
                       disabled={isEvaluating || !candidateAnswer.trim()}
-                      className="flex items-center gap-2 px-5 py-2.5 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl shadow-lg shadow-indigo-600/30 transition"
+                      className="flex items-center gap-2 px-5 py-2.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl shadow-lg shadow-blue-600/30 transition"
                     >
                       {isEvaluating ? (
                         <>
@@ -940,7 +940,7 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
                             <div>
                               <div className="flex flex-wrap items-center gap-2">
                                 <span className="text-[10px] uppercase font-bold text-rose-400 tracking-wider">
-                                  AI Assessment Scorecard
+                                  Technical Evaluation Rubric
                                 </span>
                                 <span className="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20 font-semibold flex items-center gap-1">
                                   <XCircle className="w-3 h-3" /> Status: INVALID
@@ -1018,12 +1018,12 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
 
                           {/* Ideal Sample Answer preview */}
                           {currentEvaluation.modelAnswer && (
-                            <div className="p-4 rounded-xl bg-indigo-950/30 border border-indigo-500/20 space-y-2">
-                              <div className="flex items-center gap-1.5 text-xs font-bold text-indigo-300">
-                                <BookOpen className="w-3.5 h-3.5 text-indigo-400" />
+                            <div className="p-4 rounded-xl bg-blue-950/30 border border-blue-500/20 space-y-2">
+                              <div className="flex items-center gap-1.5 text-xs font-bold text-blue-300">
+                                <BookOpen className="w-3.5 h-3.5 text-blue-400" />
                                 <span>Ideal Sample Answer (Staff-Level Model Answer)</span>
                               </div>
-                              <p className="text-xs text-slate-300 leading-relaxed font-sans bg-slate-950/60 p-3 rounded-lg border border-indigo-500/10 italic">
+                              <p className="text-xs text-slate-300 leading-relaxed font-sans bg-slate-950/60 p-3 rounded-lg border border-blue-500/10 italic">
                                 "{currentEvaluation.modelAnswer}"
                               </p>
                             </div>
@@ -1033,13 +1033,13 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
                     }
 
                     return (
-                      <div className="mt-6 p-5 sm:p-6 rounded-2xl bg-slate-950/80 border border-indigo-500/30 space-y-4 animate-fade-in">
+                      <div className="mt-6 p-5 sm:p-6 rounded-2xl bg-slate-950/80 border border-blue-500/30 space-y-4 animate-fade-in">
                         {/* Score Header */}
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800">
                           <div>
                             <div className="flex flex-wrap items-center gap-2">
-                              <span className="text-[10px] uppercase font-bold text-indigo-400 tracking-wider">
-                                AI Assessment Scorecard
+                              <span className="text-[10px] uppercase font-bold text-blue-400 tracking-wider">
+                                Technical Evaluation Rubric
                               </span>
                               {/* Concept 1: Answer Validity */}
                               <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold flex items-center gap-1 ${
@@ -1075,7 +1075,7 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
                             <div className="flex flex-col items-end">
                               <span className={`text-2xl font-black ${
                                 (Number(currentEvaluation.score) || 0) >= 7.5 ? 'text-emerald-400' :
-                                (Number(currentEvaluation.score) || 0) >= 4.5 ? 'text-indigo-400' :
+                                (Number(currentEvaluation.score) || 0) >= 4.5 ? 'text-blue-400' :
                                 'text-rose-400'
                               }`}>
                                 {currentEvaluation.score}<span className="text-sm text-slate-500">/10</span>
@@ -1098,7 +1098,7 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
 
                           {/* 2. Technical Accuracy 30% - Factual Correctness */}
                           <div className="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-0.5">
-                            <div className="text-sm font-black text-indigo-400">
+                            <div className="text-sm font-black text-blue-400">
                               {currentEvaluation.technicalAccuracyScore ?? 0}/10
                             </div>
                             <div className="text-[10px] font-semibold text-slate-300">Technical Accuracy (30%)</div>
@@ -1137,8 +1137,8 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
 
                         {/* Feedback paragraph */}
                         <div className="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800 space-y-1">
-                          <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-wider block">
-                            AI Evaluation Feedback
+                          <span className="text-[10px] font-bold text-blue-400 uppercase tracking-wider block">
+                            Technical Review & Feedback
                           </span>
                           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
                             {currentEvaluation.feedback}
@@ -1225,12 +1225,12 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
 
                         {/* Ideal Sample Answer Accordion / Preview */}
                         {currentEvaluation.modelAnswer && (
-                          <div className="p-4 rounded-xl bg-indigo-950/30 border border-indigo-500/20 space-y-2">
-                            <div className="flex items-center gap-1.5 text-xs font-bold text-indigo-300">
-                              <BookOpen className="w-3.5 h-3.5 text-indigo-400" />
+                          <div className="p-4 rounded-xl bg-blue-950/30 border border-blue-500/20 space-y-2">
+                            <div className="flex items-center gap-1.5 text-xs font-bold text-blue-300">
+                              <BookOpen className="w-3.5 h-3.5 text-blue-400" />
                               <span>Ideal Sample Answer (Staff-Level Model Answer)</span>
                             </div>
-                            <p className="text-xs text-slate-300 leading-relaxed font-sans bg-slate-950/60 p-3 rounded-lg border border-indigo-500/10 italic">
+                            <p className="text-xs text-slate-300 leading-relaxed font-sans bg-slate-950/60 p-3 rounded-lg border border-blue-500/10 italic">
                               "{currentEvaluation.modelAnswer}"
                             </p>
                           </div>

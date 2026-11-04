@@ -120,20 +120,20 @@ export default function OverviewDashboard({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         
         {/* Left Hero Growth Banner */}
-        <div className="lg:col-span-8 relative overflow-hidden rounded-3xl p-6 sm:p-8 bg-[#07152B] border border-[#0B1933] shadow-2xl flex flex-col justify-between group">
+        <div className="lg:col-span-8 relative overflow-hidden rounded-3xl p-6 sm:p-8 bg-[#111827] border border-[#1e293b] shadow-2xl flex flex-col justify-between group">
           
           {/* Futuristic CSS Ambient Glow & Layered Mountain Vista Effect */}
-          <div className="absolute top-0 right-0 w-[420px] h-full bg-gradient-to-l from-[#258BFF]/20 via-[#773BFF]/15 to-transparent pointer-events-none" />
-          <div className="absolute -bottom-10 right-10 w-72 h-72 bg-[#16D9F5]/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-[420px] h-full bg-gradient-to-l from-[#2563eb]/20 via-[#2563eb]/15 to-transparent pointer-events-none" />
+          <div className="absolute -bottom-10 right-10 w-72 h-72 bg-[#38bdf8]/10 rounded-full blur-3xl pointer-events-none" />
           
           {/* Subtle CSS Generated Stars & Silhouette Illustration */}
           <div className="absolute right-6 bottom-4 hidden sm:block opacity-75 pointer-events-none">
-            <div className="text-right font-serif italic text-xs text-[#16D9F5]/70 mb-2 select-none tracking-wide">
+            <div className="text-right font-serif italic text-xs text-[#38bdf8]/70 mb-2 select-none tracking-wide">
               Better Skills • Bigger Opportunities • Higher Dreams
             </div>
-            {/* Geometric CSS Art Silhouette Layer */}
-            <div className="w-48 h-24 bg-gradient-to-t from-[#020817] via-[#0B1933]/80 to-transparent rounded-t-full border-t border-[#258BFF]/30 flex items-center justify-center">
-              <Sparkles className="w-6 h-6 text-[#16D9F5]/60 animate-pulse" />
+            {/* Geometric Art Silhouette Layer */}
+            <div className="w-48 h-24 bg-gradient-to-t from-[#0a0e17] via-[#1e293b]/80 to-transparent rounded-t-full border-t border-blue-500/30 flex items-center justify-center">
+              <Target className="w-5 h-5 text-blue-400" />
             </div>
           </div>
 
@@ -173,11 +173,11 @@ export default function OverviewDashboard({
             ) : (
               <div className="flex items-center gap-2 flex-wrap">
                 <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                  Welcome back, <span className="text-[#16D9F5]">{displayName}</span>
+                  Welcome back, <span className="text-[#38bdf8]">{displayName}</span>
                 </h1>
                 <button
                   onClick={handleStartEdit}
-                  className="p-1.5 rounded-lg text-slate-500 hover:text-[#16D9F5] hover:bg-slate-800/80 transition"
+                  className="p-1.5 rounded-lg text-slate-500 hover:text-[#38bdf8] hover:bg-slate-800/80 transition"
                   title="Edit your display name"
                 >
                   <Edit3 className="w-4 h-4" />
@@ -197,23 +197,23 @@ export default function OverviewDashboard({
             <div className="flex flex-wrap items-center gap-3 mt-6">
               <button
                 onClick={() => onNavigateTab('analyzer')}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#258BFF] to-[#773BFF] hover:from-[#1b74de] hover:to-[#5c22df] text-white text-xs font-bold transition shadow-lg shadow-[#258BFF]/30 hover:scale-[1.02] active:scale-[0.98]"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow-md shadow-blue-900/30 hover:scale-[1.02] active:scale-[0.98]"
               >
-                <Sparkles className="w-3.5 h-3.5" />
+                <FileText className="w-3.5 h-3.5" />
                 <span>Analyze Resume</span>
               </button>
 
               <button
                 onClick={onOpenUpload}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0B1933] hover:bg-[#112244] border border-[#258BFF]/30 text-white text-xs font-semibold transition hover:scale-[1.02]"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white text-xs font-semibold transition hover:scale-[1.02]"
               >
-                <Upload className="w-3.5 h-3.5 text-[#16D9F5]" />
+                <Upload className="w-3.5 h-3.5 text-blue-400" />
                 <span>Upload Resume</span>
               </button>
 
               <button
                 onClick={() => onNavigateTab('roadmap')}
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-transparent hover:bg-[#0B1933]/50 text-slate-300 hover:text-white text-xs font-semibold transition"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-transparent hover:bg-[#1e293b]/50 text-slate-300 hover:text-white text-xs font-semibold transition"
               >
                 <span>View Roadmap</span>
                 <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
@@ -223,12 +223,12 @@ export default function OverviewDashboard({
         </div>
 
         {/* Right Resume Health Circular Progress Card */}
-        <div className="lg:col-span-4 rounded-3xl p-6 bg-[#07152B] border border-[#0B1933] shadow-2xl flex flex-col justify-between">
+        <div className="lg:col-span-4 rounded-3xl p-6 bg-[#111827] border border-[#1e293b] shadow-2xl flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between text-xs mb-3">
               <span className="font-bold text-slate-300">Resume Health</span>
-              <span className="flex items-center gap-1 font-semibold text-[#19D3A2]">
-                <span className="w-2 h-2 rounded-full bg-[#19D3A2] animate-pulse" />
+              <span className="flex items-center gap-1 font-semibold text-[#10b981]">
+                <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse" />
                 <span>{ratingTier}</span>
               </span>
             </div>
@@ -242,7 +242,7 @@ export default function OverviewDashboard({
           <div className="my-4 flex items-center justify-center">
             <div className="relative w-28 h-28 flex items-center justify-center">
               <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="40" stroke="#0B1933" strokeWidth="8" fill="transparent" />
+                <circle cx="50" cy="50" r="40" stroke="#1e293b" strokeWidth="8" fill="transparent" />
                 <circle
                   cx="50"
                   cy="50"
@@ -255,8 +255,8 @@ export default function OverviewDashboard({
                 />
                 <defs>
                   <linearGradient id="atsHealthGrad" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stopColor="#258BFF" />
-                    <stop offset="100%" stopColor="#16D9F5" />
+                    <stop offset="0%" stopColor="#2563eb" />
+                    <stop offset="100%" stopColor="#38bdf8" />
                   </linearGradient>
                 </defs>
               </svg>
@@ -269,7 +269,7 @@ export default function OverviewDashboard({
 
           <button
             onClick={() => onNavigateTab('analyzer')}
-            className="w-full py-2 px-3 rounded-xl bg-[#0B1933] hover:bg-[#112244] border border-[#0B1933] hover:border-[#258BFF]/40 text-xs font-semibold text-slate-200 hover:text-white transition flex items-center justify-center gap-1.5"
+            className="w-full py-2 px-3 rounded-xl bg-[#1e293b] hover:bg-[#112244] border border-[#1e293b] hover:border-[#2563eb]/40 text-xs font-semibold text-slate-200 hover:text-white transition flex items-center justify-center gap-1.5"
           >
             <span>View Detailed Report</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -286,13 +286,13 @@ export default function OverviewDashboard({
         {/* Metric 1: ATS Compatibility */}
         <div 
           onClick={() => onNavigateTab('analyzer')}
-          className="rounded-2xl p-5 bg-[#07152B] border border-[#0B1933] hover:border-[#258BFF]/40 cursor-pointer transition shadow-xl group"
+          className="rounded-2xl p-5 bg-[#111827] border border-[#1e293b] hover:border-[#2563eb]/40 cursor-pointer transition shadow-xl group"
         >
           <div className="flex items-center justify-between mb-3">
-            <div className="w-9 h-9 rounded-xl bg-[#258BFF]/15 text-[#258BFF] flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-[#2563eb]/15 text-[#2563eb] flex items-center justify-center">
               <Target className="w-4 h-4" />
             </div>
-            <span className="text-xs font-bold text-[#19D3A2] flex items-center gap-0.5">
+            <span className="text-xs font-bold text-[#10b981] flex items-center gap-0.5">
               <span>↑ 12%</span>
             </span>
           </div>
@@ -302,8 +302,8 @@ export default function OverviewDashboard({
             {atsScore} <span className="text-xs font-normal text-slate-400">/ 100</span>
           </div>
 
-          <div className="w-full h-1.5 bg-[#0B1933] rounded-full mt-3 overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-[#258BFF] to-[#16D9F5] rounded-full" style={{ width: `${atsScore}%` }} />
+          <div className="w-full h-1.5 bg-[#1e293b] rounded-full mt-3 overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-[#2563eb] to-[#38bdf8] rounded-full" style={{ width: `${atsScore}%` }} />
           </div>
 
           <div className="text-[11px] text-slate-400 mt-2 truncate">Great match for {role}</div>
@@ -312,13 +312,13 @@ export default function OverviewDashboard({
         {/* Metric 2: Verified Skills */}
         <div 
           onClick={() => onNavigateTab('visualizer')}
-          className="rounded-2xl p-5 bg-[#07152B] border border-[#0B1933] hover:border-[#773BFF]/40 cursor-pointer transition shadow-xl group"
+          className="rounded-2xl p-5 bg-[#111827] border border-[#1e293b] hover:border-[#2563eb]/40 cursor-pointer transition shadow-xl group"
         >
           <div className="flex items-center justify-between mb-3">
-            <div className="w-9 h-9 rounded-xl bg-[#773BFF]/15 text-[#773BFF] flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-[#2563eb]/15 text-[#2563eb] flex items-center justify-center">
               <Layers className="w-4 h-4" />
             </div>
-            <span className="text-xs font-bold text-[#19D3A2] flex items-center gap-0.5">
+            <span className="text-xs font-bold text-[#10b981] flex items-center gap-0.5">
               <span>↑ 3 new</span>
             </span>
           </div>
@@ -330,10 +330,10 @@ export default function OverviewDashboard({
 
           {/* Skill Pills preview */}
           <div className="flex items-center gap-1.5 mt-3 overflow-hidden">
-            <span className="px-2 py-0.5 rounded bg-[#0B1933] text-[10px] text-[#258BFF] font-semibold border border-white/5">React</span>
-            <span className="px-2 py-0.5 rounded bg-[#0B1933] text-[10px] text-[#16D9F5] font-semibold border border-white/5">Node.js</span>
-            <span className="px-2 py-0.5 rounded bg-[#0B1933] text-[10px] text-[#19D3A2] font-semibold border border-white/5">MongoDB</span>
-            <span className="px-1.5 py-0.5 rounded bg-[#0B1933] text-[10px] text-slate-400 font-semibold border border-white/5">+{Math.max(1, skillsCount - 3)}</span>
+            <span className="px-2 py-0.5 rounded bg-[#1e293b] text-[10px] text-[#2563eb] font-semibold border border-white/5">React</span>
+            <span className="px-2 py-0.5 rounded bg-[#1e293b] text-[10px] text-[#38bdf8] font-semibold border border-white/5">Node.js</span>
+            <span className="px-2 py-0.5 rounded bg-[#1e293b] text-[10px] text-[#10b981] font-semibold border border-white/5">MongoDB</span>
+            <span className="px-1.5 py-0.5 rounded bg-[#1e293b] text-[10px] text-slate-400 font-semibold border border-white/5">+{Math.max(1, skillsCount - 3)}</span>
           </div>
 
           <div className="text-[11px] text-slate-400 mt-2 truncate">Across languages, frameworks & tools</div>
@@ -342,13 +342,13 @@ export default function OverviewDashboard({
         {/* Metric 3: Experience Positions */}
         <div 
           onClick={() => onNavigateTab('visualizer')}
-          className="rounded-2xl p-5 bg-[#07152B] border border-[#0B1933] hover:border-[#16D9F5]/40 cursor-pointer transition shadow-xl group"
+          className="rounded-2xl p-5 bg-[#111827] border border-[#1e293b] hover:border-[#38bdf8]/40 cursor-pointer transition shadow-xl group"
         >
           <div className="flex items-center justify-between mb-3">
-            <div className="w-9 h-9 rounded-xl bg-[#16D9F5]/15 text-[#16D9F5] flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-[#38bdf8]/15 text-[#38bdf8] flex items-center justify-center">
               <Briefcase className="w-4 h-4" />
             </div>
-            <span className="text-xs font-bold text-[#19D3A2] flex items-center gap-0.5">
+            <span className="text-xs font-bold text-[#10b981] flex items-center gap-0.5">
               <span>↑ 1 new</span>
             </span>
           </div>
@@ -359,9 +359,9 @@ export default function OverviewDashboard({
           </div>
 
           <div className="flex items-center gap-1.5 mt-3 overflow-hidden">
-            <span className="px-2 py-0.5 rounded bg-[#0B1933] text-[10px] text-white font-medium border border-white/5 truncate max-w-[90px]">Full Stack Dev</span>
-            <span className="px-2 py-0.5 rounded bg-[#0B1933] text-[10px] text-white font-medium border border-white/5 truncate max-w-[90px]">Frontend Dev</span>
-            <span className="px-1.5 py-0.5 rounded bg-[#0B1933] text-[10px] text-slate-400 font-semibold border border-white/5">+1</span>
+            <span className="px-2 py-0.5 rounded bg-[#1e293b] text-[10px] text-white font-medium border border-white/5 truncate max-w-[90px]">Full Stack Dev</span>
+            <span className="px-2 py-0.5 rounded bg-[#1e293b] text-[10px] text-white font-medium border border-white/5 truncate max-w-[90px]">Frontend Dev</span>
+            <span className="px-1.5 py-0.5 rounded bg-[#1e293b] text-[10px] text-slate-400 font-semibold border border-white/5">+1</span>
           </div>
 
           <div className="text-[11px] text-slate-400 mt-2 truncate">Career experience & projects</div>
@@ -370,13 +370,13 @@ export default function OverviewDashboard({
         {/* Metric 4: Quantified Metrics */}
         <div 
           onClick={() => onNavigateTab('bullet')}
-          className="rounded-2xl p-5 bg-[#07152B] border border-[#0B1933] hover:border-[#19D3A2]/40 cursor-pointer transition shadow-xl group"
+          className="rounded-2xl p-5 bg-[#111827] border border-[#1e293b] hover:border-[#10b981]/40 cursor-pointer transition shadow-xl group"
         >
           <div className="flex items-center justify-between mb-3">
-            <div className="w-9 h-9 rounded-xl bg-[#773BFF]/20 text-[#9461ff] flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-[#2563eb]/20 text-[#9461ff] flex items-center justify-center">
               <TrendingUp className="w-4 h-4" />
             </div>
-            <span className="text-xs font-bold text-[#19D3A2] flex items-center gap-0.5">
+            <span className="text-xs font-bold text-[#10b981] flex items-center gap-0.5">
               <span>↑ 18%</span>
             </span>
           </div>
@@ -386,8 +386,8 @@ export default function OverviewDashboard({
             {quantifiedMetricsRatio}%
           </div>
 
-          <div className="w-full h-1.5 bg-[#0B1933] rounded-full mt-3 overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-[#773BFF] to-[#16D9F5] rounded-full" style={{ width: `${quantifiedMetricsRatio}%` }} />
+          <div className="w-full h-1.5 bg-[#1e293b] rounded-full mt-3 overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-[#2563eb] to-[#38bdf8] rounded-full" style={{ width: `${quantifiedMetricsRatio}%` }} />
           </div>
 
           <div className="text-[11px] text-slate-400 mt-2 truncate">With measurable business impact</div>
@@ -401,12 +401,12 @@ export default function OverviewDashboard({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         
         {/* ATS Score Progression Chart */}
-        <div className="lg:col-span-7 rounded-3xl p-6 bg-[#07152B] border border-[#0B1933] shadow-2xl flex flex-col justify-between">
+        <div className="lg:col-span-7 rounded-3xl p-6 bg-[#111827] border border-[#1e293b] shadow-2xl flex flex-col justify-between">
           <div>
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-2">
               <div>
                 <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                  <TrendingUp className="w-4 h-4 text-[#258BFF]" />
+                  <TrendingUp className="w-4 h-4 text-[#2563eb]" />
                   <span>ATS Score Progression</span>
                 </h3>
                 <p className="text-xs text-slate-400 mt-0.5">
@@ -415,14 +415,14 @@ export default function OverviewDashboard({
               </div>
 
               {/* Time Filters: 7D, 30D, 90D */}
-              <div className="flex items-center bg-[#020817] p-1 rounded-xl border border-[#0B1933] self-start sm:self-auto">
+              <div className="flex items-center bg-[#0a0e17] p-1 rounded-xl border border-[#1e293b] self-start sm:self-auto">
                 {['7D', '30D', '90D'].map((t) => (
                   <button
                     key={t}
                     onClick={() => setTimeFilter(t)}
                     className={`px-3 py-1 rounded-lg text-xs font-bold transition ${
                       timeFilter === t
-                        ? 'bg-[#258BFF] text-white shadow-md'
+                        ? 'bg-[#2563eb] text-white shadow-md'
                         : 'text-slate-400 hover:text-white'
                     }`}
                   >
@@ -439,16 +439,16 @@ export default function OverviewDashboard({
               <AreaChart data={progressionData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <defs>
                   <linearGradient id="scoreGlow" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#258BFF" stopOpacity={0.45} />
-                    <stop offset="95%" stopColor="#773BFF" stopOpacity={0.0} />
+                    <stop offset="5%" stopColor="#2563eb" stopOpacity={0.45} />
+                    <stop offset="95%" stopColor="#2563eb" stopOpacity={0.0} />
                   </linearGradient>
                 </defs>
                 <XAxis dataKey="date" stroke="#334155" fontSize={11} tickLine={false} />
                 <YAxis domain={[30, 100]} stroke="#334155" fontSize={11} tickLine={false} />
                 <Tooltip 
                   contentStyle={{ 
-                    backgroundColor: '#07152B', 
-                    borderColor: '#0B1933', 
+                    backgroundColor: '#111827', 
+                    borderColor: '#1e293b', 
                     borderRadius: '12px', 
                     fontSize: '11px',
                     color: '#fff' 
@@ -457,7 +457,7 @@ export default function OverviewDashboard({
                 <Area 
                   type="monotone" 
                   dataKey="score" 
-                  stroke="#258BFF" 
+                  stroke="#2563eb" 
                   strokeWidth={3} 
                   fillOpacity={1} 
                   fill="url(#scoreGlow)" 
@@ -468,16 +468,16 @@ export default function OverviewDashboard({
         </div>
 
         {/* Recommended Actions Panel */}
-        <div className="lg:col-span-5 rounded-3xl p-6 bg-[#07152B] border border-[#0B1933] shadow-2xl flex flex-col justify-between">
+        <div className="lg:col-span-5 rounded-3xl p-6 bg-[#111827] border border-[#1e293b] shadow-2xl flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-1">
               <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-[#16D9F5]" />
+                <Target className="w-4 h-4 text-blue-400" />
                 <span>Recommended Actions</span>
               </h3>
               <button 
                 onClick={() => onNavigateTab('analyzer')}
-                className="text-xs font-semibold text-[#258BFF] hover:underline flex items-center gap-0.5"
+                className="text-xs font-semibold text-[#2563eb] hover:underline flex items-center gap-0.5"
               >
                 <span>View All</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -490,7 +490,7 @@ export default function OverviewDashboard({
             {/* Action 1 */}
             <div 
               onClick={() => onNavigateTab('analyzer')}
-              className="p-3 rounded-2xl bg-[#0B1933]/60 hover:bg-[#0B1933] border border-white/5 hover:border-[#258BFF]/40 cursor-pointer transition flex items-center justify-between group"
+              className="p-3 rounded-2xl bg-[#1e293b]/60 hover:bg-[#1e293b] border border-white/5 hover:border-[#2563eb]/40 cursor-pointer transition flex items-center justify-between group"
             >
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center shrink-0">
@@ -498,7 +498,7 @@ export default function OverviewDashboard({
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-white group-hover:text-[#16D9F5] transition">Improve Resume Keywords</span>
+                    <span className="text-xs font-bold text-white group-hover:text-[#38bdf8] transition">Improve Resume Keywords</span>
                     <span className="text-[9px] uppercase font-extrabold px-1.5 py-0.2 rounded bg-rose-500/20 text-rose-400 border border-rose-500/30">High Priority</span>
                   </div>
                   <p className="text-[11px] text-slate-400 mt-0.5">Add missing keywords for Full Stack Developer roles.</p>
@@ -510,16 +510,16 @@ export default function OverviewDashboard({
             {/* Action 2 */}
             <div 
               onClick={() => onNavigateTab('bullet')}
-              className="p-3 rounded-2xl bg-[#0B1933]/60 hover:bg-[#0B1933] border border-white/5 hover:border-[#258BFF]/40 cursor-pointer transition flex items-center justify-between group"
+              className="p-3 rounded-2xl bg-[#1e293b]/60 hover:bg-[#1e293b] border border-white/5 hover:border-[#2563eb]/40 cursor-pointer transition flex items-center justify-between group"
             >
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-xl bg-[#258BFF]/10 text-[#258BFF] flex items-center justify-center shrink-0">
+                <div className="w-8 h-8 rounded-xl bg-[#2563eb]/10 text-[#2563eb] flex items-center justify-center shrink-0">
                   <Code2 className="w-4 h-4" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-white group-hover:text-[#16D9F5] transition">Strengthen Project Descriptions</span>
-                    <span className="text-[9px] uppercase font-bold px-1.5 py-0.2 rounded bg-[#258BFF]/20 text-[#258BFF] border border-[#258BFF]/30">Medium</span>
+                    <span className="text-xs font-bold text-white group-hover:text-[#38bdf8] transition">Strengthen Project Descriptions</span>
+                    <span className="text-[9px] uppercase font-bold px-1.5 py-0.2 rounded bg-[#2563eb]/20 text-[#2563eb] border border-[#2563eb]/30">Medium</span>
                   </div>
                   <p className="text-[11px] text-slate-400 mt-0.5">Include more technical details and measurable impact.</p>
                 </div>
@@ -530,16 +530,16 @@ export default function OverviewDashboard({
             {/* Action 3 */}
             <div 
               onClick={() => onNavigateTab('roadmap')}
-              className="p-3 rounded-2xl bg-[#0B1933]/60 hover:bg-[#0B1933] border border-white/5 hover:border-[#258BFF]/40 cursor-pointer transition flex items-center justify-between group"
+              className="p-3 rounded-2xl bg-[#1e293b]/60 hover:bg-[#1e293b] border border-white/5 hover:border-[#2563eb]/40 cursor-pointer transition flex items-center justify-between group"
             >
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-xl bg-[#19D3A2]/10 text-[#19D3A2] flex items-center justify-center shrink-0">
+                <div className="w-8 h-8 rounded-xl bg-[#10b981]/10 text-[#10b981] flex items-center justify-center shrink-0">
                   <Target className="w-4 h-4" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-white group-hover:text-[#19D3A2] transition">Learn Docker & Kubernetes</span>
-                    <span className="text-[9px] uppercase font-bold px-1.5 py-0.2 rounded bg-[#19D3A2]/20 text-[#19D3A2] border border-[#19D3A2]/30">Medium</span>
+                    <span className="text-xs font-bold text-white group-hover:text-[#10b981] transition">Learn Docker & Kubernetes</span>
+                    <span className="text-[9px] uppercase font-bold px-1.5 py-0.2 rounded bg-[#10b981]/20 text-[#10b981] border border-[#10b981]/30">Medium</span>
                   </div>
                   <p className="text-[11px] text-slate-400 mt-0.5">Important for your target role and skill gap analysis.</p>
                 </div>
@@ -550,7 +550,7 @@ export default function OverviewDashboard({
             {/* Action 3 — Resume Highlights (NEW) */}
             <div 
               onClick={() => onNavigateTab('highlights')}
-              className="p-3 rounded-2xl bg-gradient-to-r from-amber-950/30 to-[#0B1933]/60 hover:from-amber-900/30 hover:to-[#0B1933] border border-amber-500/20 hover:border-amber-400/40 cursor-pointer transition flex items-center justify-between group"
+              className="p-3 rounded-2xl bg-gradient-to-r from-amber-950/30 to-[#1e293b]/60 hover:from-amber-900/30 hover:to-[#1e293b] border border-amber-500/20 hover:border-amber-400/40 cursor-pointer transition flex items-center justify-between group"
             >
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center shrink-0">
@@ -561,7 +561,7 @@ export default function OverviewDashboard({
                     <span className="text-xs font-bold text-white group-hover:text-amber-400 transition">View Resume Highlights</span>
                     <span className="text-[9px] uppercase font-extrabold px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30">NEW</span>
                   </div>
-                  <p className="text-[11px] text-slate-400 mt-0.5">Badges, AI highlights, keyword scanner & section diagnostics.</p>
+                  <p className="text-[11px] text-slate-400 mt-0.5">Badges, executive highlights, keyword scanner & section diagnostics.</p>
                 </div>
               </div>
               <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-amber-400 group-hover:translate-x-0.5 transition" />
@@ -570,16 +570,16 @@ export default function OverviewDashboard({
             {/* Action 4 */}
             <div 
               onClick={() => onNavigateTab('interview')}
-              className="p-3 rounded-2xl bg-[#0B1933]/60 hover:bg-[#0B1933] border border-white/5 hover:border-[#258BFF]/40 cursor-pointer transition flex items-center justify-between group"
+              className="p-3 rounded-2xl bg-[#1e293b]/60 hover:bg-[#1e293b] border border-white/5 hover:border-[#2563eb]/40 cursor-pointer transition flex items-center justify-between group"
             >
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-xl bg-[#773BFF]/10 text-[#773BFF] flex items-center justify-center shrink-0">
-                  <Sparkles className="w-4 h-4" />
+                <div className="w-8 h-8 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center shrink-0">
+                  <Mic className="w-4 h-4" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-white group-hover:text-[#773BFF] transition">Practice System Design Questions</span>
-                    <span className="text-[9px] uppercase font-bold px-1.5 py-0.2 rounded bg-[#773BFF]/20 text-[#9461ff] border border-[#773BFF]/30">Low</span>
+                    <span className="text-xs font-bold text-white group-hover:text-[#2563eb] transition">Practice System Design Questions</span>
+                    <span className="text-[9px] uppercase font-bold px-1.5 py-0.2 rounded bg-[#2563eb]/20 text-[#9461ff] border border-[#2563eb]/30">Low</span>
                   </div>
                   <p className="text-[11px] text-slate-400 mt-0.5">Build confidence for advanced technical interviews.</p>
                 </div>
@@ -598,12 +598,12 @@ export default function OverviewDashboard({
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         
         {/* Widget 1: Skill Radar */}
-        <div className="rounded-3xl p-5 bg-[#07152B] border border-[#0B1933] shadow-2xl flex flex-col justify-between">
+        <div className="rounded-3xl p-5 bg-[#111827] border border-[#1e293b] shadow-2xl flex flex-col justify-between">
           <div className="flex items-center justify-between mb-2">
             <h4 className="text-xs font-bold text-white">Your Skill Radar</h4>
             <button 
               onClick={() => onNavigateTab('visualizer')} 
-              className="text-[11px] font-semibold text-[#258BFF] hover:underline"
+              className="text-[11px] font-semibold text-[#2563eb] hover:underline"
             >
               View Details →
             </button>
@@ -612,10 +612,10 @@ export default function OverviewDashboard({
           <div className="w-full h-44 -my-2">
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart data={radarData}>
-                <PolarGrid stroke="#0B1933" />
+                <PolarGrid stroke="#1e293b" />
                 <PolarAngleAxis dataKey="subject" tick={{ fill: '#94a3b8', fontSize: 9 }} />
                 <PolarRadiusAxis domain={[0, 100]} stroke="#112244" tick={false} />
-                <Radar name="Skills" dataKey="score" stroke="#16D9F5" strokeWidth={2} fill="#258BFF" fillOpacity={0.3} />
+                <Radar name="Skills" dataKey="score" stroke="#38bdf8" strokeWidth={2} fill="#2563eb" fillOpacity={0.3} />
               </RadarChart>
             </ResponsiveContainer>
           </div>
@@ -626,19 +626,19 @@ export default function OverviewDashboard({
         </div>
 
         {/* Widget 2: Recent Activity */}
-        <div className="rounded-3xl p-5 bg-[#07152B] border border-[#0B1933] shadow-2xl flex flex-col justify-between">
+        <div className="rounded-3xl p-5 bg-[#111827] border border-[#1e293b] shadow-2xl flex flex-col justify-between">
           <div className="flex items-center justify-between mb-2">
             <h4 className="text-xs font-bold text-white">Recent Activity</h4>
             <button 
               onClick={() => onNavigateTab('analyzer')} 
-              className="text-[11px] font-semibold text-[#258BFF] hover:underline"
+              className="text-[11px] font-semibold text-[#2563eb] hover:underline"
             >
               View All →
             </button>
           </div>
 
           <div className="space-y-2 mt-1">
-            <div className="flex items-start gap-2.5 p-2 rounded-xl bg-[#0B1933]/50 border border-white/5">
+            <div className="flex items-start gap-2.5 p-2 rounded-xl bg-[#1e293b]/50 border border-white/5">
               <div className="w-6 h-6 rounded-lg bg-rose-500/15 text-rose-400 flex items-center justify-center shrink-0 mt-0.5">
                 <FileText className="w-3.5 h-3.5" />
               </div>
@@ -649,8 +649,8 @@ export default function OverviewDashboard({
               </div>
             </div>
 
-            <div className="flex items-start gap-2.5 p-2 rounded-xl bg-[#0B1933]/50 border border-white/5">
-              <div className="w-6 h-6 rounded-lg bg-[#19D3A2]/15 text-[#19D3A2] flex items-center justify-center shrink-0 mt-0.5">
+            <div className="flex items-start gap-2.5 p-2 rounded-xl bg-[#1e293b]/50 border border-white/5">
+              <div className="w-6 h-6 rounded-lg bg-[#10b981]/15 text-[#10b981] flex items-center justify-center shrink-0 mt-0.5">
                 <ShieldCheck className="w-3.5 h-3.5" />
               </div>
               <div className="min-w-0 flex-1">
@@ -660,9 +660,9 @@ export default function OverviewDashboard({
               </div>
             </div>
 
-            <div className="flex items-start gap-2.5 p-2 rounded-xl bg-[#0B1933]/50 border border-white/5">
-              <div className="w-6 h-6 rounded-lg bg-[#773BFF]/15 text-[#773BFF] flex items-center justify-center shrink-0 mt-0.5">
-                <Sparkles className="w-3.5 h-3.5" />
+            <div className="flex items-start gap-2.5 p-2 rounded-xl bg-[#1e293b]/50 border border-white/5">
+              <div className="w-6 h-6 rounded-lg bg-blue-500/15 text-blue-400 flex items-center justify-center shrink-0 mt-0.5">
+                <Mic className="w-3.5 h-3.5" />
               </div>
               <div className="min-w-0 flex-1">
                 <div className="text-[11px] font-bold text-white truncate">Mock interview session</div>
@@ -674,44 +674,44 @@ export default function OverviewDashboard({
         </div>
 
         {/* Widget 3: Learning Roadmap */}
-        <div className="rounded-3xl p-5 bg-[#07152B] border border-[#0B1933] shadow-2xl flex flex-col justify-between">
+        <div className="rounded-3xl p-5 bg-[#111827] border border-[#1e293b] shadow-2xl flex flex-col justify-between">
           <div className="flex items-center justify-between mb-2">
             <h4 className="text-xs font-bold text-white">Learning Roadmap</h4>
             <button 
               onClick={() => onNavigateTab('roadmap')} 
-              className="text-[11px] font-semibold text-[#258BFF] hover:underline"
+              className="text-[11px] font-semibold text-[#2563eb] hover:underline"
             >
               View Roadmap →
             </button>
           </div>
 
-          <div className="p-3 rounded-2xl bg-[#0B1933]/60 border border-white/5 mb-3">
+          <div className="p-3 rounded-2xl bg-[#1e293b]/60 border border-white/5 mb-3">
             <div className="flex items-center justify-between text-xs mb-1">
               <span className="font-bold text-white">Phase 1: Skill Foundation</span>
-              <span className="text-[10px] font-bold text-[#16D9F5]">3/6</span>
+              <span className="text-[10px] font-bold text-[#38bdf8]">3/6</span>
             </div>
-            <div className="w-full h-1.5 bg-[#020817] rounded-full overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-[#258BFF] to-[#16D9F5] rounded-full" style={{ width: '50%' }} />
+            <div className="w-full h-1.5 bg-[#0a0e17] rounded-full overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-[#2563eb] to-[#38bdf8] rounded-full" style={{ width: '50%' }} />
             </div>
             <div className="text-[10px] text-slate-400 mt-1">45% completed</div>
           </div>
 
           <div className="space-y-1.5 text-xs">
-            <div className="flex items-center justify-between p-1.5 rounded-lg bg-[#0B1933]/40 text-slate-200">
+            <div className="flex items-center justify-between p-1.5 rounded-lg bg-[#1e293b]/40 text-slate-200">
               <div className="flex items-center gap-2">
-                <Check className="w-3.5 h-3.5 text-[#19D3A2]" />
+                <Check className="w-3.5 h-3.5 text-[#10b981]" />
                 <span className="text-[11px]">React Advanced Concepts</span>
               </div>
               <ChevronRight className="w-3 h-3 text-slate-500" />
             </div>
-            <div className="flex items-center justify-between p-1.5 rounded-lg bg-[#0B1933]/40 text-slate-200">
+            <div className="flex items-center justify-between p-1.5 rounded-lg bg-[#1e293b]/40 text-slate-200">
               <div className="flex items-center gap-2">
-                <Check className="w-3.5 h-3.5 text-[#19D3A2]" />
+                <Check className="w-3.5 h-3.5 text-[#10b981]" />
                 <span className="text-[11px]">Node.js & Express</span>
               </div>
               <ChevronRight className="w-3 h-3 text-slate-500" />
             </div>
-            <div className="flex items-center justify-between p-1.5 rounded-lg bg-[#0B1933]/40 text-slate-400">
+            <div className="flex items-center justify-between p-1.5 rounded-lg bg-[#1e293b]/40 text-slate-400">
               <div className="flex items-center gap-2">
                 <span className="w-3.5 h-3.5 rounded-full border border-slate-600 inline-block" />
                 <span className="text-[11px]">MongoDB & Mongoose</span>
@@ -722,15 +722,15 @@ export default function OverviewDashboard({
         </div>
 
         {/* Widget 4: Job Applications */}
-        <div className="rounded-3xl p-5 bg-[#07152B] border border-[#0B1933] shadow-2xl flex flex-col justify-between">
+        <div className="rounded-3xl p-5 bg-[#111827] border border-[#1e293b] shadow-2xl flex flex-col justify-between">
           <div className="flex items-center justify-between mb-2">
             <h4 className="text-xs font-bold text-white flex items-center gap-1.5">
-              <Briefcase className="w-3.5 h-3.5 text-[#258BFF]" />
+              <Briefcase className="w-3.5 h-3.5 text-[#2563eb]" />
               <span>Job Applications Pipeline</span>
             </h4>
             <button 
               onClick={() => onNavigateTab('applications')} 
-              className="text-[11px] font-semibold text-[#258BFF] hover:underline"
+              className="text-[11px] font-semibold text-[#2563eb] hover:underline"
             >
               View Pipeline ({applications.length}) →
             </button>
@@ -745,17 +745,17 @@ export default function OverviewDashboard({
 
             return (
               <>
-                <div className="grid grid-cols-3 gap-2 text-center p-2 rounded-2xl bg-[#0B1933]/60 border border-white/5 mb-3">
+                <div className="grid grid-cols-3 gap-2 text-center p-2 rounded-2xl bg-[#1e293b]/60 border border-white/5 mb-3">
                   <div>
                     <div className="text-base font-extrabold text-white">{appliedCount}</div>
                     <div className="text-[9px] uppercase font-bold text-slate-400">Applied</div>
                   </div>
                   <div>
-                    <div className="text-base font-extrabold text-[#258BFF]">{interviewCount}</div>
+                    <div className="text-base font-extrabold text-[#2563eb]">{interviewCount}</div>
                     <div className="text-[9px] uppercase font-bold text-slate-400">Interview</div>
                   </div>
                   <div>
-                    <div className="text-base font-extrabold text-[#19D3A2]">{offerCount}</div>
+                    <div className="text-base font-extrabold text-[#10b981]">{offerCount}</div>
                     <div className="text-[9px] uppercase font-bold text-slate-400">Offer</div>
                   </div>
                 </div>
@@ -769,7 +769,7 @@ export default function OverviewDashboard({
                         <div 
                           key={app.id}
                           onClick={() => onNavigateTab('applications')}
-                          className="flex items-center justify-between p-2 rounded-xl bg-[#0B1933]/40 border border-white/5 hover:bg-[#0B1933] cursor-pointer transition"
+                          className="flex items-center justify-between p-2 rounded-xl bg-[#1e293b]/40 border border-white/5 hover:bg-[#1e293b] cursor-pointer transition"
                         >
                           <div className="min-w-0 pr-2">
                             <div className="text-[11px] font-bold text-white truncate">{app.title}</div>
@@ -777,10 +777,10 @@ export default function OverviewDashboard({
                           </div>
                           <span className={`px-2 py-0.5 rounded text-[9px] font-bold shrink-0 ${
                             isOffer 
-                              ? 'bg-[#19D3A2]/20 text-[#19D3A2]' 
+                              ? 'bg-[#10b981]/20 text-[#10b981]' 
                               : isInterview 
-                              ? 'bg-[#773BFF]/20 text-[#9461ff]' 
-                              : 'bg-[#258BFF]/20 text-[#258BFF]'
+                              ? 'bg-[#2563eb]/20 text-[#9461ff]' 
+                              : 'bg-[#2563eb]/20 text-[#2563eb]'
                           }`}>
                             {app.status === 'interview' ? 'Interview' : app.status === 'final' ? 'Final Loop' : app.status === 'offer' ? 'Offer' : 'Applied'}
                           </span>
@@ -800,14 +800,14 @@ export default function OverviewDashboard({
 
       </div>
 
-      {/* Futuristic Bottom Tagline Bar */}
-      <div className="py-3 px-5 rounded-2xl bg-[#07152B]/60 border border-[#0B1933] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
+      {/* Executive Bottom Tagline Bar */}
+      <div className="py-3 px-5 rounded-2xl bg-[#111827]/60 border border-[#1e293b] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
         <div className="flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-[#773BFF]" />
-          <span>Automate your career growth with AI. From resume to interview, SkillBridge is your complete career companion.</span>
+          <ShieldCheck className="w-4 h-4 text-emerald-400" />
+          <span>Engineered for high-impact candidates. Calibrated against senior engineering hiring rubrics and enterprise ATS standards.</span>
         </div>
-        <div className="italic font-serif text-[#16D9F5]/70 text-xs shrink-0">
-          Your Next Chapter Starts Here →
+        <div className="italic font-serif text-slate-400 text-xs shrink-0">
+          Professional Standard • Benchmarked 2026
         </div>
       </div>
     </motion.div>

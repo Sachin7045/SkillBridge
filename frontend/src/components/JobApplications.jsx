@@ -30,8 +30,8 @@ import {
 
 export const PIPELINE_STAGES = [
   { id: 'applied', label: 'Applied', color: 'bg-blue-500/15 text-blue-400 border-blue-500/30', dot: 'bg-blue-400' },
-  { id: 'screening', label: 'Screening', color: 'bg-cyan-500/15 text-cyan-400 border-cyan-500/30', dot: 'bg-cyan-400' },
-  { id: 'interview', label: 'Technical Interview', color: 'bg-indigo-500/15 text-indigo-400 border-indigo-500/30', dot: 'bg-indigo-400' },
+  { id: 'screening', label: 'Screening', color: 'bg-cyan-500/15 text-blue-400 border-blue-500/30', dot: 'bg-cyan-400' },
+  { id: 'interview', label: 'Technical Interview', color: 'bg-blue-500/15 text-blue-400 border-blue-500/30', dot: 'bg-blue-400' },
   { id: 'final', label: 'Final Round', color: 'bg-purple-500/15 text-purple-300 border-purple-500/30', dot: 'bg-purple-400' },
   { id: 'offer', label: 'Offer Received', color: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30', dot: 'bg-emerald-400' },
   { id: 'rejected', label: 'Archived / Rejected', color: 'bg-slate-800/60 text-slate-400 border-slate-700/60', dot: 'bg-slate-500' }
@@ -248,7 +248,7 @@ export default function JobApplications({
       {/* Top Banner & Control Bar */}
       <div className="pro-card p-6 sm:p-7 rounded-3xl border border-slate-800/80 bg-slate-900/60 backdrop-blur-xl flex flex-col md:flex-row md:items-center justify-between gap-5">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-2">
             <Briefcase className="w-3.5 h-3.5" />
             <span>End-to-End Application Pipeline</span>
           </div>
@@ -256,7 +256,7 @@ export default function JobApplications({
             Job Applications & Interview Loop Tracker
           </h2>
           <p className="text-xs text-slate-400 mt-1 max-w-xl">
-            Monitor real-time progress of submitted roles across <strong className="text-sky-400">LinkedIn</strong>, <strong className="text-cyan-400">Naukri.com</strong>, and referrals. Never miss an interview deadline or follow-up.
+            Monitor real-time progress of submitted roles across <strong className="text-sky-400">LinkedIn</strong>, <strong className="text-blue-400">Naukri.com</strong>, and referrals. Never miss an interview deadline or follow-up.
           </p>
         </div>
 
@@ -266,7 +266,7 @@ export default function JobApplications({
             onClick={() => onNavigateTab('matcher')}
             className="px-4 py-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-200 transition flex items-center gap-1.5 shadow-sm"
           >
-            <Search className="w-3.5 h-3.5 text-cyan-400" />
+            <Search className="w-3.5 h-3.5 text-blue-400" />
             <span>Explore Matched Jobs</span>
           </button>
 
@@ -281,7 +281,7 @@ export default function JobApplications({
 
           <button
             onClick={() => handleOpenAddModal()}
-            className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-bold text-white transition shadow-lg shadow-indigo-600/25 flex items-center gap-1.5"
+            className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs font-bold text-white transition shadow-lg shadow-blue-600/25 flex items-center gap-1.5"
           >
             <Plus className="w-4 h-4" />
             <span>Track New Job</span>
@@ -298,8 +298,8 @@ export default function JobApplications({
         </div>
 
         <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/70 border border-slate-800/80 space-y-1">
-          <div className="text-xs text-indigo-400 font-medium">In Interview Loops</div>
-          <div className="text-2xl sm:text-3xl font-black text-indigo-400">{stats.activeInterviews}</div>
+          <div className="text-xs text-blue-400 font-medium">In Interview Loops</div>
+          <div className="text-2xl sm:text-3xl font-black text-blue-400">{stats.activeInterviews}</div>
           <div className="text-[11px] text-slate-500">Screening, Tech, or Final rounds</div>
         </div>
 
@@ -310,8 +310,8 @@ export default function JobApplications({
         </div>
 
         <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/70 border border-slate-800/80 space-y-1">
-          <div className="text-xs text-cyan-400 font-medium">Pipeline Response Rate</div>
-          <div className="text-2xl sm:text-3xl font-black text-cyan-400">{stats.responseRate}%</div>
+          <div className="text-xs text-blue-400 font-medium">Pipeline Response Rate</div>
+          <div className="text-2xl sm:text-3xl font-black text-blue-400">{stats.responseRate}%</div>
           <div className="text-[11px] text-slate-500">Applications reaching interview stage</div>
         </div>
       </div>
@@ -326,7 +326,7 @@ export default function JobApplications({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by company, role title, or notes..."
-            className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+            className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
           />
         </div>
 
@@ -335,7 +335,7 @@ export default function JobApplications({
           <select
             value={selectedStage}
             onChange={(e) => setSelectedStage(e.target.value)}
-            className="bg-slate-950 border border-slate-800 text-xs text-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-500"
+            className="bg-slate-950 border border-slate-800 text-xs text-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-500"
           >
             <option value="all">All Stages ({applications.length})</option>
             {PIPELINE_STAGES.map(s => (
@@ -349,7 +349,7 @@ export default function JobApplications({
           <select
             value={selectedSource}
             onChange={(e) => setSelectedSource(e.target.value)}
-            className="bg-slate-950 border border-slate-800 text-xs text-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-500"
+            className="bg-slate-950 border border-slate-800 text-xs text-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-500"
           >
             <option value="all">All Sources</option>
             {PLATFORM_SOURCES.map(src => (
@@ -361,14 +361,14 @@ export default function JobApplications({
           <div className="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
             <button
               onClick={() => setViewMode('kanban')}
-              className={`p-1.5 rounded-lg transition ${viewMode === 'kanban' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white'}`}
+              className={`p-1.5 rounded-lg transition ${viewMode === 'kanban' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'}`}
               title="Pipeline Columns View"
             >
               <Kanban className="w-3.5 h-3.5" />
             </button>
             <button
               onClick={() => setViewMode('list')}
-              className={`p-1.5 rounded-lg transition ${viewMode === 'list' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white'}`}
+              className={`p-1.5 rounded-lg transition ${viewMode === 'list' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'}`}
               title="Table List View"
             >
               <List className="w-3.5 h-3.5" />
@@ -411,12 +411,12 @@ export default function JobApplications({
                       layout
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="p-3.5 rounded-xl bg-slate-950/90 border border-slate-800/80 hover:border-indigo-500/40 transition-all space-y-2.5 group relative shadow-md"
+                      className="p-3.5 rounded-xl bg-slate-950/90 border border-slate-800/80 hover:border-blue-500/40 transition-all space-y-2.5 group relative shadow-md"
                     >
                       {/* Top Header: Title & Company */}
                       <div>
                         <div className="flex items-start justify-between gap-1">
-                          <h4 className="text-xs font-bold text-white group-hover:text-indigo-300 transition line-clamp-1">
+                          <h4 className="text-xs font-bold text-white group-hover:text-blue-300 transition line-clamp-1">
                             {app.title}
                           </h4>
                           <button
@@ -446,8 +446,8 @@ export default function JobApplications({
 
                       {/* Interview Alert Banner (if set) */}
                       {app.nextInterview && (
-                        <div className="p-2 rounded-lg bg-indigo-950/40 border border-indigo-500/30 text-[10px] text-indigo-300 space-y-0.5">
-                          <div className="font-semibold flex items-center gap-1 text-cyan-400">
+                        <div className="p-2 rounded-lg bg-blue-950/40 border border-blue-500/30 text-[10px] text-blue-300 space-y-0.5">
+                          <div className="font-semibold flex items-center gap-1 text-blue-400">
                             <Clock className="w-3 h-3" />
                             <span>Upcoming Loop</span>
                           </div>
@@ -470,7 +470,7 @@ export default function JobApplications({
                         <select
                           value={app.status}
                           onChange={(e) => handleQuickStatusChange(app.id, e.target.value)}
-                          className="bg-slate-900 text-slate-300 rounded px-1.5 py-0.5 border border-slate-800 text-[10px] focus:outline-none focus:border-indigo-500"
+                          className="bg-slate-900 text-slate-300 rounded px-1.5 py-0.5 border border-slate-800 text-[10px] focus:outline-none focus:border-blue-500"
                         >
                           {PIPELINE_STAGES.map(st => (
                             <option key={st.id} value={st.id}>{st.label}</option>
@@ -481,15 +481,15 @@ export default function JobApplications({
                         <div className="flex items-center gap-1">
                           <button
                             onClick={() => onPrepareInterview(app)}
-                            className="p-1 rounded bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 transition"
-                            title="Launch AI Mock Interview for this role"
+                            className="p-1 rounded bg-blue-600/20 text-blue-300 hover:bg-blue-600/30 transition"
+                            title="Launch Mock Interview session for this role"
                           >
                             <Mic className="w-3 h-3" />
                           </button>
                           
                           <button
                             onClick={() => onGenerateCoverLetter(app)}
-                            className="p-1 rounded bg-cyan-500/20 text-cyan-300 hover:bg-cyan-500/30 transition"
+                            className="p-1 rounded bg-cyan-500/20 text-blue-300 hover:bg-cyan-500/30 transition"
                             title="Generate Tailored Cover Letter"
                           >
                             <FileText className="w-3 h-3" />
@@ -580,8 +580,8 @@ export default function JobApplications({
 
                       <td className="py-3.5 px-4">
                         {app.nextInterview ? (
-                          <div className="text-indigo-300 font-mono text-[11px] flex items-center gap-1">
-                            <Clock className="w-3 h-3 text-cyan-400" />
+                          <div className="text-blue-300 font-mono text-[11px] flex items-center gap-1">
+                            <Clock className="w-3 h-3 text-blue-400" />
                             <span>{app.nextInterview}</span>
                           </div>
                         ) : (
@@ -592,7 +592,7 @@ export default function JobApplications({
                       <td className="py-3.5 px-4 text-right space-x-1">
                         <button
                           onClick={() => onPrepareInterview(app)}
-                          className="px-2 py-1 rounded bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 text-[11px] font-semibold transition inline-flex items-center gap-1"
+                          className="px-2 py-1 rounded bg-blue-600/20 text-blue-300 hover:bg-blue-600/30 text-[11px] font-semibold transition inline-flex items-center gap-1"
                           title="Interview Prep"
                         >
                           <Mic className="w-3 h-3" />
@@ -647,7 +647,7 @@ export default function JobApplications({
               {/* Header */}
               <div className="p-5 bg-slate-950/80 border-b border-slate-800 flex items-center justify-between shrink-0">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
+                  <div className="w-9 h-9 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
                     <Briefcase className="w-4 h-4" />
                   </div>
                   <div>
@@ -688,7 +688,7 @@ export default function JobApplications({
                       value={formCompany}
                       onChange={(e) => setFormCompany(e.target.value)}
                       placeholder="e.g. Razorpay, Swiggy, TCS"
-                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500"
+                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-blue-500"
                     />
                   </div>
 
@@ -700,7 +700,7 @@ export default function JobApplications({
                       value={formTitle}
                       onChange={(e) => setFormTitle(e.target.value)}
                       placeholder="e.g. Senior Full Stack Engineer"
-                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500"
+                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-blue-500"
                     />
                   </div>
                 </div>
@@ -712,7 +712,7 @@ export default function JobApplications({
                     <select
                       value={formSource}
                       onChange={(e) => setFormSource(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
+                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-blue-500"
                     >
                       {PLATFORM_SOURCES.map(src => (
                         <option key={src} value={src}>{src}</option>
@@ -725,7 +725,7 @@ export default function JobApplications({
                     <select
                       value={formStatus}
                       onChange={(e) => setFormStatus(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
+                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-blue-500"
                     >
                       {PIPELINE_STAGES.map(st => (
                         <option key={st.id} value={st.id}>{st.label}</option>
@@ -743,7 +743,7 @@ export default function JobApplications({
                       value={formLocation}
                       onChange={(e) => setFormLocation(e.target.value)}
                       placeholder="e.g. Bengaluru (Hybrid) / Remote"
-                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500"
+                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-blue-500"
                     />
                   </div>
 
@@ -754,7 +754,7 @@ export default function JobApplications({
                       value={formSalary}
                       onChange={(e) => setFormSalary(e.target.value)}
                       placeholder="e.g. ₹24 - ₹30 LPA"
-                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500"
+                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-blue-500"
                     />
                   </div>
                 </div>
@@ -767,7 +767,7 @@ export default function JobApplications({
                       type="date"
                       value={formAppliedDate}
                       onChange={(e) => setFormAppliedDate(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
+                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-blue-500"
                     />
                   </div>
 
@@ -778,7 +778,7 @@ export default function JobApplications({
                       value={formNextInterview}
                       onChange={(e) => setFormNextInterview(e.target.value)}
                       placeholder="e.g. 12 Nov, Round 2 Tech"
-                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500"
+                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-blue-500"
                     />
                   </div>
                 </div>
@@ -792,7 +792,7 @@ export default function JobApplications({
                       value={formUrl}
                       onChange={(e) => setFormUrl(e.target.value)}
                       placeholder="https://linkedin.com/jobs/..."
-                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500"
+                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-blue-500"
                     />
                   </div>
 
@@ -803,7 +803,7 @@ export default function JobApplications({
                       value={formContact}
                       onChange={(e) => setFormContact(e.target.value)}
                       placeholder="e.g. Priya (Tech Recruiter)"
-                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500"
+                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-blue-500"
                     />
                   </div>
                 </div>
@@ -816,7 +816,7 @@ export default function JobApplications({
                     value={formNotes}
                     onChange={(e) => setFormNotes(e.target.value)}
                     placeholder="Key concepts to revise (e.g. Redis caching, PostgreSQL indexing, STAR response for deadline questions)..."
-                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 resize-none leading-relaxed font-sans"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 resize-none leading-relaxed font-sans"
                   />
                 </div>
 
@@ -832,7 +832,7 @@ export default function JobApplications({
 
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition shadow-lg shadow-indigo-600/25 flex items-center gap-1.5"
+                    className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow-lg shadow-blue-600/25 flex items-center gap-1.5"
                   >
                     <Check className="w-3.5 h-3.5" />
                     <span>{editingApp ? 'Save Changes' : 'Track Application'}</span>

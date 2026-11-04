@@ -72,11 +72,11 @@ export default function BulletOptimizer({ apiKey, onApplyToResume = null, curren
       <div className="glass-panel p-6 rounded-3xl border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+            <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
               <Wand2 className="w-4 h-4" />
             </div>
-            <h2 className="text-lg font-bold text-white">AI STAR Bullet Point Optimizer</h2>
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-semibold">
+            <h2 className="text-lg font-bold text-white">STAR Bullet Point Polisher</h2>
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/10 text-blue-400 border border-cyan-500/20 font-semibold">
               Situation • Task • Action • Result
             </span>
           </div>
@@ -87,7 +87,7 @@ export default function BulletOptimizer({ apiKey, onApplyToResume = null, curren
 
         {currentResume && (
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300">
-            <FileText className="w-3.5 h-3.5 text-indigo-400" />
+            <FileText className="w-3.5 h-3.5 text-blue-400" />
             <span>Active Resume: <strong>{currentResume.name || 'Candidate'}</strong></span>
           </div>
         )}
@@ -99,8 +99,8 @@ export default function BulletOptimizer({ apiKey, onApplyToResume = null, curren
         {/* Resume Bullet Quick-Picks (if candidate has experience) */}
         {resumeBullets.length > 0 && (
           <div className="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800/80 space-y-2">
-            <span className="text-xs font-semibold text-indigo-300 flex items-center gap-1.5">
-              <FileText className="w-3.5 h-3.5 text-indigo-400" />
+            <span className="text-xs font-semibold text-blue-300 flex items-center gap-1.5">
+              <FileText className="w-3.5 h-3.5 text-blue-400" />
               Pick an existing bullet from your resume to enhance:
             </span>
             <div className="flex flex-wrap gap-2">
@@ -111,7 +111,7 @@ export default function BulletOptimizer({ apiKey, onApplyToResume = null, curren
                     setBullet(item.text);
                     handleOptimize(item.text, contextTech);
                   }}
-                  className="text-[11px] px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700/80 hover:border-indigo-500 text-slate-300 hover:text-white transition truncate max-w-sm text-left"
+                  className="text-[11px] px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700/80 hover:border-blue-500 text-slate-300 hover:text-white transition truncate max-w-sm text-left"
                   title={`${item.role} @ ${item.company}: "${item.text}"`}
                 >
                   <span className="text-slate-500 mr-1.5">[{item.company}]</span>
@@ -134,7 +134,7 @@ export default function BulletOptimizer({ apiKey, onApplyToResume = null, curren
                   setContextTech(sample.tech);
                   handleOptimize(sample.text, sample.tech);
                 }}
-                className="text-[11px] px-3 py-1.5 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-indigo-500/40 text-slate-300 hover:text-white transition truncate max-w-xs"
+                className="text-[11px] px-3 py-1.5 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-blue-500/40 text-slate-300 hover:text-white transition truncate max-w-xs"
               >
                 "{sample.text}"
               </button>
@@ -152,7 +152,7 @@ export default function BulletOptimizer({ apiKey, onApplyToResume = null, curren
               value={bullet}
               onChange={(e) => setBullet(e.target.value)}
               placeholder="e.g., Handled backend API performance, wrote unit tests, and resolved database bugs..."
-              className="w-full p-3.5 bg-slate-950 border border-slate-800 rounded-2xl text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 font-sans resize-none"
+              className="w-full p-3.5 bg-slate-950 border border-slate-800 rounded-2xl text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-500 font-sans resize-none"
             />
           </div>
 
@@ -166,7 +166,7 @@ export default function BulletOptimizer({ apiKey, onApplyToResume = null, curren
                 value={contextTech}
                 onChange={(e) => setContextTech(e.target.value)}
                 placeholder="e.g., React, TypeScript, Redis, PostgreSQL, AWS, Docker"
-                className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+                className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-500"
               />
             </div>
 
@@ -174,7 +174,7 @@ export default function BulletOptimizer({ apiKey, onApplyToResume = null, curren
               <button
                 onClick={() => handleOptimize()}
                 disabled={isOptimizing || !bullet.trim()}
-                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 rounded-xl shadow-lg shadow-indigo-600/30 transition"
+                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 disabled:opacity-50 rounded-xl shadow-lg shadow-blue-600/30 transition"
               >
                 {isOptimizing ? (
                   <>
@@ -183,7 +183,7 @@ export default function BulletOptimizer({ apiKey, onApplyToResume = null, curren
                   </>
                 ) : (
                   <>
-                    <Sparkles className="w-3.5 h-3.5 text-cyan-300" />
+                    <Sparkles className="w-3.5 h-3.5 text-blue-300" />
                     <span>Transform Bullet Point</span>
                   </>
                 )}
@@ -211,9 +211,9 @@ export default function BulletOptimizer({ apiKey, onApplyToResume = null, curren
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 text-indigo-400 font-bold text-xs self-center">
+              <div className="flex items-center gap-2 text-blue-400 font-bold text-xs self-center">
                 <span>STAR Transformation</span>
-                <ArrowRight className="w-4 h-4 text-cyan-400" />
+                <ArrowRight className="w-4 h-4 text-blue-400" />
               </div>
 
               <div className="flex items-center gap-3">
@@ -232,7 +232,7 @@ export default function BulletOptimizer({ apiKey, onApplyToResume = null, curren
             <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
               High-Impact STAR Variations ({result.variations?.length || 3})
             </h3>
-            <span className="text-xs text-indigo-400 flex items-center gap-1">
+            <span className="text-xs text-blue-400 flex items-center gap-1">
               <CheckCircle2 className="w-3.5 h-3.5" /> 1-Click Copy Ready
             </span>
           </div>
@@ -244,12 +244,12 @@ export default function BulletOptimizer({ apiKey, onApplyToResume = null, curren
               return (
                 <div
                   key={idx}
-                  className="glass-panel p-5 sm:p-6 rounded-3xl border border-slate-800 hover:border-indigo-500/40 transition-all space-y-3 relative group"
+                  className="glass-panel p-5 sm:p-6 rounded-3xl border border-slate-800 hover:border-blue-500/40 transition-all space-y-3 relative group"
                 >
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-bold text-white">{variation.style}</span>
-                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
                         {variation.badge}
                       </span>
                       {variation.score && (
@@ -271,7 +271,7 @@ export default function BulletOptimizer({ apiKey, onApplyToResume = null, curren
                           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition ${
                             appliedIndex === idx
                               ? 'bg-emerald-600 text-white'
-                              : 'bg-indigo-600/30 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/40'
+                              : 'bg-blue-600/30 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/40'
                           }`}
                           title="Apply this accomplishment bullet directly to your primary resume experience"
                         >
@@ -324,7 +324,7 @@ export default function BulletOptimizer({ apiKey, onApplyToResume = null, curren
                         <span className="text-slate-400">{variation.star.situation || variation.star.task}</span>
                       </div>
                       <div className="p-2.5 rounded-xl bg-slate-950/50 border border-slate-800">
-                        <span className="font-bold text-cyan-400 block mb-0.5">A (Action Execution):</span>
+                        <span className="font-bold text-blue-400 block mb-0.5">A (Action Execution):</span>
                         <span className="text-slate-300 font-medium">{variation.star.action}</span>
                       </div>
                       <div className="p-2.5 rounded-xl bg-slate-950/50 border border-slate-800">
@@ -335,7 +335,7 @@ export default function BulletOptimizer({ apiKey, onApplyToResume = null, curren
                   )}
 
                   <p className="text-xs text-slate-400 flex items-center gap-1.5 pt-1">
-                    <Zap className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                    <Zap className="w-3.5 h-3.5 text-blue-400 shrink-0" />
                     <span><strong className="text-slate-300">Why this works:</strong> {variation.rationale}</span>
                   </p>
                 </div>
@@ -348,7 +348,7 @@ export default function BulletOptimizer({ apiKey, onApplyToResume = null, curren
       {/* Action Verb Cheat Sheet */}
       <div className="glass-panel p-5 rounded-2xl border border-slate-800 space-y-2">
         <span className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-          <Award className="w-4 h-4 text-indigo-400" />
+          <Award className="w-4 h-4 text-blue-400" />
           High-Impact Action Verb Bank (Click to Prepend)
         </span>
         <div className="flex flex-wrap gap-1.5 pt-1">
@@ -361,7 +361,7 @@ export default function BulletOptimizer({ apiKey, onApplyToResume = null, curren
             <span
               key={idx}
               onClick={() => setBullet(prev => prev ? `${verb} ${prev}` : `${verb} `)}
-              className="text-[11px] px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-slate-300 hover:text-cyan-300 hover:border-cyan-500/30 cursor-pointer transition select-none"
+              className="text-[11px] px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-slate-300 hover:text-blue-300 hover:border-cyan-500/30 cursor-pointer transition select-none"
               title="Click to prepend to bullet"
             >
               {verb}

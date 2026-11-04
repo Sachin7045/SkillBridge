@@ -74,11 +74,11 @@ export default function CoverLetterGenerator({
       <div className="glass-panel p-6 rounded-3xl border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+            <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
               <Mail className="w-4 h-4" />
             </div>
-            <h2 className="text-lg font-bold text-white">AI Cover Letter Generator</h2>
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-semibold">
+            <h2 className="text-lg font-bold text-white">Targeted Cover Letter Studio</h2>
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-semibold">
               Resume-Grounded
             </span>
           </div>
@@ -93,7 +93,7 @@ export default function CoverLetterGenerator({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-semibold text-slate-300 mb-1 flex items-center gap-1.5">
-              <Building2 className="w-3.5 h-3.5 text-cyan-400" />
+              <Building2 className="w-3.5 h-3.5 text-blue-400" />
               Target Company Name
             </label>
             <input
@@ -101,19 +101,19 @@ export default function CoverLetterGenerator({
               value={companyName}
               onChange={(e) => setCompanyName(e.target.value)}
               placeholder="e.g., Stripe, Google, Datadog, Netflix"
-              className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+              className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-500"
             />
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-slate-300 mb-1 flex items-center gap-1.5">
-              <Briefcase className="w-3.5 h-3.5 text-indigo-400" />
+              <Briefcase className="w-3.5 h-3.5 text-blue-400" />
               Target Role
             </label>
             <select
               value={targetRole}
               onChange={(e) => setTargetRole(e.target.value)}
-              className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
+              className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-100 focus:outline-none focus:border-blue-500"
             >
               {(rolesList || ["Full Stack Developer", "Frontend Engineer", "Backend Engineer", "DevOps / Cloud Engineer", "Data Scientist / AI Engineer"]).map(r => (
                 <option key={r} value={r}>{r}</option>
@@ -132,7 +132,7 @@ export default function CoverLetterGenerator({
             value={jobDescription}
             onChange={(e) => setJobDescription(e.target.value)}
             placeholder="Paste specific mission, tech stack, or qualifications from the job posting to deeply personalize the cover letter..."
-            className="w-full p-3 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 font-sans resize-none"
+            className="w-full p-3 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-500 font-sans resize-none"
           />
         </div>
 
@@ -140,7 +140,7 @@ export default function CoverLetterGenerator({
           <button
             onClick={handleGenerate}
             disabled={isGenerating || !companyName.trim()}
-            className="flex items-center gap-2 px-5 py-2.5 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 rounded-xl shadow-lg shadow-indigo-600/30 transition"
+            className="flex items-center gap-2 px-5 py-2.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 disabled:opacity-50 rounded-xl shadow-lg shadow-blue-600/30 transition"
           >
             {isGenerating ? (
               <>
@@ -149,7 +149,7 @@ export default function CoverLetterGenerator({
               </>
             ) : (
               <>
-                <Sparkles className="w-3.5 h-3.5 text-cyan-300" />
+                <Sparkles className="w-3.5 h-3.5 text-blue-300" />
                 <span>Generate Tailored Cover Letter</span>
               </>
             )}
@@ -165,7 +165,7 @@ export default function CoverLetterGenerator({
             {/* Action Bar */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-400">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-400">
                   Customized for {coverLetterData.company}
                 </span>
                 <h3 className="text-base font-bold text-white">
@@ -210,8 +210,8 @@ export default function CoverLetterGenerator({
               <div className="flex flex-wrap items-center gap-2 text-xs py-1">
                 <span className="text-[11px] font-semibold text-slate-400">Emphasized:</span>
                 {coverLetterData.keyHighlights.map((hl, idx) => (
-                  <span key={idx} className="bg-slate-950 text-indigo-300 border border-indigo-500/20 px-2.5 py-1 rounded-lg text-[11px] flex items-center gap-1">
-                    <CheckCircle2 className="w-3 h-3 text-cyan-400" />
+                  <span key={idx} className="bg-slate-950 text-blue-300 border border-blue-500/20 px-2.5 py-1 rounded-lg text-[11px] flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3 text-blue-400" />
                     {hl}
                   </span>
                 ))}
@@ -219,7 +219,7 @@ export default function CoverLetterGenerator({
             )}
 
             {/* Letter Text Document */}
-            <div className="p-6 sm:p-8 rounded-2xl bg-slate-950/80 border border-slate-800/80 font-sans text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-wrap selection:bg-indigo-500">
+            <div className="p-6 sm:p-8 rounded-2xl bg-slate-950/80 border border-slate-800/80 font-sans text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-wrap selection:bg-blue-500">
               {coverLetterData.letter}
             </div>
 

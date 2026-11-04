@@ -9,46 +9,46 @@ export default {
     extend: {
       colors: {
         midnight: {
-          950: '#020817', // Deep midnight navy background
-          900: '#040d21',
-          850: '#07152B', // Layered dark navy card
-          800: '#0B1933', // Elevated card / border
-          700: '#112244',
+          950: '#0a0e17', // Modern Obsidian Charcoal
+          900: '#0f172a', // Deep Slate
+          850: '#111827', // Crisp Card Background
+          800: '#1e293b', // Elevated Surface / Border
+          700: '#334155', // Hairline Border
         },
         electric: {
-          500: '#258BFF', // Electric blue primary accent
-          400: '#4da1ff',
-          600: '#1b74de',
+          500: '#2563eb', // Royal Blue Precision Accent
+          400: '#3b82f6',
+          600: '#1d4ed8',
         },
         neonviolet: {
-          500: '#773BFF', // Neon violet secondary accent
-          400: '#9461ff',
-          600: '#5c22df',
+          500: '#3b82f6', // Refined Slate Cobalt
+          400: '#60a5fa',
+          600: '#2563eb',
         },
         cybercyan: {
-          500: '#16D9F5', // Highlight accent cyan
-          400: '#47e4f8',
+          500: '#0284c7', // Sky Blue Technical Accent
+          400: '#38bdf8',
         },
         emeraldgreen: {
-          500: '#19D3A2', // Success emerald green
-          400: '#3ce0b4',
+          500: '#10b981', // Clean Metric Green
+          400: '#34d399',
         },
         brand: {
-          50: '#eef2ff',
-          100: '#e0e7ff',
-          200: '#c7d2fe',
-          300: '#a5b4fc',
-          400: '#818cf8',
-          500: '#6366f1', // Indigo primary
-          600: '#4f46e5',
-          700: '#4338ca',
-          800: '#3730a3',
-          900: '#312e81',
-          950: '#1e1b4b',
+          50: '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#2563eb', // Precision Royal Blue
+          600: '#1d4ed8',
+          700: '#1e40af',
+          800: '#1e3a8a',
+          900: '#172554',
+          950: '#0f172a',
         },
         accent: {
-          500: '#16D9F5', // Cyan accent
-          600: '#0891b2'
+          500: '#0284c7',
+          600: '#0369a1'
         }
       },
       fontFamily: {

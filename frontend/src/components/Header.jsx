@@ -28,7 +28,7 @@ export default function Header({
     { id: 'landing', label: 'Portal Hero', icon: Sparkles },
     { id: 'visualizer', label: 'Resume Visualizer', icon: FileText },
     { id: 'analyzer', label: 'ATS & JD Analyzer', icon: BarChart3 },
-    { id: 'interview', label: 'AI Mock Interview', icon: Mic },
+    { id: 'interview', label: 'Technical Mock Interview', icon: Mic },
     { id: 'roadmap', label: 'Skill Bridge', icon: GitFork },
     { id: 'bullet', label: 'STAR Optimizer', icon: Wand2 },
     { id: 'coverletter', label: 'Cover Letter', icon: Mail },
@@ -41,17 +41,17 @@ export default function Header({
           
           {/* Logo */}
           <div className="flex items-center gap-3.5 cursor-pointer group" onClick={() => setActiveTab('landing')}>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 via-indigo-600 to-cyan-400 p-[1px] shadow-lg shadow-indigo-500/25 transition-transform group-hover:scale-105">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-500 via-blue-600 to-cyan-400 p-[1px] shadow-lg shadow-blue-500/25 transition-transform group-hover:scale-105">
               <div className="w-full h-full bg-slate-950 rounded-[11px] flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-cyan-400 animate-pulse" />
+                <Sparkles className="w-5 h-5 text-blue-400 animate-pulse" />
               </div>
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-lg font-bold tracking-tight text-white font-syne">
-                  Skill<span className="text-cyan-400">Bridge</span>
+                  Skill<span className="text-blue-400">Bridge</span>
                 </span>
-                <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-md bg-indigo-500/10 text-indigo-300 border border-indigo-500/25">
+                <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-300 border border-blue-500/25">
                   Pro Studio
                 </span>
               </div>
@@ -79,7 +79,7 @@ export default function Header({
                       : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
                   }`}
                 >
-                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-indigo-400' : 'text-slate-400'}`} />
+                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-blue-400' : 'text-slate-400'}`} />
                   {tab.label}
                 </button>
               );
@@ -93,13 +93,13 @@ export default function Header({
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/90 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700 text-xs font-medium transition shadow-sm"
               title="Load pre-built sample profiles"
             >
-              <Users className="w-3.5 h-3.5 text-indigo-400" />
+              <Users className="w-3.5 h-3.5 text-blue-400" />
               <span className="hidden sm:inline">Samples</span>
             </button>
 
             <button
               onClick={onOpenUpload}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition shadow-md shadow-indigo-600/25"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold transition shadow-md shadow-blue-600/25"
               title="Upload PDF or TXT resume"
             >
               <Upload className="w-3.5 h-3.5 text-white" />
@@ -125,7 +125,7 @@ export default function Header({
               title="Configure Gemini API Key"
             >
               <KeyRound className="w-3.5 h-3.5" />
-              <span className="hidden xl:inline">{hasApiKey ? 'Gemini Live' : 'AI Key'}</span>
+              <span className="hidden xl:inline">{hasApiKey ? 'Cloud Engine' : 'Engine Key'}</span>
             </button>
           </div>
 
@@ -142,7 +142,7 @@ export default function Header({
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs whitespace-nowrap font-medium transition ${
                   isActive
-                    ? 'bg-indigo-600 text-white'
+                    ? 'bg-blue-600 text-white'
                     : 'text-slate-400 hover:text-slate-200 bg-slate-900'
                 }`}
               >

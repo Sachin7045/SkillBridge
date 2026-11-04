@@ -173,11 +173,11 @@ ${(p.recommendedResources || []).map(r => `- ${r.title} (${r.type})`).join('\n')
       <div className="glass-panel p-6 sm:p-7 rounded-3xl border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+            <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
               <GitFork className="w-4 h-4" />
             </div>
             <h2 className="text-lg font-bold text-white">Skill Bridge Learning Roadmap</h2>
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-semibold">
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-semibold">
               Personalized Gap Closer
             </span>
           </div>
@@ -191,7 +191,7 @@ ${(p.recommendedResources || []).map(r => `- ${r.title} (${r.type})`).join('\n')
           <select
             value={targetRole}
             onChange={(e) => setTargetRole(e.target.value)}
-            className="bg-slate-950 border border-slate-700 text-xs text-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-500"
+            className="bg-slate-950 border border-slate-700 text-xs text-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-500"
           >
             {(rolesList || ["Full Stack Developer", "Frontend Engineer", "Backend Engineer", "DevOps / Cloud Engineer", "Data Scientist / AI Engineer"]).map(r => (
               <option key={r} value={r}>{r}</option>
@@ -204,7 +204,7 @@ ${(p.recommendedResources || []).map(r => `- ${r.title} (${r.type})`).join('\n')
             className="flex items-center gap-1.5 px-3 py-2 bg-slate-900 border border-slate-700 hover:border-slate-600 rounded-xl text-xs text-slate-300 transition"
             title="Recalculate Roadmap against latest resume"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-indigo-400' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-blue-400' : ''}`} />
             <span className="hidden sm:inline">Regenerate</span>
           </button>
 
@@ -212,10 +212,10 @@ ${(p.recommendedResources || []).map(r => `- ${r.title} (${r.type})`).join('\n')
             <>
               <button
                 onClick={handleExportRoadmap}
-                className="flex items-center gap-1.5 px-3 py-2 bg-indigo-600/30 hover:bg-indigo-600 border border-indigo-500/40 rounded-xl text-xs text-indigo-200 hover:text-white transition"
+                className="flex items-center gap-1.5 px-3 py-2 bg-blue-600/30 hover:bg-blue-600 border border-blue-500/40 rounded-xl text-xs text-blue-200 hover:text-white transition"
                 title="Download Roadmap as Markdown study guide"
               >
-                <Download className="w-3.5 h-3.5 text-cyan-300" />
+                <Download className="w-3.5 h-3.5 text-blue-300" />
                 <span className="hidden sm:inline">Export Plan</span>
               </button>
 
@@ -233,7 +233,7 @@ ${(p.recommendedResources || []).map(r => `- ${r.title} (${r.type})`).join('\n')
 
       {isLoading ? (
         <div className="p-16 text-center space-y-3 glass-panel rounded-3xl border border-slate-800">
-          <div className="w-12 h-12 rounded-full border-2 border-indigo-500 border-t-transparent animate-spin mx-auto" />
+          <div className="w-12 h-12 rounded-full border-2 border-blue-500 border-t-transparent animate-spin mx-auto" />
           <p className="text-sm font-medium text-slate-300">
             Mapping career milestones and analyzing competency gaps for {targetRole}...
           </p>
@@ -247,12 +247,12 @@ ${(p.recommendedResources || []).map(r => `- ${r.title} (${r.type})`).join('\n')
               <div className="text-2xl font-black text-white">{roadmap.readinessScore}%</div>
               <div className="text-xs text-slate-400 mt-1">Current Role Readiness</div>
               <div className="w-full h-1.5 bg-slate-800 rounded-full mt-3 overflow-hidden">
-                <div className="h-full bg-indigo-500 rounded-full" style={{ width: `${roadmap.readinessScore}%` }} />
+                <div className="h-full bg-blue-500 rounded-full" style={{ width: `${roadmap.readinessScore}%` }} />
               </div>
             </div>
 
             <div className="glass-panel p-5 rounded-2xl border border-slate-800 text-center">
-              <div className="text-2xl font-black text-cyan-400">{roadmap.estimatedWeeks} Weeks</div>
+              <div className="text-2xl font-black text-blue-400">{roadmap.estimatedWeeks} Weeks</div>
               <div className="text-xs text-slate-400 mt-1">Estimated Bridge Duration</div>
               <div className="text-[10px] text-slate-500 mt-3">~10-15 hrs/week recommended</div>
             </div>
@@ -326,7 +326,7 @@ ${(p.recommendedResources || []).map(r => `- ${r.title} (${r.type})`).join('\n')
                       <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-sm border ${
                         isPhaseComplete 
                           ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' 
-                          : 'bg-indigo-600/20 text-indigo-400 border-indigo-500/30'
+                          : 'bg-blue-600/20 text-blue-400 border-blue-500/30'
                       }`}>
                         P{phase.phase}
                       </div>
@@ -348,7 +348,7 @@ ${(p.recommendedResources || []).map(r => `- ${r.title} (${r.type})`).join('\n')
                         {phaseDoneCount} / {allPhaseSkills.length} done
                       </span>
                       <span className="flex items-center gap-1.5 text-xs text-slate-300 bg-slate-950 px-3 py-1 rounded-xl border border-slate-800">
-                        <Calendar className="w-3.5 h-3.5 text-indigo-400" />
+                        <Calendar className="w-3.5 h-3.5 text-blue-400" />
                         {phase.duration}
                       </span>
                     </div>
@@ -364,7 +364,7 @@ ${(p.recommendedResources || []).map(r => `- ${r.title} (${r.type})`).join('\n')
                       <button
                         type="button"
                         onClick={() => setAddingPhaseIdx(addingPhaseIdx === pIdx ? null : pIdx)}
-                        className="text-[11px] text-cyan-400 hover:text-cyan-300 flex items-center gap-1 transition"
+                        className="text-[11px] text-blue-400 hover:text-blue-300 flex items-center gap-1 transition"
                       >
                         <Plus className="w-3 h-3" />
                         <span>Add Custom Skill</span>
@@ -373,7 +373,7 @@ ${(p.recommendedResources || []).map(r => `- ${r.title} (${r.type})`).join('\n')
 
                     {/* Inline Add Skill Form */}
                     {addingPhaseIdx === pIdx && (
-                      <div className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-950 border border-indigo-500/40">
+                      <div className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-950 border border-blue-500/40">
                         <input
                           type="text"
                           value={newSkillText}
@@ -385,7 +385,7 @@ ${(p.recommendedResources || []).map(r => `- ${r.title} (${r.type})`).join('\n')
                         <button
                           type="button"
                           onClick={() => handleAddCustomSkill(pIdx)}
-                          className="px-3 py-1 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg transition"
+                          className="px-3 py-1 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg transition"
                         >
                           Add
                         </button>
@@ -447,7 +447,7 @@ ${(p.recommendedResources || []).map(r => `- ${r.title} (${r.type})`).join('\n')
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
                     {/* Project */}
                     <div className="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-1.5">
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-cyan-400">
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-blue-400">
                         <FolderGit2 className="w-3.5 h-3.5" />
                         <span>Portfolio Flagship Project</span>
                       </div>
@@ -458,7 +458,7 @@ ${(p.recommendedResources || []).map(r => `- ${r.title} (${r.type})`).join('\n')
 
                     {/* Resources */}
                     <div className="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-1.5">
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-indigo-400">
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-blue-400">
                         <BookMarked className="w-3.5 h-3.5" />
                         <span>Curated Learning Guides</span>
                       </div>
@@ -471,7 +471,7 @@ ${(p.recommendedResources || []).map(r => `- ${r.title} (${r.type})`).join('\n')
                                 href={res.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-[10px] bg-slate-900 hover:bg-slate-800 px-2 py-0.5 rounded text-cyan-400 border border-slate-800 shrink-0 flex items-center gap-1"
+                                className="text-[10px] bg-slate-900 hover:bg-slate-800 px-2 py-0.5 rounded text-blue-400 border border-slate-800 shrink-0 flex items-center gap-1"
                               >
                                 <span>{res.type}</span>
                                 <ExternalLink className="w-2.5 h-2.5" />

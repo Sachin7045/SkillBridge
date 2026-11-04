@@ -91,12 +91,12 @@ export default function AuthModal({
         {/* Top Header */}
         <div className="p-6 bg-slate-950/70 border-b border-slate-800 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-cyan-400 p-[1px] shadow-lg shadow-indigo-500/20">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-500 to-cyan-400 p-[1px] shadow-lg shadow-blue-500/20">
               <div className="w-full h-full bg-slate-950 rounded-[11px] flex items-center justify-center">
                 {step === 'credentials' ? (
-                  <Sparkles className="w-5 h-5 text-cyan-400 animate-pulse" />
+                  <Sparkles className="w-5 h-5 text-blue-400 animate-pulse" />
                 ) : (
-                  <KeyRound className="w-5 h-5 text-cyan-400" />
+                  <KeyRound className="w-5 h-5 text-blue-400" />
                 )}
               </div>
             </div>
@@ -148,7 +148,7 @@ export default function AuthModal({
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="candidate@skillbridge.io"
-                    className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs placeholder-slate-600 focus:outline-none focus:border-indigo-500"
+                    className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs placeholder-slate-600 focus:outline-none focus:border-blue-500"
                   />
                 </div>
               </div>
@@ -166,7 +166,7 @@ export default function AuthModal({
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs placeholder-slate-600 focus:outline-none focus:border-indigo-500"
+                    className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs placeholder-slate-600 focus:outline-none focus:border-blue-500"
                   />
                   <button
                     type="button"
@@ -181,7 +181,7 @@ export default function AuthModal({
               <button
                 type="submit"
                 disabled={isLoading || !email.trim() || !password.trim()}
-                className="w-full py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white text-xs font-bold transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2"
+                className="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white text-xs font-bold transition shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2"
               >
                 {isLoading ? (
                   <span>Sending Verification Code...</span>
@@ -201,13 +201,13 @@ export default function AuthModal({
               {receivedOtp && (
                 <div className="p-3 rounded-xl bg-cyan-950/40 border border-cyan-500/30 flex items-center justify-between">
                   <div>
-                    <span className="text-[10px] uppercase font-bold text-cyan-400">Verification OTP:</span>
+                    <span className="text-[10px] uppercase font-bold text-blue-400">Verification OTP:</span>
                     <span className="ml-2 font-mono font-bold text-white tracking-widest">{receivedOtp}</span>
                   </div>
                   <button
                     type="button"
                     onClick={() => setOtp(receivedOtp)}
-                    className="text-[10px] px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-semibold"
+                    className="text-[10px] px-2 py-0.5 rounded bg-cyan-500/20 text-blue-300 border border-cyan-500/30 font-semibold"
                   >
                     Auto-Fill
                   </button>
@@ -259,7 +259,7 @@ export default function AuthModal({
                   type="button"
                   onClick={handleSendOtp}
                   disabled={isLoading}
-                  className="text-cyan-400 hover:text-cyan-300 transition font-semibold"
+                  className="text-blue-400 hover:text-blue-300 transition font-semibold"
                 >
                   Resend OTP
                 </button>

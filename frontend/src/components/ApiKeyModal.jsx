@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { KeyRound, X, CheckCircle, ShieldCheck, Sparkles, ExternalLink } from 'lucide-react';
+import { KeyRound, X, CheckCircle, ShieldCheck, Settings, ExternalLink } from 'lucide-react';
 
 export default function ApiKeyModal({ isOpen, onClose, apiKey, onSaveApiKey }) {
   const [inputKey, setInputKey] = useState(apiKey || '');
@@ -32,47 +32,47 @@ export default function ApiKeyModal({ isOpen, onClose, apiKey, onSaveApiKey }) {
         </button>
 
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+          <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
             <KeyRound className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-white">AI Engine Settings</h3>
-            <p className="text-xs text-slate-400">Configure Live Gemini API or Local Engine</p>
+            <h3 className="text-lg font-bold text-white">Evaluation Engine Settings</h3>
+            <p className="text-xs text-slate-400">Configure Cloud Reasoning API or Built-in Local Engine</p>
           </div>
         </div>
 
         <div className="bg-slate-950/60 border border-slate-800 rounded-xl p-3.5 mb-4 text-xs text-slate-300 space-y-2">
-          <div className="flex items-center gap-2 text-indigo-400 font-semibold">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Dual-Mode AI Capability</span>
+          <div className="flex items-center gap-2 text-blue-400 font-semibold">
+            <Settings className="w-3.5 h-3.5" />
+            <span>Dual Evaluation Modes</span>
           </div>
           <p>
-            • <strong className="text-white">Built-in Local AI:</strong> Works 100% offline out-of-the-box with zero setup, generating realistic questions, ATS metrics, and STAR rewrites.
+            • <strong className="text-white">Built-in Local Engine:</strong> Operates 100% offline out-of-the-box with zero setup, evaluating rubric parameters, ATS metrics, and STAR rewrites.
           </p>
           <p>
-            • <strong className="text-white">Live Gemini 1.5 Flash:</strong> Add a Google AI Studio key to enable live generative interview answers, real-time feedback, and dynamic questions.
+            • <strong className="text-white">Cloud Reasoning Engine:</strong> Add an optional Google Gemini key to enable live conversational mock interviews and dynamic question generation.
           </p>
         </div>
 
         <div className="space-y-3 mb-6">
           <label className="block text-xs font-semibold text-slate-300">
-            Google Gemini API Key (Optional)
+            Cloud Engine API Key (Optional)
           </label>
           <input
             type="password"
             value={inputKey}
             onChange={(e) => setInputKey(e.target.value)}
             placeholder="AIzaSy..."
-            className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 font-mono"
+            className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 font-mono"
           />
           <div className="flex items-center justify-between text-[11px] text-slate-400 px-1">
             <a
               href="https://aistudio.google.com/app/apikey"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 text-indigo-400 hover:text-indigo-300 hover:underline"
+              className="flex items-center gap-1 text-blue-400 hover:text-blue-300 hover:underline"
             >
-              <span>Get a free key from Google AI Studio</span>
+              <span>Get API key from Google Cloud</span>
               <ExternalLink className="w-3 h-3" />
             </a>
             <span className="flex items-center gap-1 text-slate-500">
@@ -98,7 +98,7 @@ export default function ApiKeyModal({ isOpen, onClose, apiKey, onSaveApiKey }) {
           </button>
           <button
             onClick={handleSave}
-            className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-500 rounded-xl shadow-lg shadow-indigo-600/30 transition"
+            className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-xl shadow-md shadow-blue-900/30 transition"
           >
             {saved ? (
               <>

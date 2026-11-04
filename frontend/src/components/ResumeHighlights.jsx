@@ -55,10 +55,10 @@ function computeStrengthBadges(resume, analysis) {
 
   if (atsScore >= 80) badges.push({ id: 'ats-elite', label: 'ATS Elite', icon: Shield, color: 'text-emerald-400', bg: 'bg-emerald-500/10 border-emerald-500/30', desc: `${atsScore}/100 — Top tier ATS compatibility` });
   else if (atsScore >= 65) badges.push({ id: 'ats-strong', label: 'ATS Ready', icon: Shield, color: 'text-blue-400', bg: 'bg-blue-500/10 border-blue-500/30', desc: `${atsScore}/100 — Strong ATS compatibility` });
-  if (quantifiedRatio >= 60) badges.push({ id: 'data-driven', label: 'Data-Driven', icon: BarChart3, color: 'text-cyan-400', bg: 'bg-cyan-500/10 border-cyan-500/30', desc: `${quantifiedRatio}% of bullets include measurable impact` });
+  if (quantifiedRatio >= 60) badges.push({ id: 'data-driven', label: 'Data-Driven', icon: BarChart3, color: 'text-blue-400', bg: 'bg-blue-500/10 border-cyan-500/30', desc: `${quantifiedRatio}% of bullets include measurable impact` });
   if (powerVerbsCount >= 5) badges.push({ id: 'power-verbs', label: 'Power Communicator', icon: Flame, color: 'text-orange-400', bg: 'bg-orange-500/10 border-orange-500/30', desc: `${powerVerbsCount} action leadership verbs used` });
   if (matchedSkills.length >= 8) badges.push({ id: 'skill-rich', label: 'Skill-Rich', icon: Layers, color: 'text-violet-400', bg: 'bg-violet-500/10 border-violet-500/30', desc: `${matchedSkills.length} matched role keywords` });
-  if ((resume?.experience?.length || 0) >= 2) badges.push({ id: 'experienced', label: 'Experienced', icon: Briefcase, color: 'text-indigo-400', bg: 'bg-indigo-500/10 border-indigo-500/30', desc: `${resume.experience.length} documented positions` });
+  if ((resume?.experience?.length || 0) >= 2) badges.push({ id: 'experienced', label: 'Experienced', icon: Briefcase, color: 'text-blue-400', bg: 'bg-blue-500/10 border-blue-500/30', desc: `${resume.experience.length} documented positions` });
   if ((resume?.projects?.length || 0) >= 2) badges.push({ id: 'builder', label: 'Builder', icon: Code2, color: 'text-teal-400', bg: 'bg-teal-500/10 border-teal-500/30', desc: `${resume.projects.length} featured technical projects` });
   if (resume?.links?.github) badges.push({ id: 'open-source', label: 'Open Source', icon: GitBranch, color: 'text-pink-400', bg: 'bg-pink-500/10 border-pink-500/30', desc: 'GitHub profile verified' });
   if ((resume?.certifications?.length || 0) >= 1) badges.push({ id: 'certified', label: 'Certified', icon: Medal, color: 'text-amber-400', bg: 'bg-amber-500/10 border-amber-500/30', desc: `${resume.certifications.length} professional certifications` });
@@ -111,13 +111,13 @@ function CareerHighlightsCard({ resume }) {
   const visible = expanded ? highlights : highlights.slice(0, 3);
 
   return (
-    <div className="pro-card p-5 rounded-2xl border border-indigo-500/20 bg-gradient-to-br from-indigo-950/40 to-slate-900/60 space-y-3">
+    <div className="pro-card p-5 rounded-2xl border border-blue-500/20 bg-gradient-to-br from-blue-950/40 to-slate-900/60 space-y-3">
       <div className="flex items-center justify-between">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-300 flex items-center gap-2">
-          <Brain className="w-4 h-4 text-cyan-400" />
-          AI Career Highlights
+        <h3 className="text-xs font-bold uppercase tracking-wider text-blue-300 flex items-center gap-2">
+          <Award className="w-4 h-4 text-amber-400" />
+          Executive Career Highlights
         </h3>
-        <span className="text-[10px] font-semibold text-cyan-300 bg-cyan-500/10 px-2 py-0.5 rounded-full border border-cyan-500/20">
+        <span className="text-[10px] font-semibold text-blue-300 bg-blue-500/10 px-2 py-0.5 rounded-full border border-blue-500/20">
           Top {highlights.length} Impact Bullets
         </span>
       </div>
@@ -135,7 +135,7 @@ function CareerHighlightsCard({ resume }) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -4 }}
                   transition={{ delay: idx * 0.05 }}
-                  className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-950/60 border border-slate-800/80 hover:border-indigo-500/30 transition"
+                  className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-950/60 border border-slate-800/80 hover:border-blue-500/30 transition"
                 >
                   <Star className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${h.type === 'quantified' ? 'text-amber-400' : 'text-slate-500'}`} />
                   <div className="min-w-0">
@@ -152,7 +152,7 @@ function CareerHighlightsCard({ resume }) {
             </AnimatePresence>
           </div>
           {highlights.length > 3 && (
-            <button onClick={() => setExpanded(!expanded)} className="w-full flex items-center justify-center gap-1.5 text-[11px] text-indigo-400 hover:text-indigo-300 font-semibold transition py-1">
+            <button onClick={() => setExpanded(!expanded)} className="w-full flex items-center justify-center gap-1.5 text-[11px] text-blue-400 hover:text-blue-300 font-semibold transition py-1">
               {expanded ? <><ChevronUp className="w-3.5 h-3.5" /> Show Less</> : <><ChevronDown className="w-3.5 h-3.5" /> Show {highlights.length - 3} More</>}
             </button>
           )}
@@ -314,7 +314,7 @@ function KeywordSearchBar({ keywords, onKeywordsChange }) {
     <div className="pro-card p-4 rounded-2xl border border-slate-700/60 bg-slate-900/60 space-y-3">
       <div className="flex items-center justify-between">
         <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
-          <Search className="w-4 h-4 text-indigo-400" />
+          <Search className="w-4 h-4 text-blue-400" />
           Keyword Highlighter
         </h3>
         {keywords.length > 0 && (
@@ -331,9 +331,9 @@ function KeywordSearchBar({ keywords, onKeywordsChange }) {
           onChange={e => setInputValue(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && handleAdd()}
           placeholder="Type keyword and press Enter (e.g. React, Docker)"
-          className="flex-1 bg-slate-950 border border-slate-700/80 text-xs text-slate-200 placeholder-slate-500 rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-500 transition"
+          className="flex-1 bg-slate-950 border border-slate-700/80 text-xs text-slate-200 placeholder-slate-500 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-500 transition"
         />
-        <button onClick={handleAdd} disabled={!inputValue.trim()} className="px-3.5 py-2 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 rounded-xl transition">
+        <button onClick={handleAdd} disabled={!inputValue.trim()} className="px-3.5 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 disabled:opacity-40 rounded-xl transition">
           Add
         </button>
       </div>
@@ -368,7 +368,7 @@ export default function ResumeHighlights({ resume, analysis, highlightKeywords: 
       className="space-y-4"
     >
       <div className="flex items-center gap-3 mb-2">
-        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center">
+        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
           <Sparkles className="w-4 h-4 text-white" />
         </div>
         <div>

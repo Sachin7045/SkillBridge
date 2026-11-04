@@ -824,32 +824,32 @@ export default function App() {
 
             {activeTab === 'github' && currentResume && (
               <motion.div key="github" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                <div className="rounded-3xl p-6 bg-[#07152B] border border-[#0B1933] shadow-2xl space-y-4">
+                <div className="rounded-3xl p-6 bg-slate-900 border border-slate-800 shadow-2xl space-y-4">
                   <div className="flex items-center justify-between">
                     <div>
                       <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                        <Sparkles className="w-5 h-5 text-[#16D9F5]" />
-                        <span>GitHub Repository & Codebase Intelligence</span>
+                        <GitBranch className="w-5 h-5 text-blue-400" />
+                        <span>GitHub Repository & Codebase Analysis</span>
                       </h2>
-                      <p className="text-xs text-slate-400 mt-1">Deep analysis of open-source contributions, commit velocity, and language taxonomy.</p>
+                      <p className="text-xs text-slate-400 mt-1">Analysis of open-source contributions, commit velocity, and language taxonomy.</p>
                     </div>
-                    <span className="px-3 py-1 rounded-full bg-[#19D3A2]/15 text-[#19D3A2] text-xs font-semibold border border-[#19D3A2]/20">Active Analysis</span>
+                    <span className="px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 text-xs font-semibold border border-emerald-500/20">Active Analysis</span>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-                    <div className="p-4 rounded-2xl bg-[#0B1933] border border-white/5">
+                    <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800">
                       <div className="text-xs text-slate-400">Total Commits (Last 12M)</div>
                       <div className="text-2xl font-black text-white mt-1">428</div>
-                      <div className="text-[11px] text-[#19D3A2] mt-1 font-semibold">Top 15% in Full Stack</div>
+                      <div className="text-[11px] text-emerald-400 mt-1 font-semibold">Top 15% in Full Stack</div>
                     </div>
-                    <div className="p-4 rounded-2xl bg-[#0B1933] border border-white/5">
+                    <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800">
                       <div className="text-xs text-slate-400">Primary Codebase Stack</div>
                       <div className="text-base font-bold text-white mt-1">TypeScript • React • Node</div>
-                      <div className="text-[11px] text-[#258BFF] mt-1 font-semibold">14 Repositories verified</div>
+                      <div className="text-[11px] text-blue-400 mt-1 font-semibold">14 Repositories verified</div>
                     </div>
-                    <div className="p-4 rounded-2xl bg-[#0B1933] border border-white/5">
+                    <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800">
                       <div className="text-xs text-slate-400">STAR Achievement Alignment</div>
                       <div className="text-2xl font-black text-white mt-1">92%</div>
-                      <div className="text-[11px] text-[#16D9F5] mt-1 font-semibold">Code matches resume claims</div>
+                      <div className="text-[11px] text-sky-400 mt-1 font-semibold">Code matches resume claims</div>
                     </div>
                   </div>
                 </div>
@@ -946,12 +946,12 @@ export default function App() {
             <div className="flex items-center gap-2">
               <span className="font-semibold text-slate-400">SkillBridge</span>
               <span>•</span>
-              <span>AI Career Intelligence & Resume Studio</span>
+              <span>Professional Career Platform & Resume Studio</span>
             </div>
             <div className="flex items-center gap-3">
               <span className="flex items-center gap-1.5 text-slate-400">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Deterministic ATS Parsing + Gemini Flash Reasoning</span>
+                <span>Deterministic ATS Diagnostics + Calibrated Evaluation Framework</span>
               </span>
             </div>
           </div>

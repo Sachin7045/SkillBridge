@@ -143,10 +143,10 @@ export default function LoginPage({
   // If already authenticated, show friendly active session state
   if (currentUser) {
     return (
-      <div className="min-h-screen bg-[#020817] text-slate-100 flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+      <div className="min-h-screen bg-[#0a0e17] text-slate-100 flex flex-col justify-between selection:bg-blue-600 selection:text-white">
         
         {/* Navigation Bar */}
-        <header className="h-16 px-6 border-b border-slate-800/80 bg-[#020817]/80 backdrop-blur-xl flex items-center justify-between">
+        <header className="h-16 px-6 border-b border-slate-800/80 bg-[#0a0e17]/80 backdrop-blur-xl flex items-center justify-between">
           <button
             onClick={onBackToApp}
             className="flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white transition group"
@@ -168,9 +168,9 @@ export default function LoginPage({
             animate={{ opacity: 1, scale: 1 }}
             className="bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl relative text-center space-y-6"
           >
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-500 to-cyan-400 p-[1px] mx-auto shadow-xl shadow-indigo-500/20">
-              <div className="w-full h-full bg-[#020817] rounded-[15px] flex items-center justify-center">
-                <User className="w-8 h-8 text-cyan-400" />
+            <div className="w-16 h-16 rounded-2xl bg-blue-600 p-[1px] mx-auto shadow-xl shadow-blue-900/20">
+              <div className="w-full h-full bg-[#0a0e17] rounded-[15px] flex items-center justify-center">
+                <User className="w-8 h-8 text-blue-400" />
               </div>
             </div>
 
@@ -193,7 +193,7 @@ export default function LoginPage({
             <div className="space-y-2.5 pt-2">
               <button
                 onClick={onBackToApp}
-                className="w-full py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2"
+                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow-lg shadow-blue-900/30 flex items-center justify-center gap-2"
               >
                 <span>Enter Workspace Dashboard</span>
                 <ArrowRight className="w-4 h-4" />
@@ -218,10 +218,10 @@ export default function LoginPage({
   }
 
   return (
-    <div className="min-h-screen bg-[#020817] text-slate-100 flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+    <div className="min-h-screen bg-[#0a0e17] text-slate-100 flex flex-col justify-between selection:bg-blue-600 selection:text-white">
       
       {/* Top Navbar */}
-      <header className="h-16 px-6 border-b border-slate-800/80 bg-[#020817]/70 backdrop-blur-xl flex items-center justify-between">
+      <header className="h-16 px-6 border-b border-slate-800/80 bg-[#0a0e17]/70 backdrop-blur-xl flex items-center justify-between">
         <button
           onClick={onBackToApp}
           className="flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white transition group"
@@ -231,7 +231,7 @@ export default function LoginPage({
         </button>
 
         <div className="flex items-center gap-2.5">
-          <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-indigo-500 to-cyan-400 flex items-center justify-center text-[10px] font-black text-white shadow-md shadow-indigo-500/20">
+          <div className="w-6 h-6 rounded-lg bg-blue-600 flex items-center justify-center text-[10px] font-black text-white shadow-md shadow-blue-900/20">
             S
           </div>
           <span className="text-sm font-bold tracking-tight text-white hidden sm:inline">
@@ -251,16 +251,16 @@ export default function LoginPage({
             className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl relative overflow-hidden"
           >
             {/* Ambient background glow */}
-            <div className="absolute top-0 right-0 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
 
             {/* Header Icon & Title */}
             <div className="relative z-10 text-center mb-6">
-              <div className="w-12 h-12 rounded-2xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center mx-auto mb-3 text-indigo-400 shadow-lg shadow-indigo-600/20">
+              <div className="w-12 h-12 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center mx-auto mb-3 text-blue-400 shadow-lg shadow-blue-900/20">
                 {step === 'credentials' ? (
                   <Lock className="w-6 h-6" />
                 ) : (
-                  <KeyRound className="w-6 h-6 text-cyan-400" />
+                  <KeyRound className="w-6 h-6 text-blue-400" />
                 )}
               </div>
 
@@ -272,7 +272,7 @@ export default function LoginPage({
                 {step === 'credentials' ? (
                   <span>Enter your email and password to receive a secure 6-digit OTP code.</span>
                 ) : (
-                  <span>Enter the 6-digit verification code sent for <strong className="text-cyan-300 font-mono">{email}</strong></span>
+                  <span>Enter the 6-digit verification code sent for <strong className="text-blue-300 font-mono">{email}</strong></span>
                 )}
               </p>
             </div>
@@ -312,7 +312,7 @@ export default function LoginPage({
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="e.g. Sachin Yadav"
-                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs placeholder-slate-600 focus:outline-none focus:border-indigo-500 transition font-sans"
+                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs placeholder-slate-600 focus:outline-none focus:border-blue-500 transition font-sans"
                     />
                   </div>
                 </div>
@@ -330,7 +330,7 @@ export default function LoginPage({
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="e.g. candidate@skillbridge.io"
-                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs placeholder-slate-600 focus:outline-none focus:border-indigo-500 transition font-sans"
+                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs placeholder-slate-600 focus:outline-none focus:border-blue-500 transition font-sans"
                     />
                   </div>
                 </div>
@@ -351,7 +351,7 @@ export default function LoginPage({
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs placeholder-slate-600 focus:outline-none focus:border-indigo-500 transition font-sans"
+                      className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs placeholder-slate-600 focus:outline-none focus:border-blue-500 transition font-sans"
                     />
                     <button
                       type="button"
@@ -367,7 +367,7 @@ export default function LoginPage({
                 <button
                   type="submit"
                   disabled={isLoading || !email.trim() || !password.trim()}
-                  className="w-full mt-2 py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-bold transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2"
+                  className="w-full mt-2 py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-bold transition shadow-lg shadow-blue-900/30 flex items-center justify-center gap-2"
                 >
                   {isLoading ? (
                     <>
@@ -398,9 +398,9 @@ export default function LoginPage({
                 
                 {/* Instant Verification Code Helper Banner */}
                 {receivedOtp && (
-                  <div className="p-3.5 rounded-2xl bg-cyan-950/40 border border-cyan-500/40 flex items-center justify-between gap-3 animate-in fade-in">
+                  <div className="p-3.5 rounded-2xl bg-blue-950/40 border border-blue-500/40 flex items-center justify-between gap-3 animate-in fade-in">
                     <div>
-                      <div className="text-[10px] uppercase font-bold text-cyan-400 tracking-wider">
+                      <div className="text-[10px] uppercase font-bold text-blue-400 tracking-wider">
                         Verification Code
                       </div>
                       <div className="text-base font-black text-white font-mono tracking-widest mt-0.5">
@@ -410,7 +410,7 @@ export default function LoginPage({
                     <button
                       type="button"
                       onClick={handleAutoFillOtp}
-                      className="px-2.5 py-1 text-[11px] font-semibold bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/30 rounded-lg transition flex items-center gap-1"
+                      className="px-2.5 py-1 text-[11px] font-semibold bg-cyan-500/20 hover:bg-cyan-500/30 text-blue-300 border border-cyan-500/30 rounded-lg transition flex items-center gap-1"
                     >
                       <Check className="w-3 h-3" />
                       <span>Auto-Fill</span>
@@ -432,7 +432,7 @@ export default function LoginPage({
                       value={otp}
                       onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
                       placeholder="• • • • • •"
-                      className="w-full py-3 px-4 rounded-xl bg-slate-950 border border-slate-800 text-white text-center font-mono font-bold text-lg tracking-[0.5em] placeholder-slate-600 focus:outline-none focus:border-cyan-400 transition"
+                      className="w-full py-3 px-4 rounded-xl bg-slate-950 border border-slate-800 text-white text-center font-mono font-bold text-lg tracking-[0.5em] placeholder-slate-600 focus:outline-none focus:border-blue-500 transition"
                     />
                   </div>
                 </div>
@@ -441,7 +441,7 @@ export default function LoginPage({
                 <button
                   type="submit"
                   disabled={isLoading || otp.trim().length !== 6}
-                  className="w-full py-3 px-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed text-slate-950 text-xs font-bold transition shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2"
+                  className="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-bold transition shadow-lg shadow-blue-900/25 flex items-center justify-center gap-2"
                 >
                   {isLoading ? (
                     <>
@@ -475,7 +475,7 @@ export default function LoginPage({
                     type="button"
                     onClick={handleResendOtp}
                     disabled={countdown > 0 || isLoading}
-                    className="text-cyan-400 hover:text-cyan-300 disabled:text-slate-600 disabled:cursor-not-allowed font-semibold transition"
+                    className="text-blue-400 hover:text-blue-300 disabled:text-slate-600 disabled:cursor-not-allowed font-semibold transition"
                   >
                     {countdown > 0 ? `Resend code in ${countdown}s` : 'Resend Code'}
                   </button>
@@ -490,8 +490,8 @@ export default function LoginPage({
       </main>
 
       {/* Footer */}
-      <footer className="h-14 px-6 border-t border-slate-800/80 bg-[#020817]/60 flex items-center justify-center text-[11px] text-slate-500">
-        <span>SkillBridge © 2026 • AI Resume Visualizer, Analyzer & Career Accelerator</span>
+      <footer className="h-14 px-6 border-t border-slate-800/80 bg-[#0a0e17]/60 flex items-center justify-center text-[11px] text-slate-500">
+        <span>SkillBridge © 2026 • Professional Resume Visualizer, ATS Diagnostic & Career Platform</span>
       </footer>
 
     </div>

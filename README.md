@@ -1,11 +1,10 @@
-# 🌉 SkillBridge - AI Resume Visualizer, Analyzer & Career Accelerator
+# 🌉 SkillBridge - Professional Resume Visualizer, ATS Diagnostic & Career Platform
 
 SkillBridge is an attractive, modern, full-stack career platform designed to help software engineers and technical professionals bridge the gap between their current resume and high-tier industry expectations.
 
 ---
 
-## 🌟 Core Features
-
+## 🌟 Core Modules & Capabilities
 
 ### 1. 📄 Resume Visualizer
 - **Multi-Template Rendering**: Seamlessly toggle between **Modern Tech**, **Executive Clean**, and **Visual Grid** layouts.
@@ -23,15 +22,15 @@ SkillBridge is an attractive, modern, full-stack career platform designed to hel
 - **Keyword Cloud Audit**: Instant identification of matched keywords vs. critical missing competencies.
 - **Strengths & High-Impact Recommendations**: Actionable guidance to maximize interview call rates.
 
-### 3. ⭐ AI Resume Highlights & Diagnostic Panel
-- **AI Executive Career Summary**: Auto-synthesized career narrative with core domains, senior competencies, and stand-out metrics.
+### 3. ⭐ Executive Resume Highlights & Diagnostic Panel
+- **Executive Career Summary**: Synthesized career narrative with core domains, senior competencies, and stand-out metrics.
 - **Interactive Keyword Highlighter**: Real-time keyword tagging system that highlights matching competencies and technologies directly across the visual resume canvas.
 - **Strength & Achievement Badges**: Dynamic recognition badges awarded for key resume strengths (e.g., *ATS Elite, Quantified Impact, Builder Mindset, Polyglot Stack*).
 - **Missing Sections Diagnostic Audit**: Instant completeness health check for vital sections (Certifications, Summary, Quantified Metrics, Links) with fix recommendations.
 - **Top Metrics & Accomplishments Carousel**: Quick-glance high-impact metrics extracted from work experience and projects.
 
-### 4. 🎙️ AI Mock Interviewer (Resume-Anchored Q&A & Dynamic Evaluation)
-- **Deeply Anchored Questions**: AI questions tailored directly to your actual projects, claimed metrics, and stated technologies across Technical Deep-Dive, Behavioral (STAR), and Distributed Architecture.
+### 4. 🎙️ Technical Mock Interview Studio (Resume-Anchored Q&A & Evaluation)
+- **Deeply Anchored Questions**: Targeted questions tailored directly to your actual projects, claimed metrics, and stated technologies across Technical Deep-Dive, Behavioral (STAR), and Distributed Architecture.
 - **Strict Separation of 3 Concepts**:
   - **Answer Validity**: Categorizes answers as `Valid Technical Response`, `Invalid Response`, or `Insufficient Response`.
   - **Answer Quality Score**: Dynamically calculated from actual answer quality across 5 weighted criteria (never labeled "Accuracy").
@@ -45,9 +44,9 @@ SkillBridge is an attractive, modern, full-stack career platform designed to hel
   - **Clarity & Communication (15%)**: Coherent flow, transitions, and structure.
   - **Technical Depth (20%)**: Inner mechanics, trade-offs, edge cases, and quantifiable metrics.
   - **Structure (10%)**: STAR framework (Situation $\rightarrow$ Task $\rightarrow$ Action $\rightarrow$ Result) for behavioral questions; Premise $\rightarrow$ Mechanism $\rightarrow$ Trade-offs for technical questions.
-- **Stale Score Prevention & Audio Dictation**:
+- **Stale Score Prevention & Audio Prompts**:
   - Live indicator warns when an answer has been modified since previous evaluation.
-  - Web Speech API microphone dictation and sample voice transcription simulation.
+  - Audio question reader synthesis and sample voice transcription simulation.
   - Staff-level **Model Answer** provided for every question.
 
 ### 5. 🌉 Skill Bridge Learning Roadmap
@@ -56,7 +55,7 @@ SkillBridge is an attractive, modern, full-stack career platform designed to hel
 - **Portfolio Flagship Projects**: Hands-on project ideas engineered to stand out on GitHub and resumes.
 - **Curated Guides & Documentation**: Best free and interactive learning resources.
 
-### 6. ✨ AI STAR Bullet Point Optimizer
+### 6. 📝 STAR Bullet Point Polisher
 - **Instant Accomplishment Rewriter**: Transforms weak, passive statements into executive-ready achievements.
 - **Multi-Perspective Styles**: Generates variations focused on **Quantified Metrics & Scale**, **Technical Depth & Resilience**, and **Business Leadership**.
 - **Action Verb Bank**: 1-click power verbs for rapid resume tuning.
@@ -66,13 +65,13 @@ SkillBridge is an attractive, modern, full-stack career platform designed to hel
 - **Kanban & List Pipeline Views**: Track applications across 6 stages: `Applied`, `Screening`, `Technical Interview`, `Final Round`, `Offer Received`, and `Archived / Rejected`.
 - **Cross-Platform Origin Badging**: Filter and label jobs sourced from **LinkedIn**, **Naukri.com**, **Direct Careers**, and referrals.
 - **Interconnected Career Acceleration**:
-  - **1-Click Mock Q&A**: Instantly launch AI Mock Interview pre-calibrated to that company and target role.
+  - **1-Click Mock Q&A**: Instantly launch Mock Interview pre-calibrated to that company and target role.
   - **1-Click Tailored Cover Letter**: Generate custom cover letters pre-populated with company name, role, and job requirements.
 - **CSV Data Export**: 1-click download of your entire application pipeline report for offline records.
 - **Persistent Cloud & Local Sync**: Multi-device synchronization isolated to your user account.
 
-### 8. ✉️ AI Tailored Cover Letter Generator
-- Auto-generates role-specific, high-impact cover letters incorporating the candidate's top engineering achievements, technical stack, and target company value propositions.
+### 8. ✉️ Targeted Executive Cover Letter Studio
+- Generates role-specific, high-impact cover letters incorporating the candidate's top engineering achievements, technical stack, and target company value propositions.
 - 1-click copy to clipboard and text file download.
 
 ---

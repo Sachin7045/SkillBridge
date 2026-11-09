@@ -74,6 +74,12 @@ SkillBridge is an attractive, modern, full-stack career platform designed to hel
 - Generates role-specific, high-impact cover letters incorporating the candidate's top engineering achievements, technical stack, and target company value propositions.
 - 1-click copy to clipboard and text file download.
 
+### 9. 🤖 AI Career Chatbot & Mentorship Advisor
+- **Interactive Executive Advisor**: Provides conversational mentorship on ATS resume tuning, system design interview questions, and salary negotiation.
+- **Voice Dictation Integration**: Uses Web Speech API (`SpeechRecognition` / `webkitSpeechRecognition`) for hands-free voice-to-text dictation.
+- **Context-Aware Recommendations**: Integrates the candidate's target role, verified technical competencies, experience, and current ATS score into every response.
+- **Pre-Configured Advisory Chips**: One-click quick-prompts for salary negotiation bands, ATS keyword gaps, and behavioral STAR stories.
+
 ---
 
 ## 🌐 Live Production Deployment
@@ -138,10 +144,10 @@ SkillBridge provides secure authentication using **Email & Password with 6-Digit
 
 ## 🧪 Automated Testing & Verification
 
-Run the comprehensive test suites (144 automated test cases, 100% pass rate):
+Run the comprehensive test suites (153 automated test cases, 100% pass rate):
 
 ```powershell
-# 1. Email + Password + OTP Authentication Tests (15 test cases)
+# 1. Email + Password + OTP Authentication Tests (18 test cases)
 node backend/test-auth-otp.js
 
 # 2. AI Mock Interview Dynamic Evaluation & Accuracy Tests (71 test cases)
@@ -161,6 +167,9 @@ node backend/test-multilingual-interview.js
 
 # 7. Software Engineering Domains & Fields Tests (16 test cases)
 node backend/test-software-fields-interview.js
+
+# 8. AI Career Chatbot & Mentorship Advisory Tests (6 test cases)
+node backend/test-career-chat.js
 ```
 
 

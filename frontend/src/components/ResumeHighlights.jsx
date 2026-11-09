@@ -21,7 +21,8 @@ import {
   Medal,
   Flame,
   Brain,
-  Shield
+  Shield,
+  Award
 } from 'lucide-react';
 
 // ─── Utility: Extract top accomplishments from resume bullets ─────────────────

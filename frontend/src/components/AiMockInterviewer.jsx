@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Mic, 
+  MicOff,
   Sparkles, 
   HelpCircle, 
   Send, 
@@ -130,7 +131,20 @@ export default function AiMockInterviewer({
     window.speechSynthesis.onvoiceschanged = updateVoices;
   }, []);
 
-  // Stop any speech when changing question or unmounting
+  // Cleanup speech recognition and synthesis on component unmount
+  useEffect(() => {
+    return () => {
+      if (recognitionRef.current) {
+        try { recognitionRef.current.abort(); } catch (e) {}
+        recognitionRef.current = null;
+      }
+      if ('speechSynthesis' in window) {
+        try { window.speechSynthesis.cancel(); } catch (e) {}
+      }
+    };
+  }, []);
+
+  // Stop any speech when changing question or language
   useEffect(() => {
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
@@ -236,44 +250,78 @@ export default function AiMockInterviewer({
     }
   }, [selectedQuestionIndex, selectedLang, isAutoAskEnabled]);
 
-  // Real Microphone Speech-to-Text with selected language
+  // Real Microphone Speech-to-Text with selected language & robust browser compatibility
   const handleToggleMic = () => {
     const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRec) {
+      setEvalError('Web Speech Recognition is not supported by your browser (Google Chrome, Edge, and Safari are recommended). Populating sample voice answer.');
       handleSimulateSpeech();
       return;
     }
 
     if (isListeningMic) {
-      recognitionRef.current?.stop();
+      if (recognitionRef.current) {
+        try { recognitionRef.current.stop(); } catch (e) {}
+      }
       setIsListeningMic(false);
       return;
+    }
+
+    // Abort and cleanup any prior instance to prevent duplicates
+    if (recognitionRef.current) {
+      try { recognitionRef.current.abort(); } catch (e) {}
+      recognitionRef.current = null;
     }
 
     try {
       const rec = new SpeechRec();
       rec.continuous = true;
       rec.interimResults = true;
-      rec.lang = activeLangConfig.speechCode;
+      rec.lang = activeLangConfig.speechCode || 'en-US';
 
-      rec.onstart = () => setIsListeningMic(true);
-      rec.onresult = (e) => {
-        let transcript = '';
-        for (let i = e.resultIndex; i < e.results.length; ++i) {
-          transcript += e.results[i][0].transcript;
-        }
-        setCandidateAnswer(prev => {
-          const separator = prev.trim().length > 0 ? ' ' : '';
-          return prev + separator + transcript;
-        });
+      rec.onstart = () => {
+        setIsListeningMic(true);
+        setEvalError(null);
       };
-      rec.onerror = () => setIsListeningMic(false);
-      rec.onend = () => setIsListeningMic(false);
+
+      rec.onresult = (e) => {
+        let finalChunk = '';
+        for (let i = e.resultIndex; i < e.results.length; ++i) {
+          if (e.results[i].isFinal) {
+            finalChunk += e.results[i][0].transcript;
+          }
+        }
+        if (finalChunk.trim()) {
+          setCandidateAnswer(prev => {
+            const cleanPrev = prev.trim();
+            return cleanPrev ? `${cleanPrev} ${finalChunk.trim()}` : finalChunk.trim();
+          });
+        }
+      };
+
+      rec.onerror = (e) => {
+        console.warn("Speech recognition error:", e.error);
+        setIsListeningMic(false);
+        if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+          setEvalError('Microphone access was denied. Please allow microphone permissions in your browser address bar to dictate your answer.');
+        } else if (e.error === 'no-speech') {
+          // Silent timeout, no error necessary
+        } else if (e.error === 'network') {
+          setEvalError('Speech recognition network error. Please check your internet connection.');
+        } else {
+          setEvalError(`Microphone error: ${e.error}. You can continue typing your answer manually.`);
+        }
+      };
+
+      rec.onend = () => {
+        setIsListeningMic(false);
+      };
 
       recognitionRef.current = rec;
       rec.start();
     } catch (err) {
-      console.warn("Speech recognition unavailable, using simulated voice:", err);
+      console.warn("Speech recognition initialization failed:", err);
+      setIsListeningMic(false);
       handleSimulateSpeech();
     }
   };
@@ -839,15 +887,20 @@ ${ev.modelAnswer || ev.idealAnswer || 'N/A'}
 
                     <div className="flex items-center gap-2">
                       <button
+                        type="button"
                         onClick={handleToggleMic}
                         className={`text-xs flex items-center gap-1.5 px-2.5 py-1 rounded-lg border transition ${
                           isListeningMic
                             ? 'bg-rose-500/20 text-rose-300 border-rose-500/40 animate-pulse'
                             : 'bg-slate-900 text-slate-300 border-slate-700 hover:text-white'
                         }`}
-                        title={`Speak into microphone in ${activeLangConfig.name}`}
+                        title={isListeningMic ? "Click to stop recording" : `Speak into microphone in ${activeLangConfig.name}`}
                       >
-                        <Mic className="w-3 h-3 text-rose-400" />
+                        {isListeningMic ? (
+                          <MicOff className="w-3 h-3 text-rose-400" />
+                        ) : (
+                          <Mic className="w-3 h-3 text-rose-400" />
+                        )}
                         <span>{isListeningMic ? uiText.recording : uiText.useMic}</span>
                       </button>
 

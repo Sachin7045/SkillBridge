@@ -42,7 +42,7 @@ import {
   deleteApplicationFromCloud,
   updateUserProfileApi
 } from './api';
-import { Sparkles, ShieldCheck, FileText } from 'lucide-react';
+import { Sparkles, ShieldCheck, FileText, GitBranch } from 'lucide-react';
 
 const DEFAULT_APPLICATIONS = [
   {

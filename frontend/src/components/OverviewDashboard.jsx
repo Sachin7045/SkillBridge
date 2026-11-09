@@ -26,7 +26,8 @@ import {
   Check,
   Star,
   Edit3,
-  X
+  X,
+  Mic
 } from 'lucide-react';
 import { formatUserDisplayName } from '../utils/userDisplay';
 import { 

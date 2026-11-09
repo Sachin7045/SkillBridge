@@ -100,6 +100,19 @@ export async function generateCoverLetterApi(resume, companyName, targetRole, jo
   return res.json();
 }
 
+export async function chatCareerApi(messages, resumeContext, apiKey) {
+  const res = await fetch(`${API_BASE}/career/chat`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ messages, resumeContext, apiKey })
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error || 'Failed to communicate with Career Chatbot');
+  }
+  return res.json();
+}
+
 // Authentication API
 export async function sendOtpApi(email, password, name = '') {
   const res = await fetch(`${API_BASE}/auth/send-otp`, {

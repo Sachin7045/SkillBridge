@@ -4,8 +4,8 @@
 
 @layer base {
   body {
-    background-color: #0a0e17;
-    color: #f8fafc;
+    background-color: #F0FDFA;
+    color: #0f172a;
     min-height: 100vh;
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   }
@@ -16,73 +16,155 @@
 }
 
 /* Theme specific roots */
-.light {
-  --bg-main: #f8fafc;
+:root {
+  --bg-main: #F0FDFA;
   --bg-card: #ffffff;
-  --border-color: rgba(226, 232, 240, 0.9);
+  --border-color: rgba(204, 251, 241, 0.8);
   --text-main: #0f172a;
   --text-muted: #64748b;
   color-scheme: light;
 }
 
 .light body {
-  background-color: #f8fafc !important;
+  background-color: #F0FDFA !important;
   color: #0f172a !important;
 }
 
-.light .pro-card {
+.light .pro-card, .pro-card {
   background: #ffffff !important;
-  border-color: rgba(226, 232, 240, 0.9) !important;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05) !important;
+  border-color: rgba(204, 251, 241, 0.9) !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 118, 110, 0.06) !important;
+  color: #0f172a;
 }
 
-.light .pro-card:hover {
-  border-color: rgba(37, 99, 235, 0.4) !important;
-  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.08) !important;
+.light .pro-card:hover, .pro-card:hover {
+  border-color: rgba(15, 118, 110, 0.4) !important;
+  box-shadow: 0 12px 32px -4px rgba(15, 118, 110, 0.1) !important;
 }
 
 .light aside {
-  background-color: #ffffff !important;
-  border-color: #e2e8f0 !important;
+  background-color: #003B49 !important;
+  border-color: rgba(0, 43, 54, 0.8) !important;
 }
 
 .light header {
-  background-color: rgba(255, 255, 255, 0.92) !important;
-  border-color: #e2e8f0 !important;
+  background-color: #007C83 !important;
+  border-color: rgba(13, 148, 136, 0.3) !important;
+}
+
+/* Dark Mode Fallback */
+.dark body {
+  background-color: #042f2e !important;
+  color: #f8fafc !important;
+}
+
+.dark .pro-card {
+  background: #0f2d33 !important;
+  border-color: rgba(20, 184, 166, 0.2) !important;
+  color: #f8fafc !important;
 }
 
 /* Executive Surface Styles */
 .glass-panel {
-  background: rgba(17, 24, 39, 0.82);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(204, 251, 241, 0.8);
+  box-shadow: 0 10px 30px -10px rgba(15, 118, 110, 0.08);
 }
 
 .glass-panel-glow {
-  background: rgba(30, 41, 59, 0.88);
+  background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(37, 99, 235, 0.3);
-  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(20, 184, 166, 0.4);
+  box-shadow: 0 12px 30px -10px rgba(15, 118, 110, 0.12);
 }
 
-.pro-card {
-  background: #111827;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+.light .pro-card-elevated, .pro-card-elevated {
+  background: #ffffff;
+  border: 1px solid rgba(204, 251, 241, 0.9);
+  box-shadow: 0 8px 30px -4px rgba(15, 118, 110, 0.08);
 }
 
-.pro-card:hover {
-  border-color: rgba(37, 99, 235, 0.4);
-  box-shadow: 0 10px 28px -4px rgba(0, 0, 0, 0.5);
+/* Emerald-Teal Scoped Upgrades for Platform Components */
+.light main .bg-slate-900,
+.light main .bg-slate-950,
+.light main .bg-slate-900\/60,
+.light main .bg-slate-900\/70,
+.light main .bg-slate-900\/80,
+.light main .bg-slate-900\/90,
+.light main .bg-slate-950\/60,
+.light main .bg-slate-950\/70,
+.light main .bg-slate-950\/80,
+.light main .bg-slate-950\/90,
+.light main .bg-\[\#111827\],
+.light main .bg-\[\#0a0e17\],
+.light main .bg-\[\#1e293b\],
+.light main .bg-\[\#1e293b\]\/40,
+.light main .bg-\[\#1e293b\]\/50,
+.light main .bg-\[\#1e293b\]\/60 {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(204, 251, 241, 0.9) !important;
 }
 
-.pro-card-elevated {
-  background: #1e293b;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.4);
+.light main .text-white {
+  color: #0f172a;
+}
+
+.light main .text-slate-100 {
+  color: #0f172a;
+}
+
+.light main .text-slate-200 {
+  color: #1e293b;
+}
+
+.light main .text-slate-300 {
+  color: #334155;
+}
+
+.light main .text-slate-400 {
+  color: #64748b;
+}
+
+.light main .border-slate-800,
+.light main .border-slate-700,
+.light main .border-slate-800\/80,
+.light main .border-white\/5,
+.light main .border-white\/10 {
+  border-color: rgba(204, 251, 241, 0.8) !important;
+}
+
+/* Emerald-Teal Primary Buttons & Accents */
+.light main .bg-blue-600,
+.light main .bg-indigo-600 {
+  background-color: #0F766E !important;
+  color: #ffffff !important;
+}
+
+.light main .bg-blue-600:hover,
+.light main .bg-indigo-600:hover {
+  background-color: #0D9488 !important;
+}
+
+.light main .text-blue-400,
+.light main .text-indigo-400,
+.light main .text-blue-500,
+.light main .text-indigo-500 {
+  color: #0F766E !important;
+}
+
+.light main button.bg-blue-600,
+.light main button.bg-indigo-600,
+.light main button.bg-\[\#0F766E\] {
+  color: #ffffff !important;
+}
+
+.light main button.bg-blue-600 *,
+.light main button.bg-indigo-600 *,
+.light main button.bg-\[\#0F766E\] * {
+  color: #ffffff !important;
 }
 
 /* Custom Scrollbars */
@@ -92,16 +174,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #090d16;
+  background: #f0fdfa;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(37, 99, 235, 0.3);
+  background: rgba(15, 118, 110, 0.35);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(37, 99, 235, 0.6);
+  background: rgba(15, 118, 110, 0.7);
 }
 
 /* Print Styles */

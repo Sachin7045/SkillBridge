@@ -19,6 +19,7 @@ import CoverLetterGenerator from './components/CoverLetterGenerator';
 import SkillBridgeLanding from './components/SkillBridgeLanding';
 import LoginPage from './components/LoginPage';
 import JobApplications from './components/JobApplications';
+import CareerChatbot from './components/CareerChatbot';
 
 // Modals & Feedback
 import UploadModal from './components/UploadModal';
@@ -122,8 +123,8 @@ export default function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   
-  // Theme state: 'dark' | 'light' with persistent localStorage
-  const [theme, setTheme] = useState(() => localStorage.getItem('skillbridge_theme') || 'dark');
+  // Theme state: 'light' | 'dark' with persistent localStorage (Emerald-Teal light theme default)
+  const [theme, setTheme] = useState(() => localStorage.getItem('skillbridge_theme') || 'light');
 
   // Application Data States
   const [samples, setSamples] = useState([]);
@@ -624,7 +625,7 @@ export default function App() {
   }
 
   return (
-    <div className={`min-h-screen ${theme === 'light' ? 'bg-slate-50 text-slate-900' : 'bg-slate-950 text-slate-100'} flex selection:bg-indigo-500 selection:text-white transition-colors duration-200`}>
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-[#042f2e] text-slate-100' : 'bg-[#F0FDFA] text-slate-900'} flex selection:bg-[#0F766E] selection:text-white transition-colors duration-200`}>
       
       {/* Toast Feedback Manager */}
       <ToastContainer toasts={toasts} onDismiss={removeToast} />
@@ -716,6 +717,16 @@ export default function App() {
                   analysis={analysis}
                   highlightKeywords={highlightKeywords}
                   onKeywordsChange={setHighlightKeywords}
+                />
+              </motion.div>
+            )}
+
+            {activeTab === 'chat' && (
+              <motion.div key="chat" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <CareerChatbot
+                  resume={currentResume}
+                  apiKey={apiKey}
+                  currentUser={currentUser}
                 />
               </motion.div>
             )}
@@ -941,16 +952,16 @@ export default function App() {
         </main>
 
         {/* Footer */}
-        <footer className="no-print border-t border-slate-900/80 bg-slate-950/60 py-5 text-center text-xs text-slate-500 mt-auto">
+        <footer className="no-print border-t border-teal-100/80 bg-white/80 py-5 text-center text-xs text-slate-500 mt-auto">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="flex items-center gap-2">
-              <span className="font-semibold text-slate-400">SkillBridge</span>
+              <span className="font-bold text-[#007C83]">SkillBridge</span>
               <span>•</span>
-              <span>Professional Career Platform & Resume Studio</span>
+              <span className="text-slate-600 font-medium">Professional Career Platform & Resume Studio</span>
             </div>
             <div className="flex items-center gap-3">
-              <span className="flex items-center gap-1.5 text-slate-400">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="flex items-center gap-1.5 text-slate-600">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#0F766E]" />
                 <span>Deterministic ATS Diagnostics + Calibrated Evaluation Framework</span>
               </span>
             </div>

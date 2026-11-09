@@ -8,6 +8,14 @@ export default {
   theme: {
     extend: {
       colors: {
+        brandteal: {
+          sidebar: '#003B49', // Deep Pine / Teal Sidebar
+          navbar: '#007C83',  // Navbar Emerald-Teal
+          primary: '#0F766E', // Primary Buttons
+          accent: '#14B8A6',  // Accent Elements
+          bg: '#F0FDFA',      // Dashboard Background
+          hover: '#0D9488',   // Button Hover
+        },
         midnight: {
           950: '#0a0e17', // Modern Obsidian Charcoal
           900: '#0f172a', // Deep Slate

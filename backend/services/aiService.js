@@ -68,6 +68,17 @@ export async function generateCoverLetter(resume, companyName, targetRole, jobDe
   return generateCoverLetterLocal(resume, companyName, targetRole, jobDescription);
 }
 
+export async function chatCareerAdvisor(messages, resumeContext = {}, apiKey = null) {
+  if (apiKey || process.env.GEMINI_API_KEY) {
+    try {
+      return await chatCareerAdvisorWithGemini(messages, resumeContext, apiKey || process.env.GEMINI_API_KEY);
+    } catch (err) {
+      console.warn("Gemini career chat failed, falling back to smart local career AI engine:", err.message);
+    }
+  }
+  return chatCareerAdvisorLocal(messages, resumeContext);
+}
+
 // ==========================================
 // LOCAL INTELLIGENT HEURISTIC AI ENGINE
 // ==========================================
@@ -1907,4 +1918,167 @@ Return a JSON object with:
 - tone (string: e.g. "Confident, Technical & Impact-Driven")
 `;
   return await callGemini(prompt, apiKey);
+}
+
+async function chatCareerAdvisorWithGemini(messages, resumeContext, apiKey) {
+  const userRole = resumeContext.targetRole || 'Software Engineer';
+  const candidateName = resumeContext.name || 'Candidate';
+  const skillsList = [
+    ...(resumeContext.skills?.languages || []),
+    ...(resumeContext.skills?.frameworks || []),
+    ...(resumeContext.skills?.databases || []),
+    ...(resumeContext.skills?.cloudAndDevops || [])
+  ].slice(0, 15).join(', ');
+
+  const conversationHistory = (messages || []).map(m => `${m.role.toUpperCase()}: ${m.content}`).join('\n');
+
+  const prompt = `
+You are SkillBridge's Executive Career Mentor & Technical Advisor. You give high-signal, deeply practical, and encouraging career guidance to engineering candidates.
+
+Candidate Information:
+- Name: ${candidateName}
+- Target Role: ${userRole}
+- Core Stack: ${skillsList || 'Full Stack Engineering'}
+- Current ATS Score: ${resumeContext.atsScore || 86}/100
+
+Conversation Transcript:
+${conversationHistory}
+
+Instructions:
+1. Provide a direct, structured response addressing the latest user message with specific technical or career advice.
+2. Provide 3 relevant, clickable follow-up suggestions that the user might want to ask next.
+3. Return ONLY a valid JSON object matching this schema:
+{
+  "reply": "<your response in markdown format with clear headings, bullet points, and bold action items>",
+  "suggestions": [
+    "<follow-up prompt 1>",
+    "<follow-up prompt 2>",
+    "<follow-up prompt 3>"
+  ]
+}
+`;
+  return await callGemini(prompt, apiKey);
+}
+
+function chatCareerAdvisorLocal(messages, resumeContext) {
+  const lastMessage = (messages && messages.length > 0) ? messages[messages.length - 1].content : '';
+  const lowerMsg = String(lastMessage).toLowerCase();
+  const role = resumeContext.targetRole || 'Full Stack Engineer';
+  const name = resumeContext.name || 'Candidate';
+  const skills = [
+    ...(resumeContext.skills?.languages || ['TypeScript', 'JavaScript']),
+    ...(resumeContext.skills?.frameworks || ['React', 'Node.js', 'Express']),
+    ...(resumeContext.skills?.databases || ['PostgreSQL', 'MongoDB'])
+  ].slice(0, 6).join(', ');
+
+  let reply = '';
+  let suggestions = [];
+
+  if (lowerMsg.includes('ats') || lowerMsg.includes('score') || lowerMsg.includes('resume') || lowerMsg.includes('format')) {
+    reply = `### How to Maximize Your Resume ATS Score for **${role}**
+
+To lift your resume into the top 95th percentile, modern Applicant Tracking Systems look for four core pillars:
+
+1. **Standard Section Hierarchy**: Use unambiguous titles like *Work Experience*, *Technical Skills*, *Education*, and *Projects*. Avoid complex multi-column tables or header/footer embeds that parsers drop.
+2. **Deterministic Role Taxonomy**: Ensure your resume explicitly features target competencies: **${skills}**. Mention technologies in both the skills summary and directly within your bullet points.
+3. **Quantified STAR Impact**: Replace generic job duties with metric-backed achievements:
+   - *Weak*: "Maintained database and developed APIs."
+   - *Optimized*: "Architected RESTful microservices with Node.js and PostgreSQL, slashing p99 query latency by **38%** across 2.4M monthly requests."
+4. **Action Verb Power**: Lead every bullet with strong engineering verbs (*Engineered, Spearheaded, Refactored, Scaled*) rather than passive phrases (*Worked on, Handled*).
+
+> **Pro Tip**: Use the **STAR Bullet Polisher** tab to automatically rewrite any vague bullet point into an executive-ready accomplishment.`;
+
+    suggestions = [
+      "Review my top bullet points for STAR impact",
+      "Which keywords are missing for Senior Full Stack roles?",
+      "How do I prepare for System Design interviews?"
+    ];
+  } else if (lowerMsg.includes('interview') || lowerMsg.includes('question') || lowerMsg.includes('system design') || lowerMsg.includes('prep')) {
+    reply = `### Technical Interview Blueprint for **${role}**
+
+For top product engineering companies, interview loops typically assess three dimensions:
+
+#### 1. Core Technical Depth & Architecture (Round 1 & 2)
+- **Deep Concurrency & Async**: Event loop mechanics, Node.js worker threads, promises, and backpressure.
+- **State Management & Rendering**: React component lifecycles, virtual DOM reconciliation, memoization (\`useMemo\`/\`useCallback\`), and hydration.
+- **Relational vs NoSQL Tradeoffs**: When to pick PostgreSQL (ACID, complex joins) vs Redis/MongoDB (sub-millisecond lookups, horizontal sharding).
+
+#### 2. Scalable System Design (Round 3)
+- Design high-scale patterns: Rate limiting (Token Bucket), CDN caching strategies, message queues (Kafka/RabbitMQ), and database read-replicas.
+- Practice drawing system diagrams and calculating throughput (QPS, storage over 5 years).
+
+#### 3. Behavioral Leadership (Round 4)
+- Prepare 3 concrete stories of navigating production outages, cross-functional disagreements, and technical debt tradeoffs.
+
+> **Next Step**: Head over to the **Technical Mock Interview Studio** to practice real-time voice dictation with automated feedback!`;
+
+    suggestions = [
+      "Simulate a System Design mock interview question",
+      "How do I answer 'Tell me about a difficult bug you solved'?",
+      "What salary range can I negotiate for this role?"
+    ];
+  } else if (lowerMsg.includes('salary') || lowerMsg.includes('negotiate') || lowerMsg.includes('compensation') || lowerMsg.includes('offer') || lowerMsg.includes('lpa')) {
+    reply = `### Strategic Compensation Negotiation Framework
+
+Negotiating as a **${role}** requires anchoring on market data, value delivery, and leverage:
+
+1. **Benchmark the Compensation Band**:
+   - For mid-to-senior Full Stack roles in India, benchmark base salary is typically **₹22 LPA - ₹38 LPA**, with high-tier product firms and unicorns offering **₹35 LPA - ₹55+ LPA** total compensation (including RSUs/ESOPs).
+2. **Never Give the First Number**:
+   - If asked for expectations, respond: *"I'm currently focused on finding the right role fit and impact. I know your team offers competitive market rates for senior engineers, so I'd love to understand the band for this position."*
+3. **Anchor on Quantifiable Impact**:
+   - Highlight your verified technical background in **${skills}** and your ability to hit the ground running with zero onboarding lag.
+4. **Negotiate the Complete Package**:
+   - If base salary has hard departmental limits, negotiate sign-on bonuses, performance appraisal cycles (e.g. 6-month review), stock grants, or remote flexibility.`;
+
+    suggestions = [
+      "How do I counter an offer that is lower than expected?",
+      "What are the best questions to ask the hiring manager?",
+      "How do I optimize my resume for higher salary brackets?"
+    ];
+  } else if (lowerMsg.includes('skill') || lowerMsg.includes('roadmap') || lowerMsg.includes('learn') || lowerMsg.includes('docker') || lowerMsg.includes('cloud')) {
+    reply = `### Skill Gap Strategy for **${role}**
+
+Based on your current candidate profile with competencies in **${skills}**, here is your high-ROI learning roadmap:
+
+1. **Distributed Systems & Event-Driven Architecture**:
+   - Master message brokers (**Apache Kafka** or **RabbitMQ**) for decoupling services.
+   - Implement caching patterns with **Redis** (cache-aside, write-through, TTL strategies).
+2. **DevOps & Cloud Native Tooling**:
+   - Containerize full-stack apps with multi-stage **Dockerfiles**.
+   - Orchestrate deployments with **Kubernetes** manifests (Deployments, Services, Ingress).
+   - Set up automated CI/CD pipelines with **GitHub Actions**.
+3. **Database Performance Engineering**:
+   - Learn how to run \`EXPLAIN ANALYZE\`, create composite B-tree indexes, and optimize N+1 queries.
+
+> **Action Item**: Check your customized **Career Roadmap** tab to explore structured 3-phase milestones with curated learning resources!`;
+
+    suggestions = [
+      "What are the top 3 projects to showcase on GitHub?",
+      "How do I explain microservices architecture in interviews?",
+      "Review my resume ATS compatibility"
+    ];
+  } else {
+    reply = `### Welcome to your SkillBridge Career Advisory Session, **${name}**!
+
+I'm your dedicated Career Advisor, calibrated to help you navigate modern tech hiring, resume optimization, and interview loops for **${role}**.
+
+Here are some high-impact ways I can assist you right now:
+- **Resume Strategy**: Analyze your keyword density, formatting, and quantify accomplishments.
+- **Mock Interviews**: Practice technical architecture questions and behavioral scenarios with live feedback.
+- **Job Matching**: Discover positions matching your verified stack (**${skills}**).
+- **Career Roadmap**: Identify high-value missing technologies to unlock senior salary brackets.
+- **Offer Negotiation**: Structure your compensation strategy for maximum leverage.
+
+What specific challenge or career milestone would you like to tackle today?`;
+
+    suggestions = [
+      "How do I optimize my resume for ATS filters?",
+      "What technical questions will top companies ask for React and Node.js?",
+      "How do I negotiate salary between ₹25 LPA and ₹35 LPA?",
+      "What are my biggest skill gaps and how should I close them?"
+    ];
+  }
+
+  return { reply, suggestions };
 }

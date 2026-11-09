@@ -20,7 +20,8 @@ import {
   evaluateAnswer, 
   generateRoadmap, 
   optimizeBullet, 
-  generateCoverLetter 
+  generateCoverLetter,
+  chatCareerAdvisor
 } from './services/aiService.js';
 
 dotenv.config();
@@ -307,6 +308,26 @@ app.post('/api/cover-letter/generate', async (req, res) => {
     res.json({ success: true, coverLetter });
   } catch (err) {
     res.status(500).json({ error: 'Failed to generate cover letter', details: err.message });
+  }
+});
+
+// AI Career Chatbot: Interactive Mentorship & Advisory
+app.post('/api/career/chat', async (req, res) => {
+  try {
+    const { messages, resumeContext, apiKey } = req.body;
+    if (!messages || !Array.isArray(messages) || messages.length === 0) {
+      return res.status(400).json({ error: 'Messages array is required' });
+    }
+
+    const chatResponse = await chatCareerAdvisor(messages, resumeContext || {}, apiKey);
+    res.json({ 
+      success: true, 
+      reply: chatResponse.reply || 'Here is my career advisory guidance.',
+      suggestions: chatResponse.suggestions || []
+    });
+  } catch (err) {
+    console.error('Career chatbot error:', err.message);
+    res.status(500).json({ error: 'Failed to process career chat message', details: err.message });
   }
 });
 

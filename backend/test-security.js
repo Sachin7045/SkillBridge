@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:5000/api';
+const BASE_URL = process.env.BASE_URL || 'http://localhost:5001/api';
 
 async function testBackendSecurity() {
   console.log('--- Starting SkillBridge Backend Security Test ---');

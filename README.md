@@ -85,32 +85,33 @@ SkillBridge is an attractive, modern, full-stack career platform designed to hel
 
 ## 🚀 Quick Start Guide
 
-### Prerequisites
-- Node.js (v18+ recommended)
-- npm
+### 🌟 Easiest 1-Command Startup (Runs Both Backend & Frontend)
+```powershell
+# From project root:
+node run.js
+```
+Or simply double-click **`start.bat`**.  
+Both servers will start and `http://localhost:5173` will open automatically in your browser!
 
-### 1. Start the Backend API Server
+---
+
+### Manual Step-by-Step (Separate Windows)
+
+#### 1. Start Backend API Server
 ```powershell
 cd backend
-npm install        # first time only
+npm.cmd install    # first time only
 node server.js
 ```
-The backend API starts on `http://localhost:5000`.  
-> **Note:** `localhost:5000` is the API server — open the *frontend* URL below to use the app.
+The backend API starts on `http://localhost:5001`.
 
-### 2. Start the Frontend Development Server
+#### 2. Start Frontend Development Server
 ```powershell
 cd frontend
-npm install        # first time only
-npm run dev
+npm.cmd install    # first time only
+npm.cmd run dev
 ```
 Open `http://localhost:5173` in your browser.
-
-### Quick Start (both at once)
-```powershell
-# From the project root
-start.bat
-```
 
 ---
 

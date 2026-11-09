@@ -26,7 +26,7 @@ import {
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = Number(process.env.PORT) || 5001;
 const CORS_ORIGIN = process.env.CORS_ORIGIN || 'http://localhost:5173';
 
 // 1. Security Headers via Helmet
@@ -327,9 +327,20 @@ app.use((err, req, res, next) => {
 });
 
 if (process.env.NODE_ENV !== 'test' && !process.env.VERCEL) {
-  app.listen(PORT, () => {
-    console.log(`SkillBridge Backend running on http://localhost:${PORT}`);
-  });
+  const startServer = (portToTry) => {
+    const server = app.listen(portToTry, () => {
+      console.log(`SkillBridge Backend running on http://localhost:${portToTry}`);
+    });
+    server.on('error', (err) => {
+      if ((err.code === 'EADDRINUSE' || err.code === 'EACCES') && portToTry === 5000) {
+        console.warn(`[Port ${portToTry} restricted/busy on Windows] Automatically falling back to port 5001...`);
+        startServer(5001);
+      } else {
+        console.error(`Failed to start server on port ${portToTry}:`, err.message);
+      }
+    });
+  };
+  startServer(PORT);
 }
 
 export default app;

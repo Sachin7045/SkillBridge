@@ -4,8 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "dev": "node run.js",
     "build": "cd frontend && npm install && npm run build",
-    "start": "cd backend && npm start"
+    "start": "node run.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

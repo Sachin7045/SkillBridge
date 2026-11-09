@@ -4,18 +4,18 @@ color 0A
 
 echo.
 echo  ========================================
-echo    SkillBridge - AI Career Platform
+echo    SkillBridge - Career Platform
 echo  ========================================
 echo.
 
-:: Kill any old node processes on ports 5000/5173
+:: Kill any old node processes on ports 5001/5173
 echo  [1/3] Cleaning up old processes...
-for /f "tokens=5" %%a in ('netstat -ano 2^>nul ^| findstr ":5000 " ^| findstr "LISTENING"') do taskkill /PID %%a /F >nul 2>&1
+for /f "tokens=5" %%a in ('netstat -ano 2^>nul ^| findstr ":5001 " ^| findstr "LISTENING"') do taskkill /PID %%a /F >nul 2>&1
 for /f "tokens=5" %%a in ('netstat -ano 2^>nul ^| findstr ":5173 " ^| findstr "LISTENING"') do taskkill /PID %%a /F >nul 2>&1
 timeout /t 1 /nobreak >nul
 
 :: Start Backend
-echo  [2/3] Starting Backend on http://localhost:5000 ...
+echo  [2/3] Starting Backend on http://localhost:5001 ...
 start "SkillBridge Backend" cmd /k "cd /d "%~dp0backend" && node server.js"
 timeout /t 3 /nobreak >nul
 
@@ -31,7 +31,7 @@ start "" "http://localhost:5173"
 
 echo.
 echo  ========================================
-echo   Backend  -> http://localhost:5000
+echo   Backend  -> http://localhost:5001
 echo   Frontend -> http://localhost:5173
 echo  ========================================
 echo.

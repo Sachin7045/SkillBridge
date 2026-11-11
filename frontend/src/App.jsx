@@ -625,7 +625,7 @@ export default function App() {
   }
 
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-[#042f2e] text-slate-100' : 'bg-[#F0FDFA] text-slate-900'} flex selection:bg-[#0F766E] selection:text-white transition-colors duration-200`}>
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-[#031B35] text-slate-100' : 'bg-[#EFF8FF] text-[#102A43]'} flex selection:bg-[#006B83] selection:text-white transition-colors duration-200`}>
       
       {/* Toast Feedback Manager */}
       <ToastContainer toasts={toasts} onDismiss={removeToast} />
@@ -634,7 +634,11 @@ export default function App() {
       <Sidebar 
         activeTab={activeTab}
         setActiveTab={(tab) => {
-          setActiveTab(tab);
+          if (tab === 'history') {
+            setIsSamplesOpen(true);
+          } else {
+            setActiveTab(tab);
+          }
           setIsMobileSidebarOpen(false);
         }}
         isCollapsed={isSidebarCollapsed}
@@ -643,6 +647,7 @@ export default function App() {
         currentUser={currentUser}
         currentResume={currentResume}
         onLogout={handleLogout}
+        onOpenHistory={() => setIsSamplesOpen(true)}
       />
 
       {/* Mobile Drawer Backdrop */}
@@ -689,9 +694,17 @@ export default function App() {
                   analysis={analysis}
                   currentUser={currentUser}
                   applications={applications}
-                  onNavigateTab={(tab) => setActiveTab(tab)}
+                  savedResumes={savedResumes}
+                  onNavigateTab={(tab) => {
+                    if (tab === 'history') {
+                      setIsSamplesOpen(true);
+                    } else {
+                      setActiveTab(tab);
+                    }
+                  }}
                   onOpenUpload={() => setIsUploadOpen(true)}
                   onOpenSamples={() => setIsSamplesOpen(true)}
+                  onDeleteSavedResume={handleDeleteSavedResume}
                   onUpdateUserName={handleUpdateUserName}
                 />
               </motion.div>
@@ -731,7 +744,7 @@ export default function App() {
               </motion.div>
             )}
 
-            {activeTab === 'analyzer' && currentResume && (
+            {(activeTab === 'analyzer' || activeTab === 'ats') && currentResume && (
               <motion.div key="analyzer" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                 <ResumeAnalyzer
                   analysis={analysis}
@@ -770,7 +783,7 @@ export default function App() {
               </motion.div>
             )}
 
-            {activeTab === 'roadmap' && currentResume && (
+            {(activeTab === 'roadmap' || activeTab === 'skillgap') && currentResume && (
               <motion.div key="roadmap" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                 <SkillBridgeRoadmap
                   resume={currentResume}

@@ -8,13 +8,24 @@ export default {
   theme: {
     extend: {
       colors: {
+        saas: {
+          sidebar: '#031B35', // Dark Navy Sidebar
+          primary: '#006B83', // Primary Deep Cyan/Teal
+          neoncyan: '#00E5FF', // Futuristic Neon Cyan Highlight
+          emerald: '#00C9A7', // Vibrant Emerald
+          bg: '#EFF8FF',      // Background Ice Tint
+          cards: '#FFFFFF',   // Pure White Cards
+          text: '#102A43',    // Dark Navy Typography
+          secondary: '#64748B', // Secondary Slate Text
+          borders: '#DCEAF5', // Crisp Ice Borders
+        },
         brandteal: {
-          sidebar: '#003B49', // Deep Pine / Teal Sidebar
-          navbar: '#007C83',  // Navbar Emerald-Teal
-          primary: '#0F766E', // Primary Buttons
-          accent: '#14B8A6',  // Accent Elements
-          bg: '#F0FDFA',      // Dashboard Background
-          hover: '#0D9488',   // Button Hover
+          sidebar: '#031B35', 
+          navbar: '#006B83',  
+          primary: '#006B83', 
+          accent: '#00E5FF',  
+          bg: '#EFF8FF',      
+          hover: '#005568',   
         },
         midnight: {
           950: '#0a0e17', // Modern Obsidian Charcoal

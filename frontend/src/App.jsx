@@ -44,6 +44,7 @@ import {
   updateUserProfileApi
 } from './api';
 import { Sparkles, ShieldCheck, FileText, GitBranch } from 'lucide-react';
+import { getThemeById, applyThemeToDocument } from './utils/themes';
 
 const DEFAULT_APPLICATIONS = [
   {
@@ -123,8 +124,12 @@ export default function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   
-  // Theme state: 'light' | 'dark' with persistent localStorage (Emerald-Teal light theme default)
-  const [theme, setTheme] = useState(() => localStorage.getItem('skillbridge_theme') || 'light');
+  // Multi-palette theme state with persistent localStorage
+  const [currentThemeId, setCurrentThemeId] = useState(() => localStorage.getItem('skillbridge_theme_id') || 'teal');
+  const [theme, setTheme] = useState(() => {
+    const saved = localStorage.getItem('skillbridge_theme_id') || 'teal';
+    return getThemeById(saved).type;
+  });
 
   // Application Data States
   const [samples, setSamples] = useState([]);
@@ -296,31 +301,35 @@ export default function App() {
     setToasts(prev => prev.filter(t => t.id !== id));
   };
 
-  // Toggle Theme
-  const handleToggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
-    localStorage.setItem('skillbridge_theme', newTheme);
-    if (newTheme === 'light') {
-      document.documentElement.classList.add('light');
-    } else {
-      document.documentElement.classList.remove('light');
-    }
+  // Select Dashboard Theme
+  const handleSelectTheme = (themeId) => {
+    const selectedTheme = getThemeById(themeId);
+    setCurrentThemeId(themeId);
+    setTheme(selectedTheme.type);
+    localStorage.setItem('skillbridge_theme_id', themeId);
+    localStorage.setItem('skillbridge_theme', selectedTheme.type);
+    applyThemeToDocument(selectedTheme);
     addToast({
       type: 'info',
-      title: 'Theme Updated',
-      message: newTheme === 'dark' ? 'Deep Obsidian dark theme active.' : 'Clean SaaS light theme active.'
+      title: 'Dashboard Theme Applied',
+      message: `${selectedTheme.name} theme is now active.`
     });
+  };
+
+  // Quick Toggle between Light (Teal) and Dark (Midnight)
+  const handleToggleTheme = () => {
+    const nextThemeId = currentThemeId === 'teal' ? 'midnight' : 'teal';
+    handleSelectTheme(nextThemeId);
   };
 
   // Apply saved theme on mount
   useEffect(() => {
-    if (theme === 'light') {
-      document.documentElement.classList.add('light');
-    } else {
-      document.documentElement.classList.remove('light');
-    }
-  }, [theme]);
+    const savedThemeId = localStorage.getItem('skillbridge_theme_id') || 'teal';
+    const themeObj = getThemeById(savedThemeId);
+    setCurrentThemeId(savedThemeId);
+    setTheme(themeObj.type);
+    applyThemeToDocument(themeObj);
+  }, []);
 
   // Initialize data
   useEffect(() => {
@@ -624,8 +633,16 @@ export default function App() {
     );
   }
 
+  const activeTheme = getThemeById(currentThemeId);
+
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-[#031B35] text-slate-100' : 'bg-[#EFF8FF] text-[#102A43]'} flex selection:bg-[#006B83] selection:text-white transition-colors duration-200`}>
+    <div
+      style={{
+        backgroundColor: activeTheme.palette.bg,
+        color: activeTheme.palette.text
+      }}
+      className="min-h-screen flex selection:bg-[#006B83] selection:text-white transition-colors duration-200"
+    >
       
       {/* Toast Feedback Manager */}
       <ToastContainer toasts={toasts} onDismiss={removeToast} />
@@ -646,6 +663,7 @@ export default function App() {
         atsScore={analysis?.atsScore || 78}
         currentUser={currentUser}
         currentResume={currentResume}
+        currentThemeId={currentThemeId}
         onLogout={handleLogout}
         onOpenHistory={() => setIsSamplesOpen(true)}
       />
@@ -674,6 +692,8 @@ export default function App() {
           currentResume={currentResume}
           onPrint={handlePrint}
           theme={theme}
+          currentThemeId={currentThemeId}
+          onSelectTheme={handleSelectTheme}
           onToggleTheme={handleToggleTheme}
           onToggleMobileSidebar={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
           isMobileSidebarOpen={isMobileSidebarOpen}
@@ -695,6 +715,8 @@ export default function App() {
                   currentUser={currentUser}
                   applications={applications}
                   savedResumes={savedResumes}
+                  currentThemeId={currentThemeId}
+                  onSelectTheme={handleSelectTheme}
                   onNavigateTab={(tab) => {
                     if (tab === 'history') {
                       setIsSamplesOpen(true);
@@ -916,6 +938,8 @@ export default function App() {
                   apiKey={apiKey}
                   onSaveApiKey={handleSaveApiKey}
                   theme={theme}
+                  currentThemeId={currentThemeId}
+                  onSelectTheme={handleSelectTheme}
                   onToggleTheme={handleToggleTheme}
                   onShowToast={addToast}
                 />

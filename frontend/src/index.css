@@ -17,54 +17,56 @@
 
 /* Theme specific roots */
 :root {
-  --bg-main: #EFF8FF;
+  --bg-main: #F3F6FB;
   --bg-card: #FFFFFF;
-  --border-color: #DCEAF5;
-  --text-main: #102A43;
-  --text-muted: #64748B;
-  --primary: #006B83;
-  --neon-cyan: #00E5FF;
-  --emerald: #00C9A7;
+  --bg-soft: #EEF4FF;
+  --border-color: #D7E3F3;
+  --text-main: #0F172A;
+  --text-muted: #475569;
+  --primary: #1D4ED8;
+  --primary-strong: #1E3A8A;
+  --secondary: #0F172A;
+  --accent: #38BDF8;
+  --success: #10B981;
   color-scheme: light;
 }
 
 .light body {
-  background-color: #EFF8FF !important;
-  color: #102A43 !important;
+  background-color: var(--theme-bg, #EFF8FF) !important;
+  color: var(--theme-text, #102A43) !important;
 }
 
-.light .pro-card, .pro-card {
-  background: #FFFFFF !important;
-  border-color: #DCEAF5 !important;
+.dark body {
+  background-color: var(--theme-bg, #060D1A) !important;
+  color: var(--theme-text, #F1F5F9) !important;
+}
+
+.pro-card {
+  background: var(--theme-card, #FFFFFF) !important;
+  border-color: var(--theme-card-border, #DCEAF5) !important;
   box-shadow: 0 4px 20px -2px rgba(3, 27, 53, 0.05) !important;
-  color: #102A43;
+  color: var(--theme-text, #102A43);
 }
 
-.light .pro-card:hover, .pro-card:hover {
-  border-color: #00E5FF !important;
+.pro-card:hover {
+  border-color: var(--theme-accent, #00E5FF) !important;
   box-shadow: 0 10px 30px -4px rgba(0, 229, 255, 0.12) !important;
 }
 
-.light aside {
-  background-color: #031B35 !important;
-  border-color: rgba(3, 27, 53, 0.9) !important;
+aside {
+  background-color: var(--theme-sidebar, #031B35) !important;
+  border-color: var(--theme-sidebar-border, rgba(3, 27, 53, 0.9)) !important;
 }
 
-.light header {
-  background-color: rgba(255, 255, 255, 0.95) !important;
-  border-color: #DCEAF5 !important;
-}
-
-/* Dark Mode Fallback */
-.dark body {
-  background-color: #031B35 !important;
-  color: #F8FAFC !important;
+header {
+  background-color: var(--theme-nav, rgba(255, 255, 255, 0.95)) !important;
+  border-color: var(--theme-nav-border, #DCEAF5) !important;
 }
 
 .dark .pro-card {
-  background: #08284C !important;
-  border-color: rgba(0, 229, 255, 0.2) !important;
-  color: #F8FAFC !important;
+  background: var(--theme-card, #0C182F) !important;
+  border-color: var(--theme-card-border, rgba(0, 229, 255, 0.2)) !important;
+  color: var(--theme-text, #F8FAFC) !important;
 }
 
 /* Executive Surface Styles */
